@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   http: ^0.12.0+4
   flutter_bloc: ^3.2.0
+  flutter_icons: ^1.0.0+1
+  google_nav_bar: ^2.1.0
 
 
 dev_dependencies:
