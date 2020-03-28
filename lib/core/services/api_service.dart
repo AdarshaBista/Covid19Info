@@ -11,8 +11,7 @@ import 'package:covid19_info/core/models/infected_nepali.dart';
 import 'package:covid19_info/core/models/nepal_infection_data.dart';
 
 class ApiService {
-  static const String NEPALI_CORONA_BASE =
-      'https://nepalcorona.info/api/v1/data/';
+  static const String NEPALI_CORONA_BASE = 'https://nepalcorona.info/api/v1/';
 
   Future<NepalInfectionData> fetchNepalInfectionData() async {
     try {
@@ -31,8 +30,9 @@ class ApiService {
       http.Response res =
           await http.get(NEPALI_CORONA_BASE + 'allnepali?start=$start');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
-      final List<Map<String, dynamic>> infectedList = resMap['data'];
-      return infectedList.map((i) => InfectedNepali.fromMap(i));
+      return (resMap['data'] as List)
+          .map((m) => InfectedNepali.fromMap(m))
+          .toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load FAQ!",
@@ -46,8 +46,7 @@ class ApiService {
       http.Response res =
           await http.get(NEPALI_CORONA_BASE + 'news?start=$start');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
-      final List<Map<String, dynamic>> newsList = resMap['data'];
-      return newsList.map((n) => News.fromMap(n));
+      return (resMap['data'] as List).map((m) => News.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load news!",
@@ -61,8 +60,7 @@ class ApiService {
       http.Response res =
           await http.get(NEPALI_CORONA_BASE + 'myths?start=$start');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
-      final List<Map<String, dynamic>> mythList = resMap['data'];
-      return mythList.map((m) => Myth.fromMap(m));
+      return (resMap['data'] as List).map((m) => Myth.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load myths!",
@@ -75,9 +73,9 @@ class ApiService {
     try {
       http.Response res =
           await http.get(NEPALI_CORONA_BASE + 'faqs?start=$start');
-      final Map<String, dynamic> resMap = jsonDecode(res.body);
-      final List<Map<String, dynamic>> faqList = resMap['data'];
-      return faqList.map((f) => Faq.fromMap(f));
+      Map<String, dynamic> resMap =
+          jsonDecode(res.body) as Map<String, dynamic>;
+      return (resMap['data'] as List).map((m) => Faq.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load FAQ!",
@@ -91,8 +89,7 @@ class ApiService {
       http.Response res =
           await http.get(NEPALI_CORONA_BASE + 'hospitals?start=$start');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
-      final List<Map<String, dynamic>> hospitalList = resMap['data'];
-      return hospitalList.map((h) => Hospital.fromMap(h));
+      return (resMap['data'] as List).map((m) => Hospital.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load FAQ!",
