@@ -1,0 +1,45 @@
+name: covid19_info
+description: App to read statistics and news about Covid19 especially in Nepal.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_launcher_icons: ^0.7.4
+  flutter_native_splash: ^0.1.9
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
+
+flutter_native_splash:
+  image: assets/icon/splash.png
+  color: "FFE9E3"
+  android_disable_fullscreen: true
+  
+
+flutter:
+
+  uses-material-design: true
+
+  # assets:
+  #   - assets/images/
+
+  fonts:
+    - family: Sen
+      fonts:
+        - asset: assets/fonts/Sen-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Sen-Regular.ttf
+          weight: 500
