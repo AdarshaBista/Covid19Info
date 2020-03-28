@@ -6,6 +6,7 @@ import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/core/services/api_service.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/blocs/news_bloc/news_bloc.dart';
 import 'package:covid19_info/blocs/info_bloc/info_bloc.dart';
 
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -93,16 +94,19 @@ class _NavPageState extends State<NavPage> {
 
   Widget _buildNepalPage() => NepalPage();
 
-  Widget _buildNewsPage() => NewsPage();
+  Widget _buildNewsPage() => BlocProvider(
+        create: (context) => NewsBloc(
+          apiService: context.repository<ApiService>(),
+        ),
+        child: NewsPage(),
+      );
 
-  Widget _buildInfopage() {
-    return BlocProvider(
-      create: (context) => InfoBloc(
-        apiService: context.repository<ApiService>(),
-      ),
-      child: InfoPage(),
-    );
-  }
+  Widget _buildInfopage() => BlocProvider(
+        create: (context) => InfoBloc(
+          apiService: context.repository<ApiService>(),
+        ),
+        child: InfoPage(),
+      );
 
   Widget _buildWorldPage() => WorldPage();
 }

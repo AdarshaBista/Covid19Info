@@ -32,7 +32,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
         yield LoadedNewsState(news: news);
       } on AppError catch (e) {
         print(e.error);
-        yield ErrorlNewsState(message: e.message);
+        yield ErrorNewsState(message: e.message);
       }
     }
   }

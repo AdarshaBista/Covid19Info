@@ -15,10 +15,10 @@ class LoadedNewsState extends NewsState {
   }) : assert(news != null);
 }
 
-class ErrorlNewsState extends NewsState {
+class ErrorNewsState extends NewsState {
   final String message;
 
-  ErrorlNewsState({
+  ErrorNewsState({
     @required this.message,
   }) : assert(message != null);
 }
