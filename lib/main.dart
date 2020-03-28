@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
+
+import 'package:covid19_info/core/services/api_service.dart';
 
 import 'package:covid19_info/ui/pages/nav_page.dart';
 
@@ -35,7 +38,12 @@ class App extends StatelessWidget {
         accentColor: AppColors.accent,
         fontFamily: 'Sen',
       ),
-      home: NavPage(),
+      home: MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<ApiService>(create: (_) => ApiService()),
+        ],
+        child: NavPage(),
+      ),
     );
   }
 }
