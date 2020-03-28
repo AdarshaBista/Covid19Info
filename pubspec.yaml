@@ -13,6 +13,8 @@ dependencies:
   flutter_bloc: ^3.2.0
   flutter_icons: ^1.0.0+1
   google_nav_bar: ^2.1.0
+  simple_coverflow: ^0.0.8
+  animator: ^1.0.0+5
 
 
 dev_dependencies:
@@ -46,4 +48,11 @@ flutter:
         - asset: assets/fonts/Sen-Bold.ttf
           weight: 700
         - asset: assets/fonts/Sen-Regular.ttf
+          weight: 500
+
+    - family: Sura
+      fonts:
+        - asset: assets/fonts/Sura-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Sura-Regular.ttf
           weight: 500

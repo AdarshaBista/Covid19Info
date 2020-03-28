@@ -35,7 +35,7 @@ class App extends StatelessWidget {
         ),
         brightness: Brightness.dark,
         primaryColor: AppColors.primary,
-        accentColor: AppColors.accent,
+        accentColor: AppColors.secondary,
         fontFamily: 'Sen',
       ),
       home: MultiRepositoryProvider(

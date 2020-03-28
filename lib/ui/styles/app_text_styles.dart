@@ -39,22 +39,22 @@ class AppTextStyles {
 
   // Light
   static final TextStyle extraLargeLight = extraLargeDark.copyWith(
-    color: AppColors.accent,
+    color: AppColors.light,
   );
 
   static final TextStyle largeLight = largeDark.copyWith(
-    color: AppColors.accent,
+    color: AppColors.light,
   );
 
   static final TextStyle mediumLight = mediumDark.copyWith(
-    color: AppColors.accent,
+    color: AppColors.light,
   );
 
   static final TextStyle smallLight = smallDark.copyWith(
-    color: AppColors.accent.withOpacity(0.8),
+    color: AppColors.light.withOpacity(0.8),
   );
 
   static final TextStyle extraSmallLight = extraSmallDark.copyWith(
-    color: AppColors.accent.withOpacity(0.6),
+    color: AppColors.light.withOpacity(0.6),
   );
 }
