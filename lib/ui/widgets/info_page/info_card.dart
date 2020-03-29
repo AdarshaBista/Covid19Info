@@ -21,45 +21,47 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: AppColors.dark,
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          _buildTitle(),
-          const SizedBox(height: 16.0),
-          _buildSubTitle(),
-          const SizedBox(height: 16.0),
-          Tag(label: tag, color: color),
-        ],
-      ),
+    return ExpansionTile(
+      backgroundColor: color.withOpacity(0.2),
+      title: _buildTitle(),
+      children: <Widget>[
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildSubTitle(),
+            _buildTag(),
+          ],
+        ),
+      ],
     );
   }
 
   Widget _buildTitle() {
-    return Flexible(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Text(
-        title,
+        title.trim(),
         textAlign: TextAlign.left,
-        style: AppTextStyles.extraLargeLightSerif,
+        style: AppTextStyles.largeLightSerif,
       ),
     );
   }
 
   Widget _buildSubTitle() {
-    return Flexible(
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
       child: Text(
-        subTitle,
-        textAlign: TextAlign.left,
-        style: AppTextStyles.mediumLight,
+        subTitle.trim(),
+        textAlign: TextAlign.justify,
+        style: AppTextStyles.mediumLightSerif,
       ),
+    );
+  }
+
+  Widget _buildTag() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
+      child: Tag(label: tag, color: color),
     );
   }
 }

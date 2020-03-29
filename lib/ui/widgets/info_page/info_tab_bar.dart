@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 
 class InfoTabBar extends StatelessWidget {
@@ -15,19 +14,13 @@ class InfoTabBar extends StatelessWidget {
           indicatorSize: TabBarIndicatorSize.label,
           indicatorColor: AppColors.primary,
           indicatorWeight: 1.0,
-          isScrollable: true,
+          // isScrollable: true,
           tabs: <Widget>[
             const Tab(
-              icon: Icon(
-                Feather.x_circle,
-                color: Colors.red,
-              ),
+              text: 'MYTHS',
             ),
             const Tab(
-              icon: Icon(
-                Icons.question_answer,
-                color: Colors.blue,
-              ),
+              text: 'FAQ',
             ),
           ],
         ),

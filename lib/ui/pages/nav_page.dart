@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/news_bloc/news_bloc.dart';
-import 'package:covid19_info/blocs/info_bloc/info_bloc.dart';
+import 'package:covid19_info/blocs/faq_bloc/faq_bloc.dart';
+import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
 
 import 'package:covid19_info/core/services/api_service.dart';
 
@@ -100,10 +101,19 @@ class _NavPageState extends State<NavPage> {
         child: NewsPage(),
       );
 
-  Widget _buildInfopage() => BlocProvider(
-        create: (context) => InfoBloc(
-          apiService: context.repository<ApiService>(),
-        ),
+  Widget _buildInfopage() => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => FaqBloc(
+              apiService: context.repository<ApiService>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => MythBloc(
+              apiService: context.repository<ApiService>(),
+            ),
+          ),
+        ],
         child: InfoPage(),
       );
 

@@ -71,8 +71,26 @@ class AppTextStyles {
     letterSpacing: 1,
   );
 
+  static final TextStyle largeDarkSerif = _baseSerif.copyWith(
+    fontSize: 22.0,
+    fontWeight: FontWeight.w400,
+  );
+
+  static final TextStyle mediumDarkSerif = _baseSerif.copyWith(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w400,
+  );
+
   // Light Serif
   static final TextStyle extraLargeLightSerif = extraLargeDarkSerif.copyWith(
+    color: AppColors.light,
+  );
+
+  static final TextStyle largeLightSerif = largeDarkSerif.copyWith(
+    color: AppColors.light,
+  );
+
+  static final TextStyle mediumLightSerif = mediumDarkSerif.copyWith(
     color: AppColors.light,
   );
 }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/info_bloc/info_bloc.dart';
+import 'package:covid19_info/blocs/faq_bloc/faq_bloc.dart';
+import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/info_page/info_card.dart';
@@ -22,7 +23,8 @@ class _InfoPageState extends State<InfoPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    context.bloc<InfoBloc>()..add(GetInfoEvent());
+    context.bloc<MythBloc>()..add(GetMythEvent());
+    context.bloc<FaqBloc>()..add(GetFaqEvent());
   }
 
   @override
@@ -35,7 +37,7 @@ class _InfoPageState extends State<InfoPage> {
               (BuildContext context, bool innerBoxIsScrolled) => [
             const CollapsibleAppBar(
               elevation: 0.0,
-              title: 'INFORMATION',
+              title: 'INFO',
               imageUrl: 'assets/images/info_header.png',
             ),
             const InfoTabBar(),
@@ -52,22 +54,26 @@ class _InfoPageState extends State<InfoPage> {
   }
 
   Widget _buildMyths() {
-    return BlocBuilder<InfoBloc, InfoState>(
+    return BlocBuilder<MythBloc, MythState>(
       builder: (context, state) {
-        if (state is InitialInfoState) {
+        if (state is InitialMythState) {
           return const EmptyIcon();
-        } else if (state is LoadedInfoState) {
-          return ListView.builder(itemBuilder: (_, index) {
-            final myth = state.myths[index];
-            return InfoCard(
-              title: myth.myth,
-              subTitle: myth.reality,
-              tag: myth.sourceName,
-              color:
-                  AppColors.accentColors[index % AppColors.accentColors.length],
-            );
-          });
-        } else if (state is ErrorInfoState) {
+        } else if (state is LoadedMythState) {
+          return ListView.separated(
+            separatorBuilder: (_, __) => Divider(height: 16.0),
+            itemCount: state.myths.length,
+            itemBuilder: (_, index) {
+              final myth = state.myths[index];
+              return InfoCard(
+                title: myth.myth,
+                subTitle: myth.reality,
+                tag: myth.sourceName,
+                color: AppColors
+                    .accentColors[index % AppColors.accentColors.length],
+              );
+            },
+          );
+        } else if (state is ErrorMythState) {
           return ErrorIcon(message: state.message);
         } else {
           return const BusyIndicator();
@@ -77,22 +83,26 @@ class _InfoPageState extends State<InfoPage> {
   }
 
   Widget _buildFaqs() {
-    return BlocBuilder<InfoBloc, InfoState>(
+    return BlocBuilder<FaqBloc, FaqState>(
       builder: (context, state) {
-        if (state is InitialInfoState) {
+        if (state is InitialFaqState) {
           return const EmptyIcon();
-        } else if (state is LoadedInfoState) {
-          return ListView.builder(itemBuilder: (_, index) {
-            final faq = state.faqs[index];
-            return InfoCard(
-              title: faq.question,
-              subTitle: faq.answer,
-              tag: faq.category,
-              color:
-                  AppColors.accentColors[index % AppColors.accentColors.length],
-            );
-          });
-        } else if (state is ErrorInfoState) {
+        } else if (state is LoadedFaqState) {
+          return ListView.separated(
+            separatorBuilder: (_, __) => Divider(height: 16.0),
+            itemCount: state.faqs.length,
+            itemBuilder: (_, index) {
+              final faq = state.faqs[index];
+              return InfoCard(
+                title: faq.question,
+                subTitle: faq.answer,
+                tag: faq.category,
+                color: AppColors
+                    .accentColors[index % AppColors.accentColors.length],
+              );
+            },
+          );
+        } else if (state is ErrorFaqState) {
           return ErrorIcon(message: state.message);
         } else {
           return const BusyIndicator();
