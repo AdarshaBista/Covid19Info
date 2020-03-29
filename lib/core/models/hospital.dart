@@ -90,15 +90,19 @@ class Hospital {
         'latitude': map['location']['coordinates'][0],
         'longitude': map['location']['coordinates'][1],
       }),
-      isFull: map['is_full'],
-      isGovApproved: map['government_approved'],
+      isFull: map['is_full'] ?? false,
+      isGovApproved: map['government_approved'] ?? false,
       name: map['name'],
-      contactPerson: map['contactPerson'],
-      contactPersonNumber: map['contact_person_number'],
-      address: map['address'],
-      phone: map['phone'],
-      website: map['website'],
-      email: map['email'],
+      contactPerson: (map['contact_person'] as String).isEmpty
+          ? 'N/A'
+          : map['contactPerson'],
+      contactPersonNumber: (map['contact_person_number'] as String).isEmpty
+          ? 'N/A'
+          : map['contact_person_number'],
+      address: (map['address'] as String).isEmpty ? 'N/A' : map['address'],
+      phone: (map['phone'] as String).isEmpty ? 'N/A' : map['phone'],
+      website: (map['website'] as String).isEmpty ? 'N/A' : map['website'],
+      email: (map['email'] as String).isEmpty ? 'N/A' : map['email'],
       capacity: Capacity.fromMap(map['capacity']),
     );
   }

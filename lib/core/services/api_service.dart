@@ -7,7 +7,6 @@ import 'package:covid19_info/core/models/faq.dart';
 import 'package:covid19_info/core/models/myth.dart';
 import 'package:covid19_info/core/models/news.dart';
 import 'package:covid19_info/core/models/hospital.dart';
-import 'package:covid19_info/core/models/infected_nepali.dart';
 import 'package:covid19_info/core/models/nepal_infection_data.dart';
 
 class ApiService {
@@ -20,22 +19,6 @@ class ApiService {
     } catch (e) {
       throw AppError(
         message: "Couldn't load nepal infection data!",
-        error: e.toString(),
-      );
-    }
-  }
-
-  Future<List<InfectedNepali>> fetchInfectedNepalese(int start) async {
-    try {
-      http.Response res =
-          await http.get(NEPALI_CORONA_BASE + 'data/allnepali?start=$start');
-      final Map<String, dynamic> resMap = jsonDecode(res.body);
-      return (resMap['data'] as List)
-          .map((m) => InfectedNepali.fromMap(m))
-          .toList();
-    } catch (e) {
-      throw AppError(
-        message: "Couldn't load FAQ!",
         error: e.toString(),
       );
     }
@@ -92,7 +75,7 @@ class ApiService {
       return (resMap['data'] as List).map((m) => Hospital.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
-        message: "Couldn't load FAQ!",
+        message: "Couldn't load hospital data!",
         error: e.toString(),
       );
     }

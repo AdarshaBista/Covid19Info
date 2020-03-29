@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 
 import 'package:covid19_info/ui/widgets/nepal_page/stats_row.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/hospital_list.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 import 'package:covid19_info/ui/widgets/common/collapsible_appbar.dart';
 
@@ -21,6 +23,7 @@ class _NepalPageState extends State<NepalPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     context.bloc<NepalStatsBloc>()..add(GetStatsEvent());
+    context.bloc<HospitalBloc>()..add(GetHospitalEvent());
   }
 
   @override
@@ -39,6 +42,8 @@ class _NepalPageState extends State<NepalPage> {
           shrinkWrap: true,
           children: <Widget>[
             _buildNepalStats(),
+            const SizedBox(height: 32.0),
+            _buildHospitalList(),
           ],
         ),
       ),
@@ -53,6 +58,22 @@ class _NepalPageState extends State<NepalPage> {
         } else if (state is LoadedNepalStatsState) {
           return StatsRow(state: state);
         } else if (state is ErrorNepalStatsState) {
+          return ErrorIcon(message: state.message);
+        } else {
+          return const BusyIndicator();
+        }
+      },
+    );
+  }
+
+  Widget _buildHospitalList() {
+    return BlocBuilder<HospitalBloc, HospitalState>(
+      builder: (context, state) {
+        if (state is InitialHospitalState) {
+          return const EmptyIcon();
+        } else if (state is LoadedHospitalState) {
+          return HospitalList(state: state);
+        } else if (state is ErrorHospitalState) {
           return ErrorIcon(message: state.message);
         } else {
           return const BusyIndicator();

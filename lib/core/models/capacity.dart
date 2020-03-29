@@ -52,12 +52,17 @@ class Capacity {
     if (map == null) return null;
 
     return Capacity(
-      beds: map['beds'],
-      ventilators: map['ventilators'],
-      isolationBeds: map['isolation_beds'],
-      occupiedBeds: map['occupied_beds'],
-      doctors: map['doctors'],
-      nurses: map['nurses'],
+      beds: (map['beds'] as String).isEmpty ? 'N/A' : map['beds'],
+      ventilators:
+          (map['ventilators'] as String).isEmpty ? 'N/A' : map['ventilators'],
+      isolationBeds: (map['isolation_beds'] as String).isEmpty
+          ? 'N/A'
+          : map['isolation_beds'],
+      occupiedBeds: (map['occupied_beds'] as String).isEmpty
+          ? 'N/A'
+          : map['occupied_beds'],
+      doctors: (map['doctors'] as String).isEmpty ? 'N/A' : map['doctors'],
+      nurses: (map['nurses'] as String).isEmpty ? 'N/A' : map['nurses'],
     );
   }
 
