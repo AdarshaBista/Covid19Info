@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:covid19_info/ui/styles/styles.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/info_bloc/info_bloc.dart';
 
-import 'package:simple_coverflow/simple_coverflow.dart';
-import 'package:covid19_info/ui/widgets/info_page/myth_card.dart';
+import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/info_page/info_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/info_tab_bar.dart';
+import 'package:covid19_info/ui/widgets/common/collapsible_appbar.dart';
+import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
 class InfoPage extends StatefulWidget {
+  const InfoPage();
+
   @override
   _InfoPageState createState() => _InfoPageState();
 }
@@ -22,52 +27,77 @@ class _InfoPageState extends State<InfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<InfoBloc, InfoState>(
-        builder: (context, state) {
-          if (state is InitialInfoState) {
-            return Container(color: Colors.deepPurple);
-          } else if (state is LoadedInfoState) {
-            return ListView(
-              shrinkWrap: true,
-              children: <Widget>[
-                Text(
-                  'Myth',
-                  textAlign: TextAlign.left,
-                  style: AppTextStyles.extraLargeLight.copyWith(
-                    fontSize: 30.0,
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  child: CoverFlow(
-                    dismissibleItems: false,
-                    viewportFraction: 0.8,
-                    itemCount: state.myths.length,
-                    itemBuilder: (context, index) => MythCard(
-                      myth: state.myths[index],
-                    ),
-                  ),
-                ),
-                // Container(
-                //   height: MediaQuery.of(context).size.height * 0.5,
-                //   child: ListView.builder(
-                //     itemCount: state.faqs.length,
-                //     itemBuilder: (c, i) => Padding(
-                //       padding: const EdgeInsets.all(8.0),
-                //       child: Text(state.faqs[i].question),
-                //     ),
-                //   ),
-                // ),
-              ],
-            );
-          } else if (state is ErrorInfoState) {
-            return Center(child: Text(state.message));
-          } else {
-            return Center(child: LinearProgressIndicator());
-          }
-        },
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder:
+              (BuildContext context, bool innerBoxIsScrolled) => [
+            const CollapsibleAppBar(
+              elevation: 0.0,
+              title: 'INFORMATION',
+              imageUrl: 'assets/images/info_header.png',
+            ),
+            const InfoTabBar(),
+          ],
+          body: TabBarView(
+            children: <Widget>[
+              _buildMyths(),
+              _buildFaqs(),
+            ],
+          ),
+        ),
       ),
+    );
+  }
+
+  Widget _buildMyths() {
+    return BlocBuilder<InfoBloc, InfoState>(
+      builder: (context, state) {
+        if (state is InitialInfoState) {
+          return const EmptyIcon();
+        } else if (state is LoadedInfoState) {
+          return ListView.builder(itemBuilder: (_, index) {
+            final myth = state.myths[index];
+            return InfoCard(
+              title: myth.myth,
+              subTitle: myth.reality,
+              tag: myth.sourceName,
+              color:
+                  AppColors.accentColors[index % AppColors.accentColors.length],
+            );
+          });
+        } else if (state is ErrorInfoState) {
+          return ErrorIcon(message: state.message);
+        } else {
+          return const BusyIndicator();
+        }
+      },
+    );
+  }
+
+  Widget _buildFaqs() {
+    return BlocBuilder<InfoBloc, InfoState>(
+      builder: (context, state) {
+        if (state is InitialInfoState) {
+          return const EmptyIcon();
+        } else if (state is LoadedInfoState) {
+          return ListView.builder(itemBuilder: (_, index) {
+            final faq = state.faqs[index];
+            return InfoCard(
+              title: faq.question,
+              subTitle: faq.answer,
+              tag: faq.category,
+              color:
+                  AppColors.accentColors[index % AppColors.accentColors.length],
+            );
+          });
+        } else if (state is ErrorInfoState) {
+          return ErrorIcon(message: state.message);
+        } else {
+          return const BusyIndicator();
+        }
+      },
     );
   }
 }

@@ -1,6 +1,3 @@
-import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
-import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
-import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +6,9 @@ import 'package:covid19_info/blocs/news_bloc/news_bloc.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:simple_coverflow/simple_coverflow.dart';
 import 'package:covid19_info/ui/widgets/news_page/news_card.dart';
+import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
+import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 
 class NewsPage extends StatefulWidget {
   @override
@@ -58,7 +58,7 @@ class _NewsPageState extends State<NewsPage> {
   Widget _buildNewsList(LoadedNewsState state) {
     return CoverFlow(
       dismissibleItems: false,
-      viewportFraction: 0.8,
+      viewportFraction: 0.85,
       itemCount: state.news.length,
       itemBuilder: (context, index) => NewsCard(
         news: state.news[index],

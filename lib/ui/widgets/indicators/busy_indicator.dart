@@ -11,9 +11,13 @@ class BusyIndicator extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Center(
-        child: LoadingIndicator(
-          indicatorType: Indicator.orbit,
-          color: AppColors.primary,
+        child: SizedBox(
+          width: 44.0,
+          height: 44.0,
+          child: LoadingIndicator(
+            indicatorType: Indicator.orbit,
+            color: AppColors.primary,
+          ),
         ),
       ),
     );
