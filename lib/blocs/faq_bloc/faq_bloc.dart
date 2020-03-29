@@ -4,40 +4,37 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import 'package:covid19_info/core/models/faq.dart';
-import 'package:covid19_info/core/models/myth.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 
 import 'package:covid19_info/core/services/api_service.dart';
 
-part 'info_event.dart';
-part 'info_state.dart';
+part 'faq_event.dart';
+part 'faq_state.dart';
 
-class InfoBloc extends Bloc<InfoEvent, InfoState> {
+class FaqBloc extends Bloc<FaqEvent, FaqState> {
   final ApiService apiService;
 
-  InfoBloc({
+  FaqBloc({
     @required this.apiService,
   }) : assert(apiService != null);
 
   @override
-  InfoState get initialState => InitialInfoState();
+  FaqState get initialState => InitialFaqState();
 
   @override
-  Stream<InfoState> mapEventToState(
-    InfoEvent event,
+  Stream<FaqState> mapEventToState(
+    FaqEvent event,
   ) async* {
-    if (event is GetInfoEvent) {
-      yield LoadingInfoState();
+    if (event is GetFaqEvent) {
+      yield LoadingFaqState();
       try {
         final List<Faq> faqs = await apiService.fetchFaqs(0);
-        final List<Myth> myths = await apiService.fetchMyths(0);
-        yield LoadedInfoState(
+        yield LoadedFaqState(
           faqs: faqs,
-          myths: myths,
         );
       } on AppError catch (e) {
         print(e.error);
-        yield ErrorInfoState(message: e.message);
+        yield ErrorFaqState(message: e.message);
       }
     }
   }
