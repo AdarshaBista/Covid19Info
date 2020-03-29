@@ -3,41 +3,41 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/ui/styles/app_colors.dart';
 
 class AppTextStyles {
-  static const TextStyle _base = TextStyle(
+  static const TextStyle _baseSansSerif = TextStyle(
     color: AppColors.background,
     fontFamily: 'Sen',
   );
 
-  // Dark
-  static final TextStyle extraLargeDark = _base.copyWith(
+  // Dark Sans Serif
+  static final TextStyle extraLargeDark = _baseSansSerif.copyWith(
     fontSize: 28.0,
     fontWeight: FontWeight.w700,
     letterSpacing: 1,
   );
 
-  static final TextStyle largeDark = _base.copyWith(
-    fontSize: 20.0,
+  static final TextStyle largeDark = _baseSansSerif.copyWith(
+    fontSize: 22.0,
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle mediumDark = _base.copyWith(
+  static final TextStyle mediumDark = _baseSansSerif.copyWith(
     fontSize: 18.0,
     fontWeight: FontWeight.w400,
   );
 
-  static final TextStyle smallDark = _base.copyWith(
+  static final TextStyle smallDark = _baseSansSerif.copyWith(
     color: Colors.black87,
     fontSize: 15.0,
     fontWeight: FontWeight.w200,
   );
 
-  static final TextStyle extraSmallDark = _base.copyWith(
+  static final TextStyle extraSmallDark = _baseSansSerif.copyWith(
     color: Colors.black54,
     fontSize: 12.0,
     fontWeight: FontWeight.w200,
   );
 
-  // Light
+  // Light Sans Serif
   static final TextStyle extraLargeLight = extraLargeDark.copyWith(
     color: AppColors.light,
   );
@@ -56,5 +56,23 @@ class AppTextStyles {
 
   static final TextStyle extraSmallLight = extraSmallDark.copyWith(
     color: AppColors.light.withOpacity(0.6),
+  );
+
+  // Serif
+  static const TextStyle _baseSerif = TextStyle(
+    color: AppColors.background,
+    fontFamily: 'Sura',
+  );
+
+  // Dark Serif
+  static final TextStyle extraLargeDarkSerif = _baseSerif.copyWith(
+    fontSize: 28.0,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1,
+  );
+
+  // Light Serif
+  static final TextStyle extraLargeLightSerif = extraLargeDarkSerif.copyWith(
+    color: AppColors.light,
   );
 }

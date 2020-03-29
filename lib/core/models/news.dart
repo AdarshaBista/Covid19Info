@@ -10,7 +10,7 @@ class News {
   final String source;
   final String summary;
   final String imageUrl;
-  final String createdAt;
+  final DateTime createdAt;
 
   News({
     @required this.id,
@@ -31,7 +31,7 @@ class News {
     String source,
     String summary,
     String imageUrl,
-    String createdAt,
+    DateTime createdAt,
   }) {
     return News(
       id: id ?? this.id,
@@ -54,7 +54,7 @@ class News {
       'source': source,
       'summary': summary,
       'image_url': imageUrl,
-      'created_at': createdAt,
+      'created_at': createdAt.toUtc(),
     };
   }
 
@@ -69,7 +69,7 @@ class News {
       source: map['source'],
       summary: map['summary'],
       imageUrl: map['image_url'],
-      createdAt: map['created_at'],
+      createdAt: DateTime.parse(map['created_at']),
     );
   }
 

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:covid19_info/ui/styles/styles.dart';
-
-import 'package:covid19_info/core/services/api_service.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/news_bloc/news_bloc.dart';
 import 'package:covid19_info/blocs/info_bloc/info_bloc.dart';
 
+import 'package:covid19_info/core/services/api_service.dart';
+
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'package:covid19_info/ui/pages/nepal_page.dart';
