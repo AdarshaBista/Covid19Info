@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 import 'package:covid19_info/blocs/news_bloc/news_bloc.dart';
 import 'package:covid19_info/blocs/faq_bloc/faq_bloc.dart';
 import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
@@ -92,7 +93,16 @@ class _NavPageState extends State<NavPage> {
     );
   }
 
-  Widget _buildNepalPage() => NepalPage();
+  Widget _buildNepalPage() => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => NepalStatsBloc(
+              apiService: context.repository<ApiService>(),
+            ),
+          ),
+        ],
+        child: NepalPage(),
+      );
 
   Widget _buildNewsPage() => BlocProvider(
         create: (context) => NewsBloc(

@@ -1,10 +1,63 @@
 import 'package:flutter/material.dart';
 
-class NepalPage extends StatelessWidget {
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
+
+import 'package:covid19_info/ui/widgets/nepal_page/stats_row.dart';
+import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
+import 'package:covid19_info/ui/widgets/common/collapsible_appbar.dart';
+
+class NepalPage extends StatefulWidget {
+  const NepalPage();
+
+  @override
+  _NepalPageState createState() => _NepalPageState();
+}
+
+class _NepalPageState extends State<NepalPage> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.bloc<NepalStatsBloc>()..add(GetStatsEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
+    return Scaffold(
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
+            [
+          const CollapsibleAppBar(
+            elevation: 0.0,
+            title: 'NEPAL STATS',
+            imageUrl: 'assets/images/nepal_header.png',
+          ),
+        ],
+        body: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            _buildNepalStats(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNepalStats() {
+    return BlocBuilder<NepalStatsBloc, NepalStatsState>(
+      builder: (context, state) {
+        if (state is InitialNepalStatsState) {
+          return const EmptyIcon();
+        } else if (state is LoadedNepalStatsState) {
+          return StatsRow(state: state);
+        } else if (state is ErrorNepalStatsState) {
+          return ErrorIcon(message: state.message);
+        } else {
+          return const BusyIndicator();
+        }
+      },
     );
   }
 }

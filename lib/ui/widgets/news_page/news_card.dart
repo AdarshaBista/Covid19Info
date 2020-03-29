@@ -55,6 +55,8 @@ class NewsCard extends StatelessWidget {
     return Flexible(
       child: Text(
         news.title,
+        maxLines: 4,
+        overflow: TextOverflow.ellipsis,
         textAlign: TextAlign.center,
         style: AppTextStyles.extraLargeLightSerif,
       ),

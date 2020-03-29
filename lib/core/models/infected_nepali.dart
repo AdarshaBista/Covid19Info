@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 class InfectedNepali {
   final String id;
-  final String date;
+  final DateTime date;
   final String country;
   final int totalCases;
   final int deaths;
@@ -23,7 +23,7 @@ class InfectedNepali {
 
   InfectedNepali copyWith({
     String id,
-    String date,
+    DateTime date,
     String country,
     int totalCases,
     int deaths,
@@ -44,7 +44,7 @@ class InfectedNepali {
   Map<String, dynamic> toMap() {
     return {
       '_id': id,
-      'date': date,
+      'date': date.toUtc(),
       'country': country,
       'totalCases': totalCases,
       'deaths': deaths,
@@ -58,7 +58,7 @@ class InfectedNepali {
 
     return InfectedNepali(
       id: map['_id'],
-      date: map['date'],
+      date: DateTime.parse(map['date']),
       country: map['country'],
       totalCases: map['totalCases'],
       deaths: map['deaths'],

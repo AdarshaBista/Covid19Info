@@ -15,7 +15,7 @@ class ApiService {
 
   Future<NepalInfectionData> fetchNepalInfectionData() async {
     try {
-      http.Response res = await http.get(NEPALI_CORONA_BASE + 'nepal');
+      http.Response res = await http.get(NEPALI_CORONA_BASE + 'data/nepal');
       return NepalInfectionData.fromJson(res.body);
     } catch (e) {
       throw AppError(
@@ -28,7 +28,7 @@ class ApiService {
   Future<List<InfectedNepali>> fetchInfectedNepalese(int start) async {
     try {
       http.Response res =
-          await http.get(NEPALI_CORONA_BASE + 'allnepali?start=$start');
+          await http.get(NEPALI_CORONA_BASE + 'data/allnepali?start=$start');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
       return (resMap['data'] as List)
           .map((m) => InfectedNepali.fromMap(m))
