@@ -42,9 +42,9 @@ class NewsCard extends StatelessWidget {
             Divider(height: 16.0, color: color.withOpacity(0.4)),
             _buildSummary(),
             Divider(height: 16.0, color: color.withOpacity(0.4)),
-            _buildDate(),
-            const SizedBox(height: 16.0),
             _buildSource(),
+            const SizedBox(height: 16.0),
+            _buildReadMore(),
           ],
         ),
       ),
@@ -75,18 +75,27 @@ class NewsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildDate() {
+  Widget _buildSource() {
     final DateTime c = news.createdAt;
-    return Text(
-      '${c.year}/${c.month}/${c.day}',
-      textAlign: TextAlign.left,
-      style: AppTextStyles.extraSmallLight,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          news.source,
+          style: AppTextStyles.extraSmallLight,
+        ),
+        Text(
+          '${c.year}/${c.month}/${c.day}',
+          textAlign: TextAlign.left,
+          style: AppTextStyles.extraSmallLight,
+        ),
+      ],
     );
   }
 
-  Widget _buildSource() {
+  Widget _buildReadMore() {
     return Tag(
-      label: news.source,
+      label: 'READ MORE',
       color: color,
       onPressed: () {
         // TODO: Open link in webview
