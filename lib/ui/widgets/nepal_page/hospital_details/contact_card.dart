@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+
+import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:covid19_info/ui/widgets/common/tag.dart';
+import 'package:covid19_info/ui/widgets/common/icon_row.dart';
+
+class ContactCard extends StatelessWidget {
+  final String name;
+  final String number;
+  final Color color;
+
+  const ContactCard({
+    @required this.name,
+    @required this.number,
+    @required this.color,
+  })  : assert(name != null),
+        assert(number != null),
+        assert(color != null);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      padding: const EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        color: AppColors.background.withOpacity(0.25),
+        // color: color.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            'CONTACT',
+            style: AppTextStyles.mediumLight,
+          ),
+          const SizedBox(height: 10.0),
+          Row(
+            children: <Widget>[
+              Flexible(
+                child: IconRow(
+                  label: name,
+                  iconData: Icons.account_circle,
+                  labelStyle: AppTextStyles.smallLight,
+                ),
+              ),
+              const SizedBox(width: 10.0),
+              Tag(
+                label: number,
+                color: color,
+                iconData: LineAwesomeIcons.phone,
+                onPressed: () {
+                  // TODO: Call
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

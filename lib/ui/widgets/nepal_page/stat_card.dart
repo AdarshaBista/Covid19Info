@@ -7,11 +7,13 @@ class StatCard extends StatelessWidget {
   final String label;
   final String count;
   final Color color;
+  final Color backgroundColor;
 
   const StatCard({
     @required this.label,
     @required this.count,
     @required this.color,
+    this.backgroundColor = AppColors.dark,
   })  : assert(label != null),
         assert(count != null),
         assert(color != null);
@@ -24,7 +26,7 @@ class StatCard extends StatelessWidget {
       margin: const EdgeInsets.all(6.0),
       padding: const EdgeInsets.all(12.0),
       decoration: BoxDecoration(
-        color: AppColors.dark,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Column(
@@ -33,7 +35,8 @@ class StatCard extends StatelessWidget {
         children: <Widget>[
           Flexible(
             child: AutoSizeText(
-              label,
+              label.isEmpty ? 'N/A' : label,
+              textAlign: TextAlign.center,
               style: AppTextStyles.smallLight,
             ),
           ),

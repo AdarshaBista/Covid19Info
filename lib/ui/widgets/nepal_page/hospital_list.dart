@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_card.dart';
 
 class HospitalList extends StatelessWidget {
@@ -27,7 +26,6 @@ class HospitalList extends StatelessWidget {
         const SizedBox(height: 16.0),
         Column(
           children: [
-            SearchBox(),
             ...state.hospitals
                 .map(
                   (h) => HospitalCard(

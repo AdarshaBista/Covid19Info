@@ -4,14 +4,16 @@ import 'package:covid19_info/ui/styles/styles.dart';
 
 class Tag extends StatelessWidget {
   final String label;
+  final IconData iconData;
   final Color color;
   final VoidCallback onPressed;
 
   const Tag({
-    @required this.label,
+    this.label,
+    this.iconData = Icons.arrow_forward,
     this.color = AppColors.primary,
     this.onPressed,
-  }) : assert(label != null);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +28,18 @@ class Tag extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            const SizedBox(width: 8.0),
-            Text(
-              label,
-              style: AppTextStyles.extraSmallLight,
-            ),
-            const SizedBox(width: 8.0),
-            if (onPressed != null)
+            if (label != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  label,
+                  style: AppTextStyles.extraSmallLight,
+                ),
+              ),
+            if (iconData != null)
               Icon(
-                Icons.arrow_forward,
-                size: 12.0,
+                iconData,
+                size: 14.0,
               ),
           ],
         ),

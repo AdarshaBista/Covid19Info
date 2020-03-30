@@ -19,25 +19,29 @@ class IconRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Icon(
-          iconData,
-          color: color,
-          size: 20.0,
-        ),
-        const SizedBox(width: 16.0),
-        Flexible(
-          child: AutoSizeText(
-            label,
-            maxLines: 2,
-            style:
-                labelStyle ?? AppTextStyles.mediumLight.copyWith(color: color),
-            overflow: TextOverflow.ellipsis,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Icon(
+            iconData,
+            color: color,
+            size: 20.0,
           ),
-        ),
-      ],
+          const SizedBox(width: 16.0),
+          Flexible(
+            child: AutoSizeText(
+              label,
+              maxLines: 3,
+              softWrap: true,
+              style: labelStyle ??
+                  AppTextStyles.mediumLight.copyWith(color: color),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

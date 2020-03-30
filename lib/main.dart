@@ -18,12 +18,14 @@ void main() {
     ),
   );
 
+  // TODO: Remove Device Preview
   runApp(
     DevicePreview(
       builder: (_) => App(),
       background: BoxDecoration(color: AppColors.dark),
     ),
   );
+  // runApp(App());
 }
 
 class App extends StatelessWidget {
