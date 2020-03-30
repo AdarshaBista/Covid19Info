@@ -8,8 +8,6 @@ import 'package:covid19_info/core/services/api_service.dart';
 
 import 'package:covid19_info/ui/pages/nav_page.dart';
 
-import 'package:device_preview/device_preview.dart';
-
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -18,22 +16,13 @@ void main() {
     ),
   );
 
-  // TODO: Remove Device Preview
-  runApp(
-    DevicePreview(
-      builder: (_) => App(),
-      background: BoxDecoration(color: AppColors.dark),
-    ),
-  );
-  // runApp(App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.of(context).locale,
-      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
       title: 'Covid19 Info',
       theme: ThemeData(
