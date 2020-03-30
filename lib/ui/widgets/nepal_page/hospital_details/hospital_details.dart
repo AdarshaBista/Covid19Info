@@ -4,6 +4,7 @@ import 'package:covid19_info/core/models/hospital.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/action_row.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/hospital_map.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/contact_card.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/capacity_card.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/hospital_info.dart';
@@ -21,6 +22,7 @@ class HospitalDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: const EdgeInsets.all(16.0),
       children: <Widget>[
         Text(
           hospital.name,
@@ -53,6 +55,11 @@ class HospitalDetails extends StatelessWidget {
           CapacityCard(
             capacity: hospital.capacity,
           ),
+        const SizedBox(height: 16.0),
+        HospitalMap(
+          lat: hospital.coord.latitude,
+          long: hospital.coord.longitude,
+        ),
       ],
     );
   }

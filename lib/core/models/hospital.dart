@@ -84,11 +84,18 @@ class Hospital {
   static Hospital fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
+    double lat = map['location']['coordinates'][0];
+    double long = map['location']['coordinates'][1];
+    if (lat > long) {
+      lat = map['location']['coordinates'][1];
+      long = map['location']['coordinates'][0];
+    }
+
     return Hospital(
       id: map['id'],
       coord: Coord.fromMap({
-        'latitude': map['location']['coordinates'][0],
-        'longitude': map['location']['coordinates'][1],
+        'latitude': lat,
+        'longitude': long,
       }),
       isFull: map['is_full'],
       isGovApproved: map['government_approved'],
