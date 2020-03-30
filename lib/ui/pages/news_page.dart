@@ -27,6 +27,7 @@ class _NewsPageState extends State<NewsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        elevation: 0.0,
         centerTitle: true,
         title: Text(
           'NEWS',
