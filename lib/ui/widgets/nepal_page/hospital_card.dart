@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:covid19_info/core/models/hospital.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
+import 'package:covid19_info/ui/widgets/common/ui_helper.dart';
 import 'package:covid19_info/ui/widgets/common/tag.dart';
 import 'package:covid19_info/ui/widgets/common/icon_row.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/hospital_details.dart';
@@ -62,8 +65,13 @@ class HospitalCard extends StatelessWidget {
                       label: 'Call',
                       color: color,
                       iconData: LineAwesomeIcons.phone,
-                      onPressed: () {
-                        // TODO: Open phone
+                      onPressed: () async {
+                        String phoneNumber = hospital.phone.split(',').first;
+                        if (await canLaunch('tel:$phoneNumber')) {
+                          await launch('tel:$phoneNumber');
+                        } else {
+                          UiHelper.showMessage(context, 'Cannot open phone!');
+                        }
                       },
                     ),
                 ],
