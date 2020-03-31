@@ -72,7 +72,7 @@ class _NepalPageState extends State<NepalPage> {
         if (state is InitialHospitalState) {
           return const EmptyIcon();
         } else if (state is LoadedHospitalState) {
-          return HospitalList(state: state);
+          return HospitalList(hospitals: state.hospitals);
         } else if (state is ErrorHospitalState) {
           return ErrorIcon(message: state.message);
         } else {

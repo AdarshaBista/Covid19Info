@@ -2,17 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
+import 'package:covid19_info/core/models/hospital.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_card.dart';
 
 class HospitalList extends StatelessWidget {
-  final LoadedHospitalState state;
+  final List<Hospital> hospitals;
 
   const HospitalList({
-    @required this.state,
-  }) : assert(state != null);
+    @required this.hospitals,
+  }) : assert(hospitals != null);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,10 @@ class HospitalList extends StatelessWidget {
         const SizedBox(height: 16.0),
         Column(
           children: [
-            ...state.hospitals
+            SearchBox(
+              onChanged: (String value) {},
+            ),
+            ...hospitals
                 .map(
                   (h) => HospitalCard(
                     hospital: h,

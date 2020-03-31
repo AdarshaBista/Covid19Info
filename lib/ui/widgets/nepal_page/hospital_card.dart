@@ -84,6 +84,8 @@ class HospitalCard extends StatelessWidget {
   }
 
   void _openBottomSheet(BuildContext context) {
+    // Forces the keyboard(in search field) to close after card is tapped.
+    FocusScope.of(context).unfocus();
     showModalBottomSheet(
       context: context,
       enableDrag: true,
