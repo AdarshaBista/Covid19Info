@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
+import 'package:covid19_info/blocs/search_hospital_bloc/search_hospital_bloc.dart';
 
+import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/stats_row.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
@@ -43,7 +46,22 @@ class _NepalPageState extends State<NepalPage> {
           children: <Widget>[
             _buildNepalStats(),
             const SizedBox(height: 32.0),
-            _buildHospitalList(),
+            Center(
+              child: Text(
+                'HOSPITALS',
+                style: AppTextStyles.largeLight,
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            SearchBox(
+              onChanged: (String value) {
+                context.bloc<SearchHospitalBloc>()
+                  ..add(StartHospitalSearchEvent(
+                    searchTerm: value,
+                  ));
+              },
+            ),
+            _buildHospitalSearchList(),
           ],
         ),
       ),
@@ -59,6 +77,22 @@ class _NepalPageState extends State<NepalPage> {
           return StatsRow(state: state);
         } else if (state is ErrorNepalStatsState) {
           return ErrorIcon(message: state.message);
+        } else {
+          return const BusyIndicator();
+        }
+      },
+    );
+  }
+
+  Widget _buildHospitalSearchList() {
+    return BlocBuilder<SearchHospitalBloc, SearchHospitalState>(
+      builder: (context, state) {
+        if (state is InitialSearchHospitalState) {
+          return _buildHospitalList();
+        } else if (state is EmptySearchHospitalState) {
+          return const EmptyIcon();
+        } else if (state is LoadedSearchHospitalState) {
+          return HospitalList(hospitals: state.searchedHospitals);
         } else {
           return const BusyIndicator();
         }
