@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:covid19_info/core/models/hospital.dart';
+import 'package:covid19_info/core/services/launcher_service.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
-import 'package:covid19_info/ui/widgets/common/ui_helper.dart';
 import 'package:covid19_info/ui/widgets/common/tag.dart';
 import 'package:covid19_info/ui/widgets/common/icon_row.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/hospital_details.dart';
@@ -66,12 +66,9 @@ class HospitalCard extends StatelessWidget {
                       color: color,
                       iconData: LineAwesomeIcons.phone,
                       onPressed: () async {
-                        String phoneNumber = hospital.phone.split(',').first;
-                        if (await canLaunch('tel:$phoneNumber')) {
-                          await launch('tel:$phoneNumber');
-                        } else {
-                          UiHelper.showMessage(context, 'Cannot open phone!');
-                        }
+                        await context
+                            .repository<LauncherService>()
+                            .launchPhone(context, hospital.phone);
                       },
                     ),
                 ],
@@ -90,6 +87,7 @@ class HospitalCard extends StatelessWidget {
       context: context,
       enableDrag: true,
       isScrollControlled: true,
+      useRootNavigator: true,
       clipBehavior: Clip.antiAlias,
       elevation: 12.0,
       backgroundColor: AppColors.dark,

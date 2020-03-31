@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:covid19_info/core/models/news.dart';
+import 'package:covid19_info/core/services/launcher_service.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/tag.dart';
-import 'package:covid19_info/ui/widgets/common/ui_helper.dart';
 
 class NewsCard extends StatelessWidget {
   final News news;
@@ -101,12 +101,9 @@ class NewsCard extends StatelessWidget {
       label: 'READ MORE',
       color: color,
       onPressed: () async {
-        final url = news.url.contains('http') ? news.url : 'http:${news.url}';
-        if (await canLaunch(url)) {
-          await launch(url);
-        } else {
-          UiHelper.showMessage(context, 'Cannot open website!');
-        }
+        await context
+            .repository<LauncherService>()
+            .launchWebsite(context, news.url);
       },
     );
   }

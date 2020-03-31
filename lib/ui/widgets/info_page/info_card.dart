@@ -61,7 +61,11 @@ class InfoCard extends StatelessWidget {
   Widget _buildTag() {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
-      child: Tag(label: tag, color: color),
+      child: Tag(
+        label: tag,
+        color: color,
+        iconData: null,
+      ),
     );
   }
 }

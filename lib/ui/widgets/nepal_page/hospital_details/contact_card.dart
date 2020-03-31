@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/core/services/launcher_service.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
@@ -53,9 +54,9 @@ class ContactCard extends StatelessWidget {
                 color: color,
                 iconData: LineAwesomeIcons.phone,
                 onPressed: () async {
-                  if (await canLaunch('tel:$number')) {
-                    await launch('tel:$number');
-                  }
+                  await context
+                      .repository<LauncherService>()
+                      .launchPhone(context, number);
                 },
               ),
             ],
