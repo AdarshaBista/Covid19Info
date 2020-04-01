@@ -28,6 +28,7 @@ class IconIndicator extends StatelessWidget {
             const SizedBox(height: 20.0),
             Text(
               label,
+              textAlign: TextAlign.center,
               style: AppTextStyles.mediumDark.copyWith(
                 color: Colors.white54,
               ),

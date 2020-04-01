@@ -7,7 +7,7 @@ import 'package:covid19_info/blocs/search_hospital_bloc/search_hospital_bloc.dar
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/search_box.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/stats_row.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/stats_grid.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_list.dart';
@@ -74,7 +74,7 @@ class _NepalPageState extends State<NepalPage> {
         if (state is InitialNepalStatsState) {
           return const EmptyIcon();
         } else if (state is LoadedNepalStatsState) {
-          return StatsRow(state: state);
+          return StatsGrid(state: state);
         } else if (state is ErrorNepalStatsState) {
           return ErrorIcon(message: state.message);
         } else {

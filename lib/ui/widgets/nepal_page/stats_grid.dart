@@ -5,10 +5,10 @@ import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/stat_card.dart';
 
-class StatsRow extends StatelessWidget {
+class StatsGrid extends StatelessWidget {
   final LoadedNepalStatsState state;
 
-  const StatsRow({
+  const StatsGrid({
     @required this.state,
   }) : assert(state != null);
 
@@ -22,22 +22,35 @@ class StatsRow extends StatelessWidget {
           style: AppTextStyles.largeLight,
         ),
         const SizedBox(height: 16.0),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        GridView.count(
+          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+          crossAxisCount: 3,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             StatCard(
               label: 'Total',
-              count: state.nepalStats.total,
+              count: state.nepalStats.total.toString(),
               color: Colors.blue,
             ),
             StatCard(
               label: 'Negative',
-              count: state.nepalStats.negative,
+              count: state.nepalStats.negative.toString(),
               color: Colors.green,
             ),
             StatCard(
               label: 'Positive',
-              count: state.nepalStats.positive,
+              count: state.nepalStats.positive.toString(),
+              color: Colors.yellow,
+            ),
+            StatCard(
+              label: 'Isolation',
+              count: state.nepalStats.isolation.toString(),
+              color: Colors.deepPurple,
+            ),
+            StatCard(
+              label: 'Deaths',
+              count: state.nepalStats.deaths.toString(),
               color: Colors.red,
             ),
           ],

@@ -29,6 +29,12 @@ class _NavPageState extends State<NavPage> {
 
   List<GButton> get tabs => [
         GButton(
+          icon: LineAwesomeIcons.globe,
+          text: 'World',
+          iconColor: Colors.teal,
+          backgroundColor: Colors.teal,
+        ),
+        GButton(
           icon: LineAwesomeIcons.sun_o,
           text: 'Nepal',
           iconColor: Colors.red,
@@ -45,12 +51,6 @@ class _NavPageState extends State<NavPage> {
           text: 'Info',
           iconColor: Colors.blue,
           backgroundColor: Colors.blue,
-        ),
-        GButton(
-          icon: LineAwesomeIcons.globe,
-          text: 'World',
-          iconColor: Colors.teal,
-          backgroundColor: Colors.teal,
         ),
       ];
 
@@ -86,14 +86,16 @@ class _NavPageState extends State<NavPage> {
       body: IndexedStack(
         index: _selectedIndex,
         children: <Widget>[
+          _buildWorldPage(),
           _buildNepalPage(),
           _buildNewsPage(),
           _buildInfopage(),
-          _buildWorldPage(),
         ],
       ),
     );
   }
+
+  Widget _buildWorldPage() => WorldPage();
 
   Widget _buildNepalPage() => MultiBlocProvider(
         providers: [
@@ -138,6 +140,4 @@ class _NavPageState extends State<NavPage> {
         ],
         child: InfoPage(),
       );
-
-  Widget _buildWorldPage() => WorldPage();
 }
