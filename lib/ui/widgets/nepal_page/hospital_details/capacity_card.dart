@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/core/models/capacity.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/stat_card.dart';
+import 'package:covid19_info/ui/widgets/common/stat_card.dart';
 
 class CapacityCard extends StatelessWidget {
   final Capacity capacity;

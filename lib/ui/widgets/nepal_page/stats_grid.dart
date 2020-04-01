@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/stat_card.dart';
+import 'package:covid19_info/ui/widgets/common/stat_card.dart';
 
 class StatsGrid extends StatelessWidget {
   final LoadedNepalStatsState state;
