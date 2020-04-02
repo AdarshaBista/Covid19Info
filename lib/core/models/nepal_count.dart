@@ -2,14 +2,14 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
-class NepalInfectionData {
+class NepalCount {
   final int total;
   final int positive;
   final int negative;
   final int isolation;
   final int deaths;
 
-  NepalInfectionData({
+  NepalCount({
     @required this.total,
     @required this.positive,
     @required this.negative,
@@ -21,14 +21,14 @@ class NepalInfectionData {
         assert(isolation != null),
         assert(deaths != null);
 
-  NepalInfectionData copyWith({
+  NepalCount copyWith({
     int total,
     int positive,
     int negative,
     int isolation,
     int deaths,
   }) {
-    return NepalInfectionData(
+    return NepalCount(
       total: total ?? this.total,
       positive: positive ?? this.positive,
       negative: negative ?? this.negative,
@@ -47,10 +47,10 @@ class NepalInfectionData {
     };
   }
 
-  static NepalInfectionData fromMap(Map<String, dynamic> map) {
+  static NepalCount fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return NepalInfectionData(
+    return NepalCount(
       total: map['tested_total'],
       positive: map['tested_positive'],
       negative: map['tested_negative'],
@@ -61,7 +61,7 @@ class NepalInfectionData {
 
   String toJson() => json.encode(toMap());
 
-  static NepalInfectionData fromJson(String source) =>
+  static NepalCount fromJson(String source) =>
       fromMap(json.decode(source));
 
   @override
@@ -72,7 +72,7 @@ class NepalInfectionData {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is NepalInfectionData &&
+    return o is NepalCount &&
         o.total == total &&
         o.positive == positive &&
         o.negative == negative &&

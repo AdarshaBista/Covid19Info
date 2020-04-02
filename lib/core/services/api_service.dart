@@ -8,18 +8,18 @@ import 'package:covid19_info/core/models/myth.dart';
 import 'package:covid19_info/core/models/news.dart';
 import 'package:covid19_info/core/models/country.dart';
 import 'package:covid19_info/core/models/hospital.dart';
-import 'package:covid19_info/core/models/world_infection_data.dart';
-import 'package:covid19_info/core/models/nepal_infection_data.dart';
+import 'package:covid19_info/core/models/nepal_count.dart';
+import 'package:covid19_info/core/models/global_count.dart';
 
 class ApiService {
   static const String NEPAL_CORONA_BASE = 'https://nepalcorona.info/api/v1/';
   static const String COVID_API_BASE = 'https://covidapi.info/api/v1/';
 
-  Future<WorldInfectionData> fetchWorldInfectionData() async {
+  Future<GlobalCount> fetchGlobalCount() async {
     try {
       http.Response res = await http.get(COVID_API_BASE + 'global');
-      
-      return WorldInfectionData.fromMap(jsonDecode(res.body)['result']);
+
+      return GlobalCount.fromMap(jsonDecode(res.body)['result']);
     } catch (e) {
       throw AppError(
         message: "Couldn't load nepal infection data!",
@@ -41,10 +41,10 @@ class ApiService {
     }
   }
 
-  Future<NepalInfectionData> fetchNepalInfectionData() async {
+  Future<NepalCount> fetchNepalCount() async {
     try {
       http.Response res = await http.get(NEPAL_CORONA_BASE + 'data/nepal');
-      return NepalInfectionData.fromJson(res.body);
+      return NepalCount.fromJson(res.body);
     } catch (e) {
       throw AppError(
         message: "Couldn't load nepal infection data!",

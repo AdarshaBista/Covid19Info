@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/world_stats/world_stats_bloc.dart';
+import 'package:covid19_info/blocs/global_stats/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/world_page/world_stats_row.dart';
+import 'package:covid19_info/ui/widgets/global_page/global_stats_row.dart';
 
-class WorldPage extends StatefulWidget {
+class GlobalPage extends StatefulWidget {
   @override
-  _WorldPageState createState() => _WorldPageState();
+  _GlobalPageState createState() => _GlobalPageState();
 }
 
-class _WorldPageState extends State<WorldPage> {
+class _GlobalPageState extends State<GlobalPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    context.bloc<WorldStatsBloc>()..add(GetWorldStatsEvent());
+    context.bloc<GlobalStatsBloc>()..add(GetWorldStatsEvent());
   }
 
   @override
@@ -34,7 +34,7 @@ class _WorldPageState extends State<WorldPage> {
           maxHeight: MediaQuery.of(context).size.height,
           minHeight: 120.0,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          collapsed: WorldStatsRow(),
+          collapsed: GlobalStatsRow(),
           panelBuilder: (scrollController) => Center(
             child: Text("This is the sliding Widget"),
           ),

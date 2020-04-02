@@ -2,12 +2,12 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
-class WorldInfectionData {
+class GlobalCount {
   final int confirmed;
   final int deaths;
   final int recovered;
 
-  WorldInfectionData({
+  GlobalCount({
     @required this.confirmed,
     @required this.deaths,
     @required this.recovered,
@@ -15,12 +15,12 @@ class WorldInfectionData {
         assert(deaths != null),
         assert(recovered != null);
 
-  WorldInfectionData copyWith({
+  GlobalCount copyWith({
     int confirmed,
     int deaths,
     int recovered,
   }) {
-    return WorldInfectionData(
+    return GlobalCount(
       confirmed: confirmed ?? this.confirmed,
       deaths: deaths ?? this.deaths,
       recovered: recovered ?? this.recovered,
@@ -35,10 +35,10 @@ class WorldInfectionData {
     };
   }
 
-  static WorldInfectionData fromMap(Map<String, dynamic> map) {
+  static GlobalCount fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return WorldInfectionData(
+    return GlobalCount(
       confirmed: map['confirmed'],
       deaths: map['deaths'],
       recovered: map['recovered'],
@@ -47,8 +47,7 @@ class WorldInfectionData {
 
   String toJson() => json.encode(toMap());
 
-  static WorldInfectionData fromJson(String source) =>
-      fromMap(json.decode(source));
+  static GlobalCount fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() =>
@@ -58,7 +57,7 @@ class WorldInfectionData {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is WorldInfectionData &&
+    return o is GlobalCount &&
         o.confirmed == confirmed &&
         o.deaths == deaths &&
         o.recovered == recovered;

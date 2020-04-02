@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/world_stats/world_stats_bloc.dart';
+import 'package:covid19_info/blocs/global_stats/global_stats_bloc.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 import 'package:covid19_info/blocs/search_hospital_bloc/search_hospital_bloc.dart';
@@ -18,7 +18,7 @@ import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:covid19_info/ui/pages/nepal_page.dart';
 import 'package:covid19_info/ui/pages/news_page.dart';
 import 'package:covid19_info/ui/pages/info_page.dart';
-import 'package:covid19_info/ui/pages/world_page.dart';
+import 'package:covid19_info/ui/pages/global_page.dart';
 
 class NavPage extends StatefulWidget {
   @override
@@ -99,12 +99,12 @@ class _NavPageState extends State<NavPage> {
   Widget _buildWorldPage() => MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => WorldStatsBloc(
+            create: (context) => GlobalStatsBloc(
               apiService: context.repository<ApiService>(),
             ),
           ),
         ],
-        child: WorldPage(),
+        child: GlobalPage(),
       );
 
   Widget _buildNepalPage() => MultiBlocProvider(

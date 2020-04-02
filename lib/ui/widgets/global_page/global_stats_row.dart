@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/world_stats/world_stats_bloc.dart';
+import 'package:covid19_info/blocs/global_stats/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -9,10 +9,10 @@ import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
-class WorldStatsRow extends StatelessWidget {
+class GlobalStatsRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WorldStatsBloc, WorldStatsState>(
+    return BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
       builder: (context, state) {
         if (state is InitialWorldStatsState) {
           return const EmptyIcon();
