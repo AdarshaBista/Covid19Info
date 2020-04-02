@@ -4,15 +4,15 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import 'package:covid19_info/core/models/app_error.dart';
-import 'package:covid19_info/core/models/nepal_count.dart';
+import 'package:covid19_info/core/models/nepal_stats.dart';
 
-import 'package:covid19_info/core/services/api_service.dart';
+import 'package:covid19_info/core/services/nepal_api_service.dart';
 
 part 'nepal_stats_event.dart';
 part 'nepal_stats_state.dart';
 
 class NepalStatsBloc extends Bloc<NepalStatsEvent, NepalStatsState> {
-  final ApiService apiService;
+  final NepalApiService apiService;
 
   NepalStatsBloc({
     @required this.apiService,
@@ -25,11 +25,10 @@ class NepalStatsBloc extends Bloc<NepalStatsEvent, NepalStatsState> {
   Stream<NepalStatsState> mapEventToState(
     NepalStatsEvent event,
   ) async* {
-    if (event is GetStatsEvent) {
+    if (event is GetNepalStatsEvent) {
       yield LoadingNepalStatsState();
       try {
-        NepalCount nepalStats =
-            await apiService.fetchNepalCount();
+        NepalStats nepalStats = await apiService.fetchNepalStats();
         yield LoadedNepalStatsState(nepalStats: nepalStats);
       } on AppError catch (e) {
         print(e.error);

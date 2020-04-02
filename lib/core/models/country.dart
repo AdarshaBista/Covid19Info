@@ -1,73 +1,79 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 class Country {
-  final String id;
   final String name;
-  final int totalCases;
-  final int newCases;
-  final int totalDeaths;
-  final int newDeaths;
-  final int activeCases;
-  final int totalRecovered;
-  final int criticalCases;
+  final int cases;
+  final int todayCases;
+  final int deaths;
+  final int todayDeaths;
+  final int recovered;
+  final int active;
+  final int critical;
+  final int casesPerMillion;
+  final int deathsPerMillion;
 
   Country({
-    @required this.id,
     @required this.name,
-    @required this.totalCases,
-    @required this.newCases,
-    @required this.totalDeaths,
-    @required this.newDeaths,
-    @required this.activeCases,
-    @required this.totalRecovered,
-    @required this.criticalCases,
-  })  : assert(id != null),
-        assert(name != null),
-        assert(totalCases != null),
-        assert(newCases != null),
-        assert(totalDeaths != null),
-        assert(newDeaths != null),
-        assert(activeCases != null),
-        assert(totalRecovered != null),
-        assert(criticalCases != null);
+    @required this.cases,
+    @required this.todayCases,
+    @required this.deaths,
+    @required this.todayDeaths,
+    @required this.recovered,
+    @required this.active,
+    @required this.critical,
+    @required this.casesPerMillion,
+    @required this.deathsPerMillion,
+  })  : assert(name != null),
+        assert(cases != null),
+        assert(todayCases != null),
+        assert(deaths != null),
+        assert(todayDeaths != null),
+        assert(recovered != null),
+        assert(active != null),
+        assert(critical != null),
+        assert(casesPerMillion != null),
+        assert(deathsPerMillion != null);
 
   Country copyWith({
-    String id,
     String name,
-    int totalCases,
-    int newCases,
-    int totalDeaths,
-    int newDeaths,
-    int activeCases,
-    int totalRecovered,
-    int criticalCases,
+    int cases,
+    int todayCases,
+    int deaths,
+    int todayDeaths,
+    int recovered,
+    int active,
+    int critical,
+    int casesPerMillion,
+    int deathsPerMillion,
   }) {
     return Country(
-      id: id ?? this.id,
       name: name ?? this.name,
-      totalCases: totalCases ?? this.totalCases,
-      newCases: newCases ?? this.newCases,
-      totalDeaths: totalDeaths ?? this.totalDeaths,
-      newDeaths: newDeaths ?? this.newDeaths,
-      activeCases: activeCases ?? this.activeCases,
-      totalRecovered: totalRecovered ?? this.totalRecovered,
-      criticalCases: criticalCases ?? this.criticalCases,
+      cases: cases ?? this.cases,
+      todayCases: todayCases ?? this.todayCases,
+      deaths: deaths ?? this.deaths,
+      todayDeaths: todayDeaths ?? this.todayDeaths,
+      recovered: recovered ?? this.recovered,
+      active: active ?? this.active,
+      critical: critical ?? this.critical,
+      casesPerMillion: casesPerMillion ?? this.casesPerMillion,
+      deathsPerMillion: deathsPerMillion ?? this.deathsPerMillion,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      '_id': id,
-      'name': name,
-      'totalCases': totalCases,
-      'newCases': newCases,
-      'totalDeaths': totalDeaths,
-      'newDeaths': newDeaths,
-      'activeCases': activeCases,
-      'totalRecovered': totalRecovered,
-      'criticalCases': criticalCases,
+      'country': name,
+      'cases': cases,
+      'todayCases': todayCases,
+      'deaths': deaths,
+      'todayDeaths': todayDeaths,
+      'recovered': recovered,
+      'active': active,
+      'critical': critical,
+      'casesPerOneMillion': casesPerMillion,
+      'deathsPerOneMillion': deathsPerMillion,
     };
   }
 
@@ -75,15 +81,16 @@ class Country {
     if (map == null) return null;
 
     return Country(
-      id: map['_id'],
-      name: map['name'],
-      totalCases: map['totalCases'],
-      newCases: map['newCases'],
-      totalDeaths: map['totalDeaths'],
-      newDeaths: map['newDeaths'],
-      activeCases: map['activeCases'],
-      totalRecovered: map['totalRecovered'],
-      criticalCases: map['criticalCases'],
+      name: map['country'],
+      cases: map['cases'],
+      todayCases: map['todayCases'],
+      deaths: map['deaths'],
+      todayDeaths: map['todayDeaths'],
+      recovered: map['recovered'],
+      active: map['active'],
+      critical: map['critical'],
+      casesPerMillion: map['casesPerOneMillion'],
+      deathsPerMillion: map['deathsPerOneMillion'],
     );
   }
 
@@ -93,7 +100,7 @@ class Country {
 
   @override
   String toString() {
-    return 'Country(id: $id, name: $name, totalCases: $totalCases, newCases: $newCases, totalDeaths: $totalDeaths, newDeaths: $newDeaths, activeCases: $activeCases, totalRecovered: $totalRecovered, criticalCases: $criticalCases)';
+    return 'Country(name: $name, cases: $cases, todayCases: $todayCases, deaths: $deaths, todayDeaths: $todayDeaths, recovered: $recovered, active: $active, critical: $critical, casesPerMillion: $casesPerMillion, deathsPerMillion: $deathsPerMillion)';
   }
 
   @override
@@ -101,27 +108,29 @@ class Country {
     if (identical(this, o)) return true;
 
     return o is Country &&
-        o.id == id &&
         o.name == name &&
-        o.totalCases == totalCases &&
-        o.newCases == newCases &&
-        o.totalDeaths == totalDeaths &&
-        o.newDeaths == newDeaths &&
-        o.activeCases == activeCases &&
-        o.totalRecovered == totalRecovered &&
-        o.criticalCases == criticalCases;
+        o.cases == cases &&
+        o.todayCases == todayCases &&
+        o.deaths == deaths &&
+        o.todayDeaths == todayDeaths &&
+        o.recovered == recovered &&
+        o.active == active &&
+        o.critical == critical &&
+        o.casesPerMillion == casesPerMillion &&
+        o.deathsPerMillion == deathsPerMillion;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        totalCases.hashCode ^
-        newCases.hashCode ^
-        totalDeaths.hashCode ^
-        newDeaths.hashCode ^
-        activeCases.hashCode ^
-        totalRecovered.hashCode ^
-        criticalCases.hashCode;
+    return name.hashCode ^
+        cases.hashCode ^
+        todayCases.hashCode ^
+        deaths.hashCode ^
+        todayDeaths.hashCode ^
+        recovered.hashCode ^
+        active.hashCode ^
+        critical.hashCode ^
+        casesPerMillion.hashCode ^
+        deathsPerMillion.hashCode;
   }
 }

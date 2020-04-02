@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/global_stats/global_stats_bloc.dart';
+import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/global_page/global_stats_row.dart';
+import 'package:covid19_info/ui/widgets/global_page/global_details.dart';
+import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
 class GlobalPage extends StatefulWidget {
   @override
@@ -16,7 +19,7 @@ class _GlobalPageState extends State<GlobalPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    context.bloc<GlobalStatsBloc>()..add(GetWorldStatsEvent());
+    context.bloc<GlobalStatsBloc>()..add(GetGlobalStatsEvent());
   }
 
   @override
@@ -34,9 +37,18 @@ class _GlobalPageState extends State<GlobalPage> {
           maxHeight: MediaQuery.of(context).size.height,
           minHeight: 120.0,
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          collapsed: GlobalStatsRow(),
-          panelBuilder: (scrollController) => Center(
-            child: Text("This is the sliding Widget"),
+          panel: BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
+            builder: (context, state) {
+              if (state is InitialGlobalStatsState) {
+                return const EmptyIcon();
+              } else if (state is LoadedGlobalStatsState) {
+                return GlobalDetails(state: state);
+              } else if (state is ErrorGlobalStatsState) {
+                return ErrorIcon(message: state.message);
+              } else {
+                return const BusyIndicator();
+              }
+            },
           ),
           body: Center(
             child: Text("This is the Widget behind the sliding panel"),

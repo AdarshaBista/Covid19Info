@@ -6,13 +6,13 @@ import 'package:meta/meta.dart';
 import 'package:covid19_info/core/models/faq.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 
-import 'package:covid19_info/core/services/api_service.dart';
+import 'package:covid19_info/core/services/nepal_api_service.dart';
 
 part 'faq_event.dart';
 part 'faq_state.dart';
 
 class FaqBloc extends Bloc<FaqEvent, FaqState> {
-  final ApiService apiService;
+  final NepalApiService apiService;
 
   FaqBloc({
     @required this.apiService,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/global_stats/global_stats_bloc.dart';
+import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -14,11 +14,11 @@ class GlobalStatsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
       builder: (context, state) {
-        if (state is InitialWorldStatsState) {
+        if (state is InitialGlobalStatsState) {
           return const EmptyIcon();
-        } else if (state is LoadedWorldStatsState) {
+        } else if (state is LoadedGlobalStatsState) {
           return _buildStatsRow(state);
-        } else if (state is ErrorWorldStatsState) {
+        } else if (state is ErrorGlobalStatsState) {
           return ErrorIcon(message: state.message);
         } else {
           return const BusyIndicator();
@@ -27,25 +27,25 @@ class GlobalStatsRow extends StatelessWidget {
     );
   }
 
-  Widget _buildStatsRow(LoadedWorldStatsState state) {
+  Widget _buildStatsRow(LoadedGlobalStatsState state) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         _buildStat(
           label: 'Confirmed',
-          count: state.worldStats.confirmed,
+          count: state.globalStats.confirmed,
           color: Colors.blue,
         ),
         _buildStat(
           label: 'Recovered',
-          count: state.worldStats.recovered,
+          count: state.globalStats.recovered,
           color: Colors.green,
           showIcon: true,
         ),
         _buildStat(
           label: 'Deaths',
-          count: state.worldStats.deaths,
+          count: state.globalStats.deaths,
           color: Colors.red,
         ),
       ],

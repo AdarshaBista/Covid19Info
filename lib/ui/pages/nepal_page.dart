@@ -25,7 +25,7 @@ class _NepalPageState extends State<NepalPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    context.bloc<NepalStatsBloc>()..add(GetStatsEvent());
+    context.bloc<NepalStatsBloc>()..add(GetNepalStatsEvent());
     context.bloc<HospitalBloc>()..add(GetHospitalEvent());
   }
 

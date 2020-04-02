@@ -2,28 +2,33 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
-class GlobalCount {
+class TimelineData {
   final int confirmed;
   final int deaths;
   final int recovered;
+  final String date;
 
-  GlobalCount({
+  TimelineData({
     @required this.confirmed,
     @required this.deaths,
     @required this.recovered,
+    @required this.date,
   })  : assert(confirmed != null),
         assert(deaths != null),
-        assert(recovered != null);
+        assert(recovered != null),
+        assert(date != null);
 
-  GlobalCount copyWith({
+  TimelineData copyWith({
     int confirmed,
     int deaths,
     int recovered,
+    String date,
   }) {
-    return GlobalCount(
+    return TimelineData(
       confirmed: confirmed ?? this.confirmed,
       deaths: deaths ?? this.deaths,
       recovered: recovered ?? this.recovered,
+      date: date ?? this.date,
     );
   }
 
@@ -32,37 +37,46 @@ class GlobalCount {
       'confirmed': confirmed,
       'deaths': deaths,
       'recovered': recovered,
+      'date': date,
     };
   }
 
-  static GlobalCount fromMap(Map<String, dynamic> map) {
+  static TimelineData fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    return GlobalCount(
+    return TimelineData(
       confirmed: map['confirmed'],
       deaths: map['deaths'],
       recovered: map['recovered'],
+      date: map['date'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  static GlobalCount fromJson(String source) => fromMap(json.decode(source));
+  static TimelineData fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'WorldInfectionData(confirmed: $confirmed, deaths: $deaths, recovered: $recovered)';
+  String toString() {
+    return 'CountData(confirmed: $confirmed, deaths: $deaths, recovered: $recovered, date: $date)';
+  }
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is GlobalCount &&
+    return o is TimelineData &&
         o.confirmed == confirmed &&
         o.deaths == deaths &&
-        o.recovered == recovered;
+        o.recovered == recovered &&
+        o.date == date;
   }
 
   @override
-  int get hashCode => confirmed.hashCode ^ deaths.hashCode ^ recovered.hashCode;
+  int get hashCode {
+    return confirmed.hashCode ^
+        deaths.hashCode ^
+        recovered.hashCode ^
+        date.hashCode;
+  }
 }

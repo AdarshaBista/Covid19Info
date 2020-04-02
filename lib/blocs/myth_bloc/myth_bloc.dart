@@ -6,13 +6,13 @@ import 'package:meta/meta.dart';
 import 'package:covid19_info/core/models/myth.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 
-import 'package:covid19_info/core/services/api_service.dart';
+import 'package:covid19_info/core/services/nepal_api_service.dart';
 
 part 'myth_event.dart';
 part 'myth_state.dart';
 
 class MythBloc extends Bloc<MythEvent, MythState> {
-  final ApiService apiService;
+  final NepalApiService apiService;
 
   MythBloc({
     @required this.apiService,

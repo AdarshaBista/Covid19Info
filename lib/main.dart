@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 
 import 'package:covid19_info/core/services/launcher_service.dart';
-import 'package:covid19_info/core/services/api_service.dart';
+import 'package:covid19_info/core/services/nepal_api_service.dart';
+import 'package:covid19_info/core/services/global_api_service.dart';
 
 import 'package:covid19_info/ui/pages/nav_page.dart';
 
@@ -21,6 +22,7 @@ void main() {
 
   runApp(
     DevicePreview(
+      enabled: true,
       builder: (context) => App(),
     ),
   );
@@ -31,7 +33,8 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<ApiService>(create: (_) => ApiService()),
+        RepositoryProvider<NepalApiService>(create: (_) => NepalApiService()),
+        RepositoryProvider<GlobalApiService>(create: (_) => GlobalApiService()),
         RepositoryProvider<LauncherService>(create: (_) => LauncherService()),
       ],
       child: MaterialApp(

@@ -6,13 +6,13 @@ import 'package:meta/meta.dart';
 import 'package:covid19_info/core/models/hospital.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 
-import 'package:covid19_info/core/services/api_service.dart';
+import 'package:covid19_info/core/services/nepal_api_service.dart';
 
 part 'hospital_event.dart';
 part 'hospital_state.dart';
 
 class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
-  final ApiService apiService;
+  final NepalApiService apiService;
 
   HospitalBloc({
     @required this.apiService,

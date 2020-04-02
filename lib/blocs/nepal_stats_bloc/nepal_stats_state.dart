@@ -8,7 +8,7 @@ class InitialNepalStatsState extends NepalStatsState {}
 class LoadingNepalStatsState extends NepalStatsState {}
 
 class LoadedNepalStatsState extends NepalStatsState {
-  final NepalCount nepalStats;
+  final NepalStats nepalStats;
 
   LoadedNepalStatsState({
     @required this.nepalStats,
