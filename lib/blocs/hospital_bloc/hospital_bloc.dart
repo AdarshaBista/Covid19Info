@@ -30,7 +30,7 @@ class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
       try {
         List<Hospital> hospitals = await apiService.fetchHospitals(0);
         yield LoadedHospitalState(
-          hospitals: hospitals,
+          hospitals: hospitals.where((h) => h.isValid).toList(),
         );
       } on AppError catch (e) {
         print(e.error);

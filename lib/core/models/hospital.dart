@@ -64,6 +64,12 @@ class Hospital {
     );
   }
 
+  bool get isValid =>
+      !capacity.isEmpty &&
+      name.isNotEmpty &&
+      phone.isNotEmpty &&
+      address.isNotEmpty;
+
   Map<String, dynamic> toMap() {
     return {
       '_id': id,
