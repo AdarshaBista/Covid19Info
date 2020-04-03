@@ -6,7 +6,6 @@ import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:covid19_info/ui/widgets/global_page/global_details.dart';
-import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
@@ -44,7 +43,7 @@ class _GlobalPageState extends State<GlobalPage> {
               } else if (state is LoadedGlobalStatsState) {
                 return GlobalDetails(state: state);
               } else if (state is ErrorGlobalStatsState) {
-                return ErrorIcon(message: state.message);
+                return Text(state.message, style: AppTextStyles.mediumLight);
               } else {
                 return const BusyIndicator();
               }

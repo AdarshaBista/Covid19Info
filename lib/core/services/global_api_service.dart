@@ -7,13 +7,12 @@ import 'package:covid19_info/core/models/country.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
 class GlobalApiService {
-  static const String COVID_API_BASE = 'https://covidapi.info/api/v1/';
   static const String CORONA_STAT_BASE = 'https://api.coronastatistics.live/';
 
   Future<List<TimelineData>> fetchGlobalTimeline() async {
     try {
-      http.Response res = await http.get(COVID_API_BASE + 'global/count');
-      final Map<String, dynamic> resMap = jsonDecode(res.body)['result'];
+      http.Response res = await http.get(CORONA_STAT_BASE + 'timeline/global');
+      final Map<String, dynamic> resMap = jsonDecode(res.body);
       final List<Map<String, dynamic>> timelineList = flattenMap(resMap);
       return timelineList.map((m) => TimelineData.fromMap(m)).toList();
     } catch (e) {

@@ -3,29 +3,29 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 class TimelineData {
-  final int confirmed;
+  final int cases;
   final int deaths;
   final int recovered;
   final String date;
 
   TimelineData({
-    @required this.confirmed,
+    @required this.cases,
     @required this.deaths,
     @required this.recovered,
     @required this.date,
-  })  : assert(confirmed != null),
+  })  : assert(cases != null),
         assert(deaths != null),
         assert(recovered != null),
         assert(date != null);
 
   TimelineData copyWith({
-    int confirmed,
+    int cases,
     int deaths,
     int recovered,
     String date,
   }) {
     return TimelineData(
-      confirmed: confirmed ?? this.confirmed,
+      cases: cases ?? this.cases,
       deaths: deaths ?? this.deaths,
       recovered: recovered ?? this.recovered,
       date: date ?? this.date,
@@ -34,7 +34,7 @@ class TimelineData {
 
   Map<String, dynamic> toMap() {
     return {
-      'confirmed': confirmed,
+      'cases': cases,
       'deaths': deaths,
       'recovered': recovered,
       'date': date,
@@ -45,7 +45,7 @@ class TimelineData {
     if (map == null) return null;
 
     return TimelineData(
-      confirmed: map['confirmed'],
+      cases: map['cases'],
       deaths: map['deaths'],
       recovered: map['recovered'],
       date: map['date'],
@@ -58,7 +58,7 @@ class TimelineData {
 
   @override
   String toString() {
-    return 'CountData(confirmed: $confirmed, deaths: $deaths, recovered: $recovered, date: $date)';
+    return 'CountData(cases: $cases, deaths: $deaths, recovered: $recovered, date: $date)';
   }
 
   @override
@@ -66,7 +66,7 @@ class TimelineData {
     if (identical(this, o)) return true;
 
     return o is TimelineData &&
-        o.confirmed == confirmed &&
+        o.cases == cases &&
         o.deaths == deaths &&
         o.recovered == recovered &&
         o.date == date;
@@ -74,7 +74,7 @@ class TimelineData {
 
   @override
   int get hashCode {
-    return confirmed.hashCode ^
+    return cases.hashCode ^
         deaths.hashCode ^
         recovered.hashCode ^
         date.hashCode;

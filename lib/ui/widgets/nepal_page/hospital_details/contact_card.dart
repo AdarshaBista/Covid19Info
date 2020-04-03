@@ -40,6 +40,7 @@ class ContactCard extends StatelessWidget {
           ),
           const SizedBox(height: 10.0),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Flexible(
                 child: IconRow(
@@ -59,6 +60,7 @@ class ContactCard extends StatelessWidget {
                       .launchPhone(context, number);
                 },
               ),
+              const SizedBox(width: 10.0),
             ],
           ),
         ],

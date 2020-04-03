@@ -18,6 +18,19 @@ class TimelineGraph extends StatelessWidget {
   })  : assert(title != null),
         assert(timeline != null);
 
+  String _getXTitle(double value) {
+    int index = value.toInt();
+    List<String> dateElements = timeline[index].date.split('-');
+
+    // Pad month and day with leading zero
+    dateElements[1] = dateElements[1].padLeft(2, '0');
+    dateElements[2] = dateElements[2].padLeft(2, '0');
+
+    DateTime date = DateTime.parse(dateElements.join());
+    DateFormat formatter = DateFormat('MMMd');
+    return formatter.format(date);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,7 +64,7 @@ class TimelineGraph extends StatelessWidget {
     final double labelSize = 40.0;
     final double maxX = timeline.length.toDouble();
     final double maxY =
-        timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
+        timeline.map((e) => e.cases).reduce(math.max).toDouble();
 
     final double verticalInterval = (maxX ~/ 5).toDouble();
     final double horizontalInterval = (maxY ~/ 5).toDouble();
@@ -72,7 +85,10 @@ class TimelineGraph extends StatelessWidget {
         maxY: maxY,
         gridData: FlGridData(
           show: true,
+          drawHorizontalLine: true,
           horizontalInterval: horizontalInterval,
+          drawVerticalLine: true,
+          verticalInterval: verticalInterval,
         ),
         titlesData: FlTitlesData(
           bottomTitles: SideTitles(
@@ -81,12 +97,7 @@ class TimelineGraph extends StatelessWidget {
             interval: verticalInterval,
             reservedSize: labelSize,
             textStyle: AppTextStyles.extraSmallLight,
-            getTitles: (value) {
-              int index = value.toInt();
-              DateTime date = DateTime.parse(timeline[index].date);
-              DateFormat formatter = DateFormat('MMMd');
-              return formatter.format(date);
-            },
+            getTitles: _getXTitle,
           ),
           leftTitles: SideTitles(
             showTitles: true,
@@ -97,29 +108,11 @@ class TimelineGraph extends StatelessWidget {
             getTitles: (value) => value.toInt().toString(),
           ),
         ),
-        borderData: FlBorderData(
-          show: true,
-          border: Border(
-            bottom: BorderSide(
-              color: AppColors.primary,
-              width: 1,
-            ),
-            left: BorderSide(
-              color: AppColors.primary,
-              width: 1,
-            ),
-            right: BorderSide(
-              color: Colors.transparent,
-            ),
-            top: BorderSide(
-              color: Colors.transparent,
-            ),
-          ),
-        ),
+        borderData: FlBorderData(show: false),
         lineBarsData: [
           _buildLineData(
             xValues: xValues,
-            yValues: timeline.map((data) => data.confirmed.toDouble()).toList(),
+            yValues: timeline.map((data) => data.cases.toDouble()).toList(),
             color: Colors.blue,
           ),
           _buildLineData(
@@ -161,8 +154,8 @@ class TimelineGraph extends StatelessWidget {
       belowBarData: BarAreaData(
         show: true,
         colors: [
-          color,
-          color.withOpacity(0.6),
+          color.withOpacity(0.7),
+          color.withOpacity(0.5),
           color.withOpacity(0.3),
           color.withOpacity(0.0),
         ],
