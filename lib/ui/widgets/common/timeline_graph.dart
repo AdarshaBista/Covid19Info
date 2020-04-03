@@ -48,7 +48,7 @@ class TimelineGraph extends StatelessWidget {
   }
 
   LineChart _buildGraph() {
-    final double labelSize = 32.0;
+    final double labelSize = 40.0;
     final double maxX = timeline.length.toDouble();
     final double maxY =
         timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
