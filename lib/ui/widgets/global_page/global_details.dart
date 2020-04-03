@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
-import 'package:covid19_info/ui/widgets/global_page/timeline_graph.dart';
-import 'package:covid19_info/ui/widgets/common/global_stats_row.dart';
+import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
+import 'package:covid19_info/ui/widgets/global_page/global_stats_row.dart';
 
 class GlobalDetails extends StatelessWidget {
   final LoadedGlobalStatsState state;
@@ -19,7 +19,7 @@ class GlobalDetails extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        TimelineGraph(timelineData: state.globalStats.timeline),
+        TimelineGraph(timelineData: state.globalTimeline),
         const SizedBox(height: 40.0),
         GlobalStatsRow(),
       ],

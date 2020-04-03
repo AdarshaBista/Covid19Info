@@ -34,18 +34,18 @@ class GlobalStatsRow extends StatelessWidget {
       children: <Widget>[
         _buildStat(
           label: 'Confirmed',
-          count: state.globalStats.confirmed,
+          count: state.globalTimeline.last.confirmed,
           color: Colors.blue,
         ),
         _buildStat(
           label: 'Recovered',
-          count: state.globalStats.recovered,
+          count: state.globalTimeline.last.recovered,
           color: Colors.green,
           showIcon: true,
         ),
         _buildStat(
           label: 'Deaths',
-          count: state.globalStats.deaths,
+          count: state.globalTimeline.last.deaths,
           color: Colors.red,
         ),
       ],

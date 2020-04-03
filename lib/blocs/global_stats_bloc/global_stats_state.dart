@@ -8,11 +8,11 @@ class InitialGlobalStatsState extends GlobalStatsState {}
 class LoadingGlobalStatsState extends GlobalStatsState {}
 
 class LoadedGlobalStatsState extends GlobalStatsState {
-  final GlobalStats globalStats;
+  final List<TimelineData> globalTimeline;
 
   LoadedGlobalStatsState({
-    @required this.globalStats,
-  }) : assert(globalStats != null);
+    @required this.globalTimeline,
+  }) : assert(globalTimeline != null);
 }
 
 class ErrorGlobalStatsState extends GlobalStatsState {

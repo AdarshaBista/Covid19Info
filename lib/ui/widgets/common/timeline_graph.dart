@@ -121,14 +121,15 @@ class TimelineGraph extends StatelessWidget {
       ),
       isCurved: true,
       preventCurveOverShooting: true,
-      barWidth: 1,
+      barWidth: 2,
       isStrokeCapRound: true,
       dotData: FlDotData(show: false),
       colors: [
+        color.withOpacity(0.3),
         color.withOpacity(0.7),
         color,
       ],
-      colorStops: [0.0, 0.8],
+      colorStops: [0.0, 0.2, 0.6],
       belowBarData: BarAreaData(
         show: true,
         colors: [

@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import 'package:covid19_info/core/models/app_error.dart';
-import 'package:covid19_info/core/models/global_stats.dart';
+import 'package:covid19_info/core/models/timeline_data.dart';
 
 import 'package:covid19_info/core/services/global_api_service.dart';
 
@@ -28,8 +28,9 @@ class GlobalStatsBloc extends Bloc<GlobalStatsEvent, GlobalStatsState> {
     if (event is GetGlobalStatsEvent) {
       yield LoadingGlobalStatsState();
       try {
-        GlobalStats globalStats = await apiService.fetchGlobalStats();
-        yield LoadedGlobalStatsState(globalStats: globalStats);
+        List<TimelineData> globalTimeline =
+            await apiService.fetchGlobalTimeline();
+        yield LoadedGlobalStatsState(globalTimeline: globalTimeline);
       } on AppError catch (e) {
         print(e.error);
         yield ErrorGlobalStatsState(message: e.message);

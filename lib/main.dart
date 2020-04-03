@@ -22,6 +22,7 @@ void main() {
 
   runApp(
     DevicePreview(
+      background: BoxDecoration(color: AppColors.dark),
       enabled: true,
       builder: (context) => App(),
     ),
