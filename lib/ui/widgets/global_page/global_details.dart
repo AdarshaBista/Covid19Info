@@ -19,8 +19,11 @@ class GlobalDetails extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        TimelineGraph(timelineData: state.globalTimeline),
-        const SizedBox(height: 40.0),
+        TimelineGraph(
+          title: 'Global',
+          timeline: state.globalTimeline,
+        ),
+        const SizedBox(height: 32.0),
         GlobalStatsRow(),
       ],
     );

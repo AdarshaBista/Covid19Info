@@ -2,109 +2,137 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import 'package:intl/intl.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 
 class TimelineGraph extends StatelessWidget {
-  final List<TimelineData> timelineData;
+  final String title;
+  final List<TimelineData> timeline;
 
   const TimelineGraph({
-    @required this.timelineData,
-  }) : assert(timelineData != null);
+    @required this.title,
+    @required this.timeline,
+  })  : assert(title != null),
+        assert(timeline != null);
 
   @override
   Widget build(BuildContext context) {
-    final double labelSize = 40.0;
-    final double maxX = timelineData.length.toDouble();
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        const Divider(height: 24.0),
+        Flexible(
+          child: Text(
+            title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.mediumLight,
+          ),
+        ),
+        const SizedBox(height: 8.0),
+        Text(
+          'spread over time',
+          style: AppTextStyles.smallLight,
+        ),
+        const SizedBox(height: 20.0),
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: _buildGraph(),
+        ),
+        const Divider(height: 8.0),
+      ],
+    );
+  }
+
+  LineChart _buildGraph() {
+    final double labelSize = 32.0;
+    final double maxX = timeline.length.toDouble();
     final double maxY =
-        timelineData.map((e) => e.confirmed).reduce(math.max).toDouble();
+        timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
 
     final double verticalInterval = (maxX ~/ 5).toDouble();
     final double horizontalInterval = (maxY ~/ 5).toDouble();
-    final List<double> xValues = timelineData
-        .map((data) => timelineData.indexOf(data).toDouble())
-        .toList();
+    final List<double> xValues =
+        timeline.map((data) => timeline.indexOf(data).toDouble()).toList();
 
-    return Container(
-      padding: const EdgeInsets.only(top: 16.0, right: 16.0, bottom: 16.0),
-      child: LineChart(
-        LineChartData(
-          lineTouchData: LineTouchData(
-            handleBuiltInTouches: true,
-            touchTooltipData: LineTouchTooltipData(
-              tooltipBgColor: AppColors.background.withOpacity(0.7),
-            ),
+    return LineChart(
+      LineChartData(
+        lineTouchData: LineTouchData(
+          handleBuiltInTouches: true,
+          touchTooltipData: LineTouchTooltipData(
+            tooltipBgColor: AppColors.background.withOpacity(0.7),
+            fitInsideHorizontally: true,
           ),
-          minX: 0.0,
-          minY: 0.0,
-          maxY: maxY,
-          gridData: FlGridData(
-            show: true,
-            horizontalInterval: horizontalInterval,
-          ),
-          titlesData: FlTitlesData(
-            bottomTitles: SideTitles(
-              showTitles: true,
-              margin: 12.0,
-              rotateAngle: 270.0,
-              interval: verticalInterval,
-              reservedSize: labelSize,
-              textStyle: AppTextStyles.extraSmallLight,
-              getTitles: (value) => timelineData[value.toInt()].date,
-            ),
-            leftTitles: SideTitles(
-              showTitles: true,
-              margin: 8.0,
-              interval: horizontalInterval,
-              reservedSize: labelSize,
-              textStyle: AppTextStyles.extraSmallLight,
-              getTitles: (value) => value.toInt().toString(),
-            ),
-          ),
-          borderData: FlBorderData(
-            show: true,
-            border: Border(
-              bottom: BorderSide(
-                color: AppColors.primary,
-                width: 1,
-              ),
-              left: BorderSide(
-                color: AppColors.primary,
-                width: 1,
-              ),
-              right: BorderSide(
-                color: Colors.transparent,
-              ),
-              top: BorderSide(
-                color: Colors.transparent,
-              ),
-            ),
-          ),
-          lineBarsData: [
-            _buildLineData(
-              xValues: xValues,
-              yValues: timelineData
-                  .map((data) => data.confirmed.toDouble())
-                  .toList(),
-              color: Colors.blue,
-            ),
-            _buildLineData(
-              xValues: xValues,
-              yValues: timelineData
-                  .map((data) => data.recovered.toDouble())
-                  .toList(),
-              color: Colors.green,
-            ),
-            _buildLineData(
-              xValues: xValues,
-              yValues:
-                  timelineData.map((data) => data.deaths.toDouble()).toList(),
-              color: Colors.red,
-            ),
-          ],
         ),
+        minX: 0.0,
+        minY: 0.0,
+        maxY: maxY,
+        gridData: FlGridData(
+          show: true,
+          horizontalInterval: horizontalInterval,
+        ),
+        titlesData: FlTitlesData(
+          bottomTitles: SideTitles(
+            showTitles: true,
+            margin: 12.0,
+            interval: verticalInterval,
+            reservedSize: labelSize,
+            textStyle: AppTextStyles.extraSmallLight,
+            getTitles: (value) {
+              int index = value.toInt();
+              DateTime date = DateTime.parse(timeline[index].date);
+              DateFormat formatter = DateFormat('MMMd');
+              return formatter.format(date);
+            },
+          ),
+          leftTitles: SideTitles(
+            showTitles: true,
+            margin: 8.0,
+            interval: horizontalInterval,
+            reservedSize: labelSize,
+            textStyle: AppTextStyles.extraSmallLight,
+            getTitles: (value) => value.toInt().toString(),
+          ),
+        ),
+        borderData: FlBorderData(
+          show: true,
+          border: Border(
+            bottom: BorderSide(
+              color: AppColors.primary,
+              width: 1,
+            ),
+            left: BorderSide(
+              color: AppColors.primary,
+              width: 1,
+            ),
+            right: BorderSide(
+              color: Colors.transparent,
+            ),
+            top: BorderSide(
+              color: Colors.transparent,
+            ),
+          ),
+        ),
+        lineBarsData: [
+          _buildLineData(
+            xValues: xValues,
+            yValues: timeline.map((data) => data.confirmed.toDouble()).toList(),
+            color: Colors.blue,
+          ),
+          _buildLineData(
+            xValues: xValues,
+            yValues: timeline.map((data) => data.recovered.toDouble()).toList(),
+            color: Colors.green,
+          ),
+          _buildLineData(
+            xValues: xValues,
+            yValues: timeline.map((data) => data.deaths.toDouble()).toList(),
+            color: Colors.red,
+          ),
+        ],
       ),
     );
   }

@@ -35,8 +35,8 @@ class _GlobalPageState extends State<GlobalPage> {
           padding: const EdgeInsets.all(12.0),
           margin: const EdgeInsets.all(12.0),
           maxHeight: MediaQuery.of(context).size.height,
-          minHeight: 120.0,
-          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+          minHeight: 110.0,
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
           panel: BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
             builder: (context, state) {
               if (state is InitialGlobalStatsState) {
