@@ -43,9 +43,10 @@ class GlobalApiService {
   Future<List<TimelineData>> fetchCountryTimeline(String code) async {
     try {
       http.Response res = await http.get(CORONA_STAT_BASE + 'timeline/$code');
-      final List<Map<String, dynamic>> timeline =
-          jsonDecode(res.body)['data']['timeline'];
-      return timeline.map((m) => TimelineData.fromMap(m)).toList();
+      final timeline = jsonDecode(res.body)['data']['timeline'];
+      return (timeline as List)
+          .map((m) => TimelineData.fromMap(m as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load timeline data!",

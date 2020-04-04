@@ -6,10 +6,8 @@ import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/global_page/global_details.dart';
-import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
-import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
-import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
+import 'package:covid19_info/ui/widgets/global_page/country_grid.dart';
+import 'package:covid19_info/ui/widgets/global_page/global_stats_row.dart';
 
 class GlobalPage extends StatefulWidget {
   @override
@@ -26,6 +24,7 @@ class _GlobalPageState extends State<GlobalPage> {
 
   @override
   Widget build(BuildContext context) {
+    const double minHeight = 110.0;
     return SafeArea(
       child: Scaffold(
         body: SlidingUpPanel(
@@ -33,46 +32,30 @@ class _GlobalPageState extends State<GlobalPage> {
           isDraggable: true,
           backdropEnabled: true,
           parallaxEnabled: true,
+          parallaxOffset: 0.5,
           slideDirection: SlideDirection.DOWN,
           padding: const EdgeInsets.all(12.0),
           margin: const EdgeInsets.all(12.0),
           maxHeight: MediaQuery.of(context).size.height,
-          minHeight: 110.0,
+          minHeight: minHeight,
           borderRadius: BorderRadius.all(Radius.circular(12.0)),
-          panel: BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
-            builder: (context, state) {
-              if (state is InitialGlobalStatsState) {
-                return const EmptyIcon();
-              } else if (state is LoadedGlobalStatsState) {
-                return GlobalDetails(state: state);
-              } else if (state is ErrorGlobalStatsState) {
-                return ErrorIcon(message: state.message);
-              } else {
-                return const BusyIndicator();
-              }
-            },
-          ),
-          body: BlocBuilder<CountryBloc, CountryState>(
-            builder: (context, state) {
-              if (state is InitialCountryState) {
-                return const EmptyIcon();
-              } else if (state is LoadedCountryState) {
-                return ListView.builder(
-                  itemCount: state.countries.length,
-                  itemBuilder: (_, i) => ListTile(
-                    title: Text(state.countries[i].countryData.name),
-                    trailing: Text(state.countries[i].code),
-                  ),
-                );
-              } else if (state is ErrorCountryState) {
-                return ErrorIcon(message: state.message);
-              } else {
-                return const BusyIndicator();
-              }
-            },
-          ),
+          panel: _buildPanelContent(minHeight),
+          body: Center(child: Text('MAP')),
         ),
       ),
+    );
+  }
+
+  Widget _buildPanelContent(double minHeight) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        SizedBox(height: minHeight + 64.0),
+        Expanded(child: CountryGrid()),
+        const SizedBox(height: 32.0),
+        GlobalStatsRow(),
+      ],
     );
   }
 }
