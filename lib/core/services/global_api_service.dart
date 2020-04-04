@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:covid19_info/core/models/app_error.dart';
-import 'package:covid19_info/core/models/country.dart';
+import 'package:covid19_info/core/models/country_data.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
 class GlobalApiService {
@@ -13,7 +13,8 @@ class GlobalApiService {
     try {
       http.Response res = await http.get(CORONA_STAT_BASE + 'timeline/global');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
-      final List<Map<String, dynamic>> timelineList = flattenMap(resMap);
+      final List<Map<String, dynamic>> timelineList =
+          _flattenGlobalTimelineMap(resMap);
       return timelineList.map((m) => TimelineData.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
@@ -23,12 +24,14 @@ class GlobalApiService {
     }
   }
 
-  Future<List<Country>> fetchCountries() async {
+  Future<List<CountryData>> fetchCountriesData() async {
     try {
       http.Response res =
           await http.get(CORONA_STAT_BASE + 'countries?sort=cases');
-      final Map<String, dynamic> resMap = jsonDecode(res.body);
-      return (resMap['data'] as List).map((m) => Country.fromMap(m)).toList();
+      final resMap = jsonDecode(res.body);
+      return (resMap as List)
+          .map((m) => CountryData.fromMap(m as Map<String, dynamic>))
+          .toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load countries!",
@@ -37,7 +40,22 @@ class GlobalApiService {
     }
   }
 
-  List<Map<String, dynamic>> flattenMap(Map<String, dynamic> map) {
+  Future<List<TimelineData>> fetchCountryTimeline(String code) async {
+    try {
+      http.Response res = await http.get(CORONA_STAT_BASE + 'timeline/$code');
+      final List<Map<String, dynamic>> timeline =
+          jsonDecode(res.body)['data']['timeline'];
+      return timeline.map((m) => TimelineData.fromMap(m)).toList();
+    } catch (e) {
+      throw AppError(
+        message: "Couldn't load timeline data!",
+        error: e.toString(),
+      );
+    }
+  }
+
+  List<Map<String, dynamic>> _flattenGlobalTimelineMap(
+      Map<String, dynamic> map) {
     List<Map<String, dynamic>> list = [];
     map.forEach((k, v) {
       list.add({

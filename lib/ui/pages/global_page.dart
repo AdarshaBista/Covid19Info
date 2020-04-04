@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
 import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:covid19_info/ui/widgets/global_page/global_details.dart';
+import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
@@ -19,6 +21,7 @@ class _GlobalPageState extends State<GlobalPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     context.bloc<GlobalStatsBloc>()..add(GetGlobalStatsEvent());
+    context.bloc<CountryBloc>()..add(GetCountryEvent());
   }
 
   @override
@@ -43,14 +46,30 @@ class _GlobalPageState extends State<GlobalPage> {
               } else if (state is LoadedGlobalStatsState) {
                 return GlobalDetails(state: state);
               } else if (state is ErrorGlobalStatsState) {
-                return Text(state.message, style: AppTextStyles.mediumLight);
+                return ErrorIcon(message: state.message);
               } else {
                 return const BusyIndicator();
               }
             },
           ),
-          body: Center(
-            child: Text("This is the Widget behind the sliding panel"),
+          body: BlocBuilder<CountryBloc, CountryState>(
+            builder: (context, state) {
+              if (state is InitialCountryState) {
+                return const EmptyIcon();
+              } else if (state is LoadedCountryState) {
+                return ListView.builder(
+                  itemCount: state.countries.length,
+                  itemBuilder: (_, i) => ListTile(
+                    title: Text(state.countries[i].countryData.name),
+                    trailing: Text(state.countries[i].code),
+                  ),
+                );
+              } else if (state is ErrorCountryState) {
+                return ErrorIcon(message: state.message);
+              } else {
+                return const BusyIndicator();
+              }
+            },
           ),
         ),
       ),

@@ -1,79 +1,40 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
+
+import 'package:covid19_info/core/models/country_data.dart';
+import 'package:covid19_info/core/models/timeline_data.dart';
 
 class Country {
-  final String name;
-  final int cases;
-  final int todayCases;
-  final int deaths;
-  final int todayDeaths;
-  final int recovered;
-  final int active;
-  final int critical;
-  final int casesPerMillion;
-  final int deathsPerMillion;
+  final List<TimelineData> timeline;
+  final CountryData countryData;
+  final String code;
 
   Country({
-    @required this.name,
-    @required this.cases,
-    @required this.todayCases,
-    @required this.deaths,
-    @required this.todayDeaths,
-    @required this.recovered,
-    @required this.active,
-    @required this.critical,
-    @required this.casesPerMillion,
-    @required this.deathsPerMillion,
-  })  : assert(name != null),
-        assert(cases != null),
-        assert(todayCases != null),
-        assert(deaths != null),
-        assert(todayDeaths != null),
-        assert(recovered != null),
-        assert(active != null),
-        assert(critical != null),
-        assert(casesPerMillion != null),
-        assert(deathsPerMillion != null);
+    @required this.timeline,
+    @required this.countryData,
+    @required this.code,
+  })  : assert(timeline != null),
+        assert(countryData != null),
+        assert(code != null);
 
   Country copyWith({
-    String name,
-    int cases,
-    int todayCases,
-    int deaths,
-    int todayDeaths,
-    int recovered,
-    int active,
-    int critical,
-    int casesPerMillion,
-    int deathsPerMillion,
+    List<TimelineData> timeline,
+    CountryData countryData,
+    String code,
   }) {
     return Country(
-      name: name ?? this.name,
-      cases: cases ?? this.cases,
-      todayCases: todayCases ?? this.todayCases,
-      deaths: deaths ?? this.deaths,
-      todayDeaths: todayDeaths ?? this.todayDeaths,
-      recovered: recovered ?? this.recovered,
-      active: active ?? this.active,
-      critical: critical ?? this.critical,
-      casesPerMillion: casesPerMillion ?? this.casesPerMillion,
-      deathsPerMillion: deathsPerMillion ?? this.deathsPerMillion,
+      timeline: timeline ?? this.timeline,
+      countryData: countryData ?? this.countryData,
+      code: code ?? this.code,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'country': name,
-      'cases': cases,
-      'todayCases': todayCases,
-      'deaths': deaths,
-      'todayDeaths': todayDeaths,
-      'recovered': recovered,
-      'active': active,
-      'critical': critical,
-      'casesPerOneMillion': casesPerMillion,
-      'deathsPerOneMillion': deathsPerMillion,
+      'timeline': List<dynamic>.from(timeline.map((x) => x.toMap())),
+      'countryData': countryData.toMap(),
+      'code': code,
     };
   }
 
@@ -81,16 +42,10 @@ class Country {
     if (map == null) return null;
 
     return Country(
-      name: map['country'],
-      cases: map['cases'],
-      todayCases: map['todayCases'],
-      deaths: map['deaths'],
-      todayDeaths: map['todayDeaths'],
-      recovered: map['recovered'],
-      active: map['active'],
-      critical: map['critical'],
-      casesPerMillion: map['casesPerOneMillion'],
-      deathsPerMillion: map['deathsPerOneMillion'],
+      timeline: List<TimelineData>.from(
+          map['timeline']?.map((x) => TimelineData.fromMap(x))),
+      countryData: CountryData.fromMap(map['countryData']),
+      code: map['code'],
     );
   }
 
@@ -99,38 +54,19 @@ class Country {
   static Country fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  String toString() {
-    return 'Country(name: $name, cases: $cases, todayCases: $todayCases, deaths: $deaths, todayDeaths: $todayDeaths, recovered: $recovered, active: $active, critical: $critical, casesPerMillion: $casesPerMillion, deathsPerMillion: $deathsPerMillion)';
-  }
+  String toString() =>
+      'Country(timeline: $timeline, countryData: $countryData, code: $code)';
 
   @override
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
     return o is Country &&
-        o.name == name &&
-        o.cases == cases &&
-        o.todayCases == todayCases &&
-        o.deaths == deaths &&
-        o.todayDeaths == todayDeaths &&
-        o.recovered == recovered &&
-        o.active == active &&
-        o.critical == critical &&
-        o.casesPerMillion == casesPerMillion &&
-        o.deathsPerMillion == deathsPerMillion;
+        listEquals(o.timeline, timeline) &&
+        o.countryData == countryData &&
+        o.code == code;
   }
 
   @override
-  int get hashCode {
-    return name.hashCode ^
-        cases.hashCode ^
-        todayCases.hashCode ^
-        deaths.hashCode ^
-        todayDeaths.hashCode ^
-        recovered.hashCode ^
-        active.hashCode ^
-        critical.hashCode ^
-        casesPerMillion.hashCode ^
-        deathsPerMillion.hashCode;
-  }
+  int get hashCode => timeline.hashCode ^ countryData.hashCode ^ code.hashCode;
 }
