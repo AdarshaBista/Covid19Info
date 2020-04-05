@@ -14,7 +14,7 @@ class TopInfectedGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double maxY = mostInfected.first.countryData.cases.toDouble();
+    final double maxY = mostInfected.first.data.cases.toDouble();
     final double hInterval = 100000.0;
 
     return BarChart(
@@ -35,7 +35,7 @@ class TopInfectedGraph extends StatelessWidget {
             margin: 12.0,
             reservedSize: 32.0,
             textStyle: AppTextStyles.extraSmallLight,
-            getTitles: (value) => mostInfected[value.toInt()].countryData.name,
+            getTitles: (value) => mostInfected[value.toInt()].data.name,
           ),
           leftTitles: SideTitles(
             showTitles: true,
@@ -52,15 +52,15 @@ class TopInfectedGraph extends StatelessWidget {
               i,
               [
                 _makeBarRod(
-                  mostInfected[i].countryData.cases.toDouble(),
+                  mostInfected[i].data.cases.toDouble(),
                   Colors.blue,
                 ),
                 _makeBarRod(
-                  mostInfected[i].countryData.recovered.toDouble(),
+                  mostInfected[i].data.recovered.toDouble(),
                   Colors.green,
                 ),
                 _makeBarRod(
-                  mostInfected[i].countryData.deaths.toDouble(),
+                  mostInfected[i].data.deaths.toDouble(),
                   Colors.red,
                 ),
               ],

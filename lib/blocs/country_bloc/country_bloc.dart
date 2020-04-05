@@ -36,7 +36,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
           (e) {
             final String code = nameToCodeMap[e.name.toLowerCase()] ?? e.name;
             return Country(
-              countryData: e,
+              data: e,
               timeline: [],
               code: code,
             );

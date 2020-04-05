@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
 import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
+import 'package:covid19_info/ui/widgets/global_page/country_list.dart';
 import 'package:covid19_info/ui/widgets/global_page/global_stats_row.dart';
 import 'package:covid19_info/ui/widgets/global_page/top_infected_stats.dart';
 
@@ -39,6 +40,8 @@ class _GlobalPageState extends State<GlobalPage> {
             GlobalStatsRow(),
             const SizedBox(height: 16.0),
             TopInfectedStats(),
+            const SizedBox(height: 16.0),
+            CountryList(),
           ],
         ),
       ),

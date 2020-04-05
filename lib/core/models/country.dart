@@ -7,15 +7,15 @@ import 'package:covid19_info/core/models/timeline_data.dart';
 
 class Country {
   final List<TimelineData> timeline;
-  final CountryData countryData;
+  final CountryData data;
   final String code;
 
   Country({
     @required this.timeline,
-    @required this.countryData,
+    @required this.data,
     @required this.code,
   })  : assert(timeline != null),
-        assert(countryData != null),
+        assert(data != null),
         assert(code != null);
 
   Country copyWith({
@@ -25,7 +25,7 @@ class Country {
   }) {
     return Country(
       timeline: timeline ?? this.timeline,
-      countryData: countryData ?? this.countryData,
+      data: countryData ?? this.data,
       code: code ?? this.code,
     );
   }
@@ -33,7 +33,7 @@ class Country {
   Map<String, dynamic> toMap() {
     return {
       'timeline': List<dynamic>.from(timeline.map((x) => x.toMap())),
-      'countryData': countryData.toMap(),
+      'countryData': data.toMap(),
       'code': code,
     };
   }
@@ -45,7 +45,7 @@ class Country {
       timeline: map.containsKey('timeline')
           ? List<TimelineData>.from(map['timeline']?.map((x) => TimelineData.fromMap(x)))
           : [],
-      countryData: CountryData.fromMap(map['countryData']),
+      data: CountryData.fromMap(map['countryData']),
       code: map['code'],
     );
   }
@@ -55,7 +55,7 @@ class Country {
   static Country fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  String toString() => 'Country(timeline: $timeline, countryData: $countryData, code: $code)';
+  String toString() => 'Country(timeline: $timeline, countryData: $data, code: $code)';
 
   @override
   bool operator ==(Object o) {
@@ -63,10 +63,10 @@ class Country {
 
     return o is Country &&
         listEquals(o.timeline, timeline) &&
-        o.countryData == countryData &&
+        o.data == data &&
         o.code == code;
   }
 
   @override
-  int get hashCode => timeline.hashCode ^ countryData.hashCode ^ code.hashCode;
+  int get hashCode => timeline.hashCode ^ data.hashCode ^ code.hashCode;
 }

@@ -7,6 +7,7 @@ import 'package:covid19_info/core/models/timeline_data.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/common/label.dart';
 
 class TimelineGraph extends StatelessWidget {
   final String title;
@@ -67,27 +68,11 @@ class TimelineGraph extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        _buildLabel('Confirmed', Colors.blue),
+        Label(text: 'Confirmed', color: Colors.blue),
         const SizedBox(width: 16.0),
-        _buildLabel('Recovered', Colors.green),
+        Label(text: 'Recovered', color: Colors.green),
         const SizedBox(width: 16.0),
-        _buildLabel('Deaths', Colors.red),
-      ],
-    );
-  }
-
-  Widget _buildLabel(String label, Color color) {
-    return Row(
-      children: <Widget>[
-        CircleAvatar(
-          backgroundColor: color,
-          radius: 4.0,
-        ),
-        const SizedBox(width: 8.0),
-        Text(
-          label,
-          style: AppTextStyles.extraSmallLight,
-        ),
+        Label(text: 'Deaths', color: Colors.red),
       ],
     );
   }

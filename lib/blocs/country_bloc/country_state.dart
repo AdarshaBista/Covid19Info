@@ -12,7 +12,7 @@ class LoadedCountryState extends CountryState {
   final List<Country> countries;
 
   List<Country> get mostInfected =>
-      countries.where((c) => c.countryData.cases > MAX_CASES).toList();
+      countries.where((c) => c.data.cases > MAX_CASES).toList();
 
   LoadedCountryState({
     @required this.countries,
