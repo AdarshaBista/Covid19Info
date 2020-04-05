@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 
 import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/nepal_stats.dart';
+import 'package:covid19_info/core/models/timeline_data.dart';
 
 import 'package:covid19_info/core/services/nepal_api_service.dart';
 
@@ -29,7 +30,8 @@ class NepalStatsBloc extends Bloc<NepalStatsEvent, NepalStatsState> {
       yield LoadingNepalStatsState();
       try {
         NepalStats nepalStats = await apiService.fetchNepalStats();
-        yield LoadedNepalStatsState(nepalStats: nepalStats);
+        List<TimelineData> nepalTimeline = await apiService.fetchNepalTimeline();
+        yield LoadedNepalStatsState(nepalStats: nepalStats.copyWith(timeline: nepalTimeline));
       } on AppError catch (e) {
         print(e.error);
         yield ErrorNepalStatsState(message: e.message);

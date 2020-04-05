@@ -1,6 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
+
+import 'package:covid19_info/core/models/timeline_data.dart';
 
 class NepalStats {
   final int total;
@@ -8,6 +11,7 @@ class NepalStats {
   final int negative;
   final int isolation;
   final int deaths;
+  final List<TimelineData> timeline;
 
   NepalStats({
     @required this.total,
@@ -15,11 +19,13 @@ class NepalStats {
     @required this.negative,
     @required this.isolation,
     @required this.deaths,
+    @required this.timeline,
   })  : assert(total != null),
         assert(positive != null),
         assert(negative != null),
         assert(isolation != null),
-        assert(deaths != null);
+        assert(deaths != null),
+        assert(timeline != null);
 
   NepalStats copyWith({
     int total,
@@ -27,6 +33,7 @@ class NepalStats {
     int negative,
     int isolation,
     int deaths,
+    List<TimelineData> timeline,
   }) {
     return NepalStats(
       total: total ?? this.total,
@@ -34,6 +41,7 @@ class NepalStats {
       negative: negative ?? this.negative,
       isolation: isolation ?? this.isolation,
       deaths: deaths ?? this.deaths,
+      timeline: timeline ?? this.timeline,
     );
   }
 
@@ -42,8 +50,9 @@ class NepalStats {
       'tested_total': total,
       'tested_positive': positive,
       'tested_negative': negative,
-      'in_isolation': isolation,
-      'deaths': deaths,
+      'isolation': isolation,
+      'in_isolation': deaths,
+      'timeline': List<dynamic>.from(timeline.map((x) => x.toMap())),
     };
   }
 
@@ -56,17 +65,20 @@ class NepalStats {
       negative: map['tested_negative'],
       isolation: map['in_isolation'],
       deaths: map['deaths'],
+      timeline: map.containsKey('timeline')
+          ? List<TimelineData>.from(map['timeline']?.map((x) => TimelineData.fromMap(x)))
+          : [],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  static NepalStats fromJson(String source) =>
-      fromMap(json.decode(source));
+  static NepalStats fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'NepalInfectionData(total: $total, positive: $positive, negative: $negative, isolation: $isolation, deaths: $deaths)';
+  String toString() {
+    return 'NepalStats(total: $total, positive: $positive, negative: $negative, isolation: $isolation, deaths: $deaths, timeline: $timeline)';
+  }
 
   @override
   bool operator ==(Object o) {
@@ -77,14 +89,17 @@ class NepalStats {
         o.positive == positive &&
         o.negative == negative &&
         o.isolation == isolation &&
-        o.deaths == deaths;
+        o.deaths == deaths &&
+        listEquals(o.timeline, timeline);
   }
 
   @override
-  int get hashCode =>
-      total.hashCode ^
-      positive.hashCode ^
-      negative.hashCode ^
-      isolation.hashCode ^
-      deaths.hashCode;
+  int get hashCode {
+    return total.hashCode ^
+        positive.hashCode ^
+        negative.hashCode ^
+        isolation.hashCode ^
+        deaths.hashCode ^
+        timeline.hashCode;
+  }
 }

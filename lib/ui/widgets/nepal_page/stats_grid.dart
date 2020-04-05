@@ -4,6 +4,7 @@ import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/stat_card.dart';
+import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
 
 class StatsGrid extends StatelessWidget {
   final LoadedNepalStatsState state;
@@ -54,6 +55,10 @@ class StatsGrid extends StatelessWidget {
               color: Colors.red,
             ),
           ],
+        ),
+        TimelineGraph(
+          title: 'Nepal',
+          timeline: state.nepalStats.timeline,
         ),
       ],
     );

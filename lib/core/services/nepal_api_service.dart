@@ -8,9 +8,11 @@ import 'package:covid19_info/core/models/myth.dart';
 import 'package:covid19_info/core/models/news.dart';
 import 'package:covid19_info/core/models/hospital.dart';
 import 'package:covid19_info/core/models/nepal_stats.dart';
+import 'package:covid19_info/core/models/timeline_data.dart';
 
 class NepalApiService {
   static const String NEPAL_CORONA_BASE = 'https://nepalcorona.info/api/v1/';
+  static const String CORONA_STAT_BASE = 'https://api.coronastatistics.live/';
 
   Future<NepalStats> fetchNepalStats() async {
     try {
@@ -24,10 +26,24 @@ class NepalApiService {
     }
   }
 
+  Future<List<TimelineData>> fetchNepalTimeline() async {
+    try {
+      http.Response res = await http.get(CORONA_STAT_BASE + 'timeline/nepal');
+      final timeline = jsonDecode(res.body)['data']['timeline'];
+      return (timeline as List)
+          .map((m) => TimelineData.fromMap(m as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw AppError(
+        message: "Couldn't load Nepal timeline data!",
+        error: e.toString(),
+      );
+    }
+  }
+
   Future<List<News>> fetchNews(int start) async {
     try {
-      http.Response res =
-          await http.get(NEPAL_CORONA_BASE + 'news?start=$start');
+      http.Response res = await http.get(NEPAL_CORONA_BASE + 'news?start=$start');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
       return (resMap['data'] as List).map((m) => News.fromMap(m)).toList();
     } catch (e) {
@@ -40,8 +56,7 @@ class NepalApiService {
 
   Future<List<Myth>> fetchMyths(int start) async {
     try {
-      http.Response res =
-          await http.get(NEPAL_CORONA_BASE + 'myths?start=$start');
+      http.Response res = await http.get(NEPAL_CORONA_BASE + 'myths?start=$start');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
       return (resMap['data'] as List).map((m) => Myth.fromMap(m)).toList();
     } catch (e) {
@@ -54,10 +69,8 @@ class NepalApiService {
 
   Future<List<Faq>> fetchFaqs(int start) async {
     try {
-      http.Response res =
-          await http.get(NEPAL_CORONA_BASE + 'faqs?start=$start');
-      Map<String, dynamic> resMap =
-          jsonDecode(res.body) as Map<String, dynamic>;
+      http.Response res = await http.get(NEPAL_CORONA_BASE + 'faqs?start=$start');
+      Map<String, dynamic> resMap = jsonDecode(res.body) as Map<String, dynamic>;
       return (resMap['data'] as List).map((m) => Faq.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
@@ -69,8 +82,7 @@ class NepalApiService {
 
   Future<List<Hospital>> fetchHospitals(int start) async {
     try {
-      http.Response res =
-          await http.get(NEPAL_CORONA_BASE + 'hospitals?start=$start');
+      http.Response res = await http.get(NEPAL_CORONA_BASE + 'hospitals?start=$start');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
       return (resMap['data'] as List).map((m) => Hospital.fromMap(m)).toList();
     } catch (e) {

@@ -42,8 +42,9 @@ class Country {
     if (map == null) return null;
 
     return Country(
-      timeline: List<TimelineData>.from(
-          map['timeline']?.map((x) => TimelineData.fromMap(x))),
+      timeline: map.containsKey('timeline')
+          ? List<TimelineData>.from(map['timeline']?.map((x) => TimelineData.fromMap(x)))
+          : [],
       countryData: CountryData.fromMap(map['countryData']),
       code: map['code'],
     );
@@ -54,8 +55,7 @@ class Country {
   static Country fromJson(String source) => fromMap(json.decode(source));
 
   @override
-  String toString() =>
-      'Country(timeline: $timeline, countryData: $countryData, code: $code)';
+  String toString() => 'Country(timeline: $timeline, countryData: $countryData, code: $code)';
 
   @override
   bool operator ==(Object o) {
