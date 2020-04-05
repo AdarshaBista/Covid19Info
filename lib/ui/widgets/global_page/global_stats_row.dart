@@ -5,6 +5,7 @@ import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
@@ -17,13 +18,33 @@ class GlobalStatsRow extends StatelessWidget {
         if (state is InitialGlobalStatsState) {
           return const EmptyIcon();
         } else if (state is LoadedGlobalStatsState) {
-          return _buildStatsRow(state);
+          return _buildColumn(state);
         } else if (state is ErrorGlobalStatsState) {
           return ErrorIcon(message: state.message);
         } else {
           return const BusyIndicator();
         }
       },
+    );
+  }
+
+  Widget _buildColumn(LoadedGlobalStatsState state) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Text(
+          'GLOBAL STATS',
+          style: AppTextStyles.largeLight,
+        ),
+        const SizedBox(height: 24.0),
+        _buildStatsRow(state),
+        const SizedBox(height: 16.0),
+        TimelineGraph(
+          title: 'Global',
+          timeline: state.globalTimeline,
+        ),
+      ],
     );
   }
 
@@ -41,7 +62,6 @@ class GlobalStatsRow extends StatelessWidget {
           label: 'Recovered',
           count: state.globalTimeline.last.recovered,
           color: Colors.green,
-          showIcon: true,
         ),
         _buildStat(
           label: 'Deaths',
@@ -56,7 +76,6 @@ class GlobalStatsRow extends StatelessWidget {
     String label,
     int count,
     Color color,
-    bool showIcon = false,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -77,12 +96,6 @@ class GlobalStatsRow extends StatelessWidget {
               count.toString(),
               style: AppTextStyles.largeLight.copyWith(color: color),
             ),
-          ),
-          const SizedBox(height: 12.0),
-          Icon(
-            Icons.keyboard_arrow_down,
-            size: 14.0,
-            color: showIcon ? AppColors.light : Colors.transparent,
           ),
         ],
       ),

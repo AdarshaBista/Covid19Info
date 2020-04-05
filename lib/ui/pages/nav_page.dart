@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
 import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
-import 'package:covid19_info/blocs/country_detail_bloc/country_detail_bloc.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 import 'package:covid19_info/blocs/search_hospital_bloc/search_hospital_bloc.dart';
@@ -108,11 +107,6 @@ class _NavPageState extends State<NavPage> {
           ),
           BlocProvider(
             create: (context) => CountryBloc(
-              apiService: context.repository<GlobalApiService>(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => CountryDetailBloc(
               apiService: context.repository<GlobalApiService>(),
             ),
           ),

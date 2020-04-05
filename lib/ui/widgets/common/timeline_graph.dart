@@ -35,6 +35,7 @@ class TimelineGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         const Divider(height: 24.0),
         Flexible(
@@ -55,7 +56,38 @@ class TimelineGraph extends StatelessWidget {
           padding: const EdgeInsets.only(right: 8.0),
           child: _buildGraph(),
         ),
+        _buildLabelRow(),
+        const SizedBox(height: 20.0),
         const Divider(height: 8.0),
+      ],
+    );
+  }
+
+  Widget _buildLabelRow() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        _buildLabel('Confirmed', Colors.blue),
+        const SizedBox(width: 16.0),
+        _buildLabel('Recovered', Colors.green),
+        const SizedBox(width: 16.0),
+        _buildLabel('Deaths', Colors.red),
+      ],
+    );
+  }
+
+  Widget _buildLabel(String label, Color color) {
+    return Row(
+      children: <Widget>[
+        CircleAvatar(
+          backgroundColor: color,
+          radius: 4.0,
+        ),
+        const SizedBox(width: 8.0),
+        Text(
+          label,
+          style: AppTextStyles.extraSmallLight,
+        ),
       ],
     );
   }
@@ -63,13 +95,10 @@ class TimelineGraph extends StatelessWidget {
   LineChart _buildGraph() {
     final double labelSize = 40.0;
     final double maxX = timeline.length.toDouble();
-    final double maxY =
-        timeline.map((e) => e.cases).reduce(math.max).toDouble();
-
+    final double maxY = timeline.map((e) => e.cases).reduce(math.max).toDouble();
     final double verticalInterval = (maxX ~/ 5).toDouble();
     final double horizontalInterval = (maxY ~/ 5).toDouble();
-    final List<double> xValues =
-        timeline.map((data) => timeline.indexOf(data).toDouble()).toList();
+    final List<double> xValues = timeline.map((data) => timeline.indexOf(data).toDouble()).toList();
 
     return LineChart(
       LineChartData(
