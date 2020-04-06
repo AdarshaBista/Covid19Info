@@ -29,7 +29,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
       yield LoadingCountryState();
       try {
         final List<Country> countries = await apiService.fetchCountries();
-        yield LoadedCountryState(countries: countries.where((c) => c.isValid).toList());
+        yield LoadedCountryState(countries: countries.where((c) => c.isValid).take(190).toList());
       } on AppError catch (e) {
         print(e.error);
         yield ErrorCountryState(message: e.message);

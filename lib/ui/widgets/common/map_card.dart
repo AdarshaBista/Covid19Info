@@ -32,49 +32,6 @@ class MapCardState extends State<MapCard> with TickerProviderStateMixin {
     _mapController = MapController();
   }
 
-  void _animateMapTo(LatLng destLocation) {
-    final destZoom = 15.0;
-    final _latTween = Tween<double>(
-      begin: _mapController.center.latitude,
-      end: destLocation.latitude,
-    );
-    final _lngTween = Tween<double>(
-      begin: _mapController.center.longitude,
-      end: destLocation.longitude,
-    );
-    final _zoomTween = Tween<double>(
-      begin: _mapController.zoom,
-      end: destZoom,
-    );
-
-    AnimationController animController = AnimationController(
-      duration: const Duration(milliseconds: 800),
-      vsync: this,
-    );
-    Animation<double> animation = CurvedAnimation(
-      parent: animController,
-      curve: Curves.fastOutSlowIn,
-    );
-
-    animController.addListener(() {
-      _mapController.move(
-          LatLng(
-            _latTween.evaluate(animation),
-            _lngTween.evaluate(animation),
-          ),
-          _zoomTween.evaluate(animation));
-    });
-
-    animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        animController.dispose();
-      } else if (status == AnimationStatus.dismissed) {
-        animController.dispose();
-      }
-    });
-    animController.forward();
-  }
-
   @override
   Widget build(BuildContext context) {
     return FlutterMap(

@@ -6,11 +6,15 @@ class CountryStatChart extends StatelessWidget {
   final int active;
   final int recovered;
   final int deaths;
+  final double radius;
+  final double centerSpaceRadius;
 
   const CountryStatChart({
     @required this.active,
     @required this.recovered,
     @required this.deaths,
+    this.radius = 8.0,
+    this.centerSpaceRadius = 30.0,
   })  : assert(active != null),
         assert(recovered != null),
         assert(deaths != null);
@@ -20,7 +24,7 @@ class CountryStatChart extends StatelessWidget {
     return PieChart(
       PieChartData(
         sectionsSpace: 3.0,
-        centerSpaceRadius: 30.0,
+        centerSpaceRadius: centerSpaceRadius,
         startDegreeOffset: -90.0,
         borderData: FlBorderData(show: false),
         sections: [
@@ -36,7 +40,7 @@ class CountryStatChart extends StatelessWidget {
     return PieChartSectionData(
       color: color,
       value: value,
-      radius: 8.0,
+      radius: radius,
       showTitle: false,
     );
   }

@@ -119,7 +119,7 @@ class TimelineGraph extends StatelessWidget {
             interval: horizontalInterval,
             reservedSize: labelSize,
             textStyle: AppTextStyles.extraSmallLight,
-            getTitles: (value) => value.toInt().toString(),
+            getTitles: (value) => '${value.round()}',
           ),
         ),
         borderData: FlBorderData(show: false),

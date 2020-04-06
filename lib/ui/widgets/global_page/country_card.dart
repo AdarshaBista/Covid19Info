@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/blocs/country_detail_bloc/country_detail_bloc.dart';
+
 import 'package:covid19_info/core/models/country.dart';
+import 'package:covid19_info/core/services/global_api_service.dart';
+
+import 'package:covid19_info/ui/pages/country_details_page.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
-import 'package:covid19_info/ui/widgets/global_page/country_stat_chart.dart';
+import 'package:covid19_info/ui/widgets/common/country_stat_chart.dart';
 
 class CountryCard extends StatelessWidget {
   final Country country;
@@ -16,9 +22,7 @@ class CountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // TODO: Open country detail
-      },
+      onTap: () => _navigateToDetailsPage(context),
       child: Container(
         height: 128.0,
         margin: const EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
@@ -117,6 +121,21 @@ class CountryCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _navigateToDetailsPage(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => BlocProvider(
+          create: (_) => CountryDetailBloc(
+            apiService: context.repository<GlobalApiService>(),
+          ),
+          child: CountryDetailsPage(
+            country: country,
+          ),
+        ),
       ),
     );
   }
