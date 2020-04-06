@@ -2,14 +2,10 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 
-import 'package:covid19_info/core/models/coord.dart';
 import 'package:covid19_info/core/models/capacity.dart';
 
 class Hospital {
   final String id;
-  final Coord coord;
-  final bool isFull;
-  final bool isGovApproved;
   final String name;
   final String contactPerson;
   final String contactPersonNumber;
@@ -21,9 +17,6 @@ class Hospital {
 
   Hospital({
     @required this.id,
-    @required this.coord,
-    @required this.isFull,
-    @required this.isGovApproved,
     @required this.name,
     @required this.contactPerson,
     @required this.contactPersonNumber,
@@ -36,7 +29,6 @@ class Hospital {
 
   Hospital copyWith({
     String id,
-    Coord coord,
     bool isFull,
     bool isGovApproved,
     String name,
@@ -50,9 +42,6 @@ class Hospital {
   }) {
     return Hospital(
       id: id ?? this.id,
-      coord: coord ?? this.coord,
-      isFull: isFull ?? this.isFull,
-      isGovApproved: isGovApproved ?? this.isGovApproved,
       name: name ?? this.name,
       contactPerson: contactPerson ?? this.contactPerson,
       contactPersonNumber: contactPersonName ?? this.contactPersonNumber,
@@ -65,17 +54,11 @@ class Hospital {
   }
 
   bool get isValid =>
-      !capacity.isEmpty &&
-      name.isNotEmpty &&
-      phone.isNotEmpty &&
-      address.isNotEmpty;
+      !capacity.isEmpty && name.isNotEmpty && phone.isNotEmpty && address.isNotEmpty;
 
   Map<String, dynamic> toMap() {
     return {
       '_id': id,
-      'coord': coord.toMap(),
-      'is_full': isFull,
-      'government_approved': isGovApproved,
       'name': name,
       'contact_person': contactPerson,
       'contact_person_number': contactPersonNumber,
@@ -90,21 +73,8 @@ class Hospital {
   static Hospital fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
-    double lat = map['location']['coordinates'][0];
-    double long = map['location']['coordinates'][1];
-    if (lat > long) {
-      lat = map['location']['coordinates'][1];
-      long = map['location']['coordinates'][0];
-    }
-
     return Hospital(
       id: map['id'],
-      coord: Coord.fromMap({
-        'latitude': lat,
-        'longitude': long,
-      }),
-      isFull: map['is_full'],
-      isGovApproved: map['government_approved'],
       name: map['name'],
       contactPerson: map['contact_person'],
       contactPersonNumber: map['contact_person_number'],
@@ -122,7 +92,7 @@ class Hospital {
 
   @override
   String toString() {
-    return 'Hospital(id: $id, coord: $coord, isFull: $isFull, isGovApproved: $isGovApproved, name: $name, contactPerson: $contactPerson, contactPersonName: $contactPersonNumber, address: $address, phone: $phone, website: $website, email: $email, capacity: $capacity)';
+    return 'Hospital(id: $id, name: $name, contactPerson: $contactPerson, contactPersonName: $contactPersonNumber, address: $address, phone: $phone, website: $website, email: $email, capacity: $capacity)';
   }
 
   @override
@@ -131,9 +101,6 @@ class Hospital {
 
     return o is Hospital &&
         o.id == id &&
-        o.coord == coord &&
-        o.isFull == isFull &&
-        o.isGovApproved == isGovApproved &&
         o.name == name &&
         o.contactPerson == contactPerson &&
         o.contactPersonNumber == contactPersonNumber &&
@@ -147,9 +114,6 @@ class Hospital {
   @override
   int get hashCode {
     return id.hashCode ^
-        coord.hashCode ^
-        isFull.hashCode ^
-        isGovApproved.hashCode ^
         name.hashCode ^
         contactPerson.hashCode ^
         contactPersonNumber.hashCode ^
