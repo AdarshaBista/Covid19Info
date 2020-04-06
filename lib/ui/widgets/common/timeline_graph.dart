@@ -9,7 +9,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
 
-class TimelineGraph extends StatelessWidget {
+class TimelineGraph extends StatefulWidget {
   final String title;
   final List<TimelineData> timeline;
 
@@ -19,9 +19,22 @@ class TimelineGraph extends StatelessWidget {
   })  : assert(title != null),
         assert(timeline != null);
 
+  @override
+  _TimelineGraphState createState() => _TimelineGraphState();
+}
+
+class _TimelineGraphState extends State<TimelineGraph> {
+  RangeValues sliderValues;
+
+  @override
+  void initState() {
+    super.initState();
+    sliderValues = RangeValues(0.0, widget.timeline.length.toDouble() - 1.0);
+  }
+
   String _getXTitle(double value) {
     int index = value.toInt();
-    List<String> dateElements = timeline[index].date.split('-');
+    List<String> dateElements = widget.timeline[index].date.split('-');
 
     // Pad month and day with leading zero
     dateElements[1] = dateElements[1].padLeft(2, '0');
@@ -41,7 +54,7 @@ class TimelineGraph extends StatelessWidget {
         const Divider(height: 24.0),
         Flexible(
           child: Text(
-            title,
+            widget.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.mediumLight,
@@ -58,6 +71,27 @@ class TimelineGraph extends StatelessWidget {
           child: _buildGraph(),
         ),
         _buildLabelRow(),
+        const SizedBox(height: 20.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: RangeSlider(
+            min: 0.0,
+            max: widget.timeline.length.toDouble() - 1.0,
+            divisions: widget.timeline.length,
+            activeColor: AppColors.dark,
+            labels: RangeLabels(
+              _getXTitle(sliderValues.start),
+              _getXTitle(sliderValues.end),
+            ),
+            values: sliderValues,
+            onChanged: (values) {
+              if (values.end - values.start > 10.0)
+                setState(() {
+                  sliderValues = values;
+                });
+            },
+          ),
+        ),
         const SizedBox(height: 20.0),
         const Divider(height: 8.0),
       ],
@@ -79,11 +113,12 @@ class TimelineGraph extends StatelessWidget {
 
   LineChart _buildGraph() {
     final double labelSize = 40.0;
-    final double maxX = timeline.length.toDouble();
-    final double maxY = timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
-    final double verticalInterval = (maxX ~/ 5).toDouble();
+    final double maxX = widget.timeline.length.toDouble();
+    final double maxY = widget.timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
+    final double verticalInterval = ((sliderValues.end - sliderValues.start) ~/ 4).toDouble();
     final double horizontalInterval = (maxY ~/ 5).toDouble();
-    final List<double> xValues = timeline.map((data) => timeline.indexOf(data).toDouble()).toList();
+    final List<double> xValues =
+        widget.timeline.map((data) => widget.timeline.indexOf(data).toDouble()).toList();
 
     return LineChart(
       LineChartData(
@@ -94,7 +129,9 @@ class TimelineGraph extends StatelessWidget {
             fitInsideHorizontally: true,
           ),
         ),
-        minX: 0.0,
+        clipToBorder: true,
+        minX: sliderValues.start,
+        maxX: sliderValues.end,
         minY: 0.0,
         maxY: maxY,
         gridData: FlGridData(
@@ -126,17 +163,17 @@ class TimelineGraph extends StatelessWidget {
         lineBarsData: [
           _buildLineData(
             xValues: xValues,
-            yValues: timeline.map((data) => data.confirmed.toDouble()).toList(),
+            yValues: widget.timeline.map((data) => data.confirmed.toDouble()).toList(),
             color: Colors.blue,
           ),
           _buildLineData(
             xValues: xValues,
-            yValues: timeline.map((data) => data.recovered.toDouble()).toList(),
+            yValues: widget.timeline.map((data) => data.recovered.toDouble()).toList(),
             color: Colors.green,
           ),
           _buildLineData(
             xValues: xValues,
-            yValues: timeline.map((data) => data.deaths.toDouble()).toList(),
+            yValues: widget.timeline.map((data) => data.deaths.toDouble()).toList(),
             color: Colors.red,
           ),
         ],

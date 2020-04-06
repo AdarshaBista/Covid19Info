@@ -8,10 +8,9 @@ class InitialCountryState extends CountryState {}
 class LoadingCountryState extends CountryState {}
 
 class LoadedCountryState extends CountryState {
-  static const int MAX_CASES = 100000;
   final List<Country> countries;
 
-  List<Country> get mostInfected => countries.where((c) => c.totalConfirmed > MAX_CASES).toList();
+  List<Country> get mostInfected => countries.take(5).toList();
 
   LoadedCountryState({
     @required this.countries,
