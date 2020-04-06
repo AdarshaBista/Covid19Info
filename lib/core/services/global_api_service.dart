@@ -1,20 +1,21 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:covid19_info/core/services/api_service.dart';
 
 import 'package:covid19_info/core/models/app_error.dart';
-import 'package:covid19_info/core/models/country_data.dart';
+import 'package:covid19_info/core/models/country.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
-class GlobalApiService {
-  static const String CORONA_STAT_BASE = 'https://api.coronastatistics.live/';
+class GlobalApiService extends ApiService {
+  static const String COVID_API_BASE = 'https://covidapi.info/api/v1/';
+  static const String CORONA_TRACKER_BASE = 'https://api.coronatracker.com/';
 
   Future<List<TimelineData>> fetchGlobalTimeline() async {
     try {
-      http.Response res = await http.get(CORONA_STAT_BASE + 'timeline/global');
-      final Map<String, dynamic> resMap = jsonDecode(res.body);
-      final List<Map<String, dynamic>> timelineList =
-          _flattenGlobalTimelineMap(resMap);
+      http.Response res = await http.get(COVID_API_BASE + 'global/count');
+      final Map<String, dynamic> resMap = jsonDecode(res.body)['result'];
+      final List<Map<String, dynamic>> timelineList = flattenTimelineMap(resMap);
       return timelineList.map((m) => TimelineData.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
@@ -24,14 +25,11 @@ class GlobalApiService {
     }
   }
 
-  Future<List<CountryData>> fetchCountriesData() async {
+  Future<List<Country>> fetchCountries() async {
     try {
-      http.Response res =
-          await http.get(CORONA_STAT_BASE + 'countries?sort=cases');
+      http.Response res = await http.get(CORONA_TRACKER_BASE + 'v3/stats/worldometer/country');
       final resMap = jsonDecode(res.body);
-      return (resMap as List)
-          .map((m) => CountryData.fromMap(m as Map<String, dynamic>))
-          .toList();
+      return (resMap as List).map((m) => Country.fromMap(m as Map<String, dynamic>)).toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load countries!",
@@ -42,28 +40,15 @@ class GlobalApiService {
 
   Future<List<TimelineData>> fetchCountryTimeline(String code) async {
     try {
-      http.Response res = await http.get(CORONA_STAT_BASE + 'timeline/$code');
-      final timeline = jsonDecode(res.body)['data']['timeline'];
-      return (timeline as List)
-          .map((m) => TimelineData.fromMap(m as Map<String, dynamic>))
-          .toList();
+      http.Response res = await http.get(COVID_API_BASE + 'country/$code');
+      final Map<String, dynamic> resMap = jsonDecode(res.body)['result'];
+      final List<Map<String, dynamic>> timelineList = flattenTimelineMap(resMap);
+      return timelineList.map((m) => TimelineData.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
-        message: "Couldn't load timeline data!",
+        message: "Couldn't load country timeline data!",
         error: e.toString(),
       );
     }
-  }
-
-  List<Map<String, dynamic>> _flattenGlobalTimelineMap(
-      Map<String, dynamic> map) {
-    List<Map<String, dynamic>> list = [];
-    map.forEach((k, v) {
-      list.add({
-        'date': k,
-        ...v,
-      });
-    });
-    return list;
   }
 }

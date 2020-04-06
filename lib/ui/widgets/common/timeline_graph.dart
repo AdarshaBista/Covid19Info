@@ -80,7 +80,7 @@ class TimelineGraph extends StatelessWidget {
   LineChart _buildGraph() {
     final double labelSize = 40.0;
     final double maxX = timeline.length.toDouble();
-    final double maxY = timeline.map((e) => e.cases).reduce(math.max).toDouble();
+    final double maxY = timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
     final double verticalInterval = (maxX ~/ 5).toDouble();
     final double horizontalInterval = (maxY ~/ 5).toDouble();
     final List<double> xValues = timeline.map((data) => timeline.indexOf(data).toDouble()).toList();
@@ -126,7 +126,7 @@ class TimelineGraph extends StatelessWidget {
         lineBarsData: [
           _buildLineData(
             xValues: xValues,
-            yValues: timeline.map((data) => data.cases.toDouble()).toList(),
+            yValues: timeline.map((data) => data.confirmed.toDouble()).toList(),
             color: Colors.blue,
           ),
           _buildLineData(

@@ -19,8 +19,9 @@ class CountryStatChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return PieChart(
       PieChartData(
-        sectionsSpace: 4.0,
-        centerSpaceRadius: 24.0,
+        sectionsSpace: 3.0,
+        centerSpaceRadius: 30.0,
+        startDegreeOffset: -90.0,
         borderData: FlBorderData(show: false),
         sections: [
           _makeSection(active.toDouble(), Colors.yellow),
@@ -35,7 +36,7 @@ class CountryStatChart extends StatelessWidget {
     return PieChartSectionData(
       color: color,
       value: value,
-      radius: 12.0,
+      radius: 8.0,
       showTitle: false,
     );
   }

@@ -55,7 +55,7 @@ class GlobalStatsRow extends StatelessWidget {
       children: <Widget>[
         _buildStat(
           label: 'Confirmed',
-          count: state.globalTimeline.last.cases,
+          count: state.globalTimeline.last.confirmed,
           color: Colors.blue,
         ),
         _buildStat(

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:covid19_info/core/services/api_service.dart';
 
 import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/faq.dart';
@@ -10,9 +11,9 @@ import 'package:covid19_info/core/models/hospital.dart';
 import 'package:covid19_info/core/models/nepal_stats.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
-class NepalApiService {
+class NepalApiService extends ApiService {
+  static const String COVID_API_BASE = 'https://covidapi.info/api/v1/';
   static const String NEPAL_CORONA_BASE = 'https://nepalcorona.info/api/v1/';
-  static const String CORONA_STAT_BASE = 'https://api.coronastatistics.live/';
 
   Future<NepalStats> fetchNepalStats() async {
     try {
@@ -28,11 +29,10 @@ class NepalApiService {
 
   Future<List<TimelineData>> fetchNepalTimeline() async {
     try {
-      http.Response res = await http.get(CORONA_STAT_BASE + 'timeline/nepal');
-      final timeline = jsonDecode(res.body)['data']['timeline'];
-      return (timeline as List)
-          .map((m) => TimelineData.fromMap(m as Map<String, dynamic>))
-          .toList();
+      http.Response res = await http.get(COVID_API_BASE + 'country/NPL');
+      final Map<String, dynamic> resMap = jsonDecode(res.body)['result'];
+      final List<Map<String, dynamic>> timelineList = flattenTimelineMap(resMap);
+      return timelineList.map((m) => TimelineData.fromMap(m)).toList();
     } catch (e) {
       throw AppError(
         message: "Couldn't load Nepal timeline data!",

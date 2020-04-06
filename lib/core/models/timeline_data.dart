@@ -3,17 +3,17 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 
 class TimelineData {
-  final int cases;
+  final int confirmed;
   final int deaths;
   final int recovered;
   final String date;
 
   TimelineData({
-    @required this.cases,
+    @required this.confirmed,
     @required this.deaths,
     @required this.recovered,
     @required this.date,
-  })  : assert(cases != null),
+  })  : assert(confirmed != null),
         assert(deaths != null),
         assert(recovered != null),
         assert(date != null);
@@ -25,7 +25,7 @@ class TimelineData {
     String date,
   }) {
     return TimelineData(
-      cases: cases ?? this.cases,
+      confirmed: cases ?? this.confirmed,
       deaths: deaths ?? this.deaths,
       recovered: recovered ?? this.recovered,
       date: date ?? this.date,
@@ -34,7 +34,7 @@ class TimelineData {
 
   Map<String, dynamic> toMap() {
     return {
-      'cases': cases,
+      'confirmed': confirmed,
       'deaths': deaths,
       'recovered': recovered,
       'date': date,
@@ -45,7 +45,7 @@ class TimelineData {
     if (map == null) return null;
 
     return TimelineData(
-      cases: map['cases'],
+      confirmed: map['confirmed'],
       deaths: map['deaths'],
       recovered: map['recovered'],
       date: map['date'],
@@ -58,7 +58,7 @@ class TimelineData {
 
   @override
   String toString() {
-    return 'CountData(cases: $cases, deaths: $deaths, recovered: $recovered, date: $date)';
+    return 'CountData(cases: $confirmed, deaths: $deaths, recovered: $recovered, date: $date)';
   }
 
   @override
@@ -66,7 +66,7 @@ class TimelineData {
     if (identical(this, o)) return true;
 
     return o is TimelineData &&
-        o.cases == cases &&
+        o.confirmed == confirmed &&
         o.deaths == deaths &&
         o.recovered == recovered &&
         o.date == date;
@@ -74,9 +74,6 @@ class TimelineData {
 
   @override
   int get hashCode {
-    return cases.hashCode ^
-        deaths.hashCode ^
-        recovered.hashCode ^
-        date.hashCode;
+    return confirmed.hashCode ^ deaths.hashCode ^ recovered.hashCode ^ date.hashCode;
   }
 }
