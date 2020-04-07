@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 
 import 'package:covid19_info/core/models/timeline_data.dart';
@@ -81,24 +79,6 @@ class Country {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'countryCode': code,
-      'country': name,
-      'lat': lat,
-      'lng': lng,
-      'totalConfirmed': totalConfirmed,
-      'totalDeaths': totalDeaths,
-      'totalRecovered': totalRecovered,
-      'totalCritical': totalCritical,
-      'activeCases': activeCases,
-      'dailyConfirmed': dailyConfirmed,
-      'dailyDeaths': dailyDeaths,
-      'totalConfirmedPerMillionPopulation': confirmedPerMillion,
-      'timeline': List<dynamic>.from(timeline.map((x) => x.toMap())),
-    };
-  }
-
   static Country fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -120,10 +100,6 @@ class Country {
           : [],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static Country fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

@@ -18,7 +18,7 @@ class NepalApiService extends ApiService {
   Future<NepalStats> fetchNepalStats() async {
     try {
       http.Response res = await http.get(NEPAL_CORONA_BASE + 'data/nepal');
-      return NepalStats.fromJson(res.body);
+      return NepalStats.fromMap(jsonDecode(res.body));
     } catch (e) {
       throw AppError(
         message: "Couldn't load nepal infection data!",

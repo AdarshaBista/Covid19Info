@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
 
 class News {
@@ -45,19 +43,6 @@ class News {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      '_id': id,
-      'lang': lang,
-      'url': url,
-      'title': title,
-      'source': source,
-      'summary': summary,
-      'image_url': imageUrl,
-      'created_at': createdAt.toUtc(),
-    };
-  }
-
   static News fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -72,10 +57,6 @@ class News {
       createdAt: DateTime.parse(map['created_at']),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static News fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

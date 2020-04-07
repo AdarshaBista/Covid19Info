@@ -33,8 +33,7 @@ class _NepalPageState extends State<NepalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) =>
-            [
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
           const CollapsibleAppBar(
             elevation: 0.0,
             title: 'NEPAL STATS',
@@ -54,6 +53,7 @@ class _NepalPageState extends State<NepalPage> {
             ),
             const SizedBox(height: 16.0),
             SearchBox(
+              hintText: 'Search Hospitals',
               onChanged: (String value) {
                 context.bloc<SearchHospitalBloc>()
                   ..add(StartHospitalSearchEvent(

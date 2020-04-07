@@ -1,7 +1,5 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:covid19_info/core/models/timeline_data.dart';
 
@@ -45,17 +43,6 @@ class NepalStats {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'tested_total': total,
-      'tested_positive': positive,
-      'tested_negative': negative,
-      'isolation': isolation,
-      'in_isolation': deaths,
-      'timeline': List<dynamic>.from(timeline.map((x) => x.toMap())),
-    };
-  }
-
   static NepalStats fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -70,10 +57,6 @@ class NepalStats {
           : [],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static NepalStats fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

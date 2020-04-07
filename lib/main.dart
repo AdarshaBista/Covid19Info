@@ -10,8 +10,6 @@ import 'package:covid19_info/core/services/global_api_service.dart';
 
 import 'package:covid19_info/ui/pages/nav_page.dart';
 
-import 'package:device_preview/device_preview.dart';
-
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -20,13 +18,7 @@ void main() {
     ),
   );
 
-  runApp(
-    DevicePreview(
-      background: BoxDecoration(color: AppColors.dark),
-      enabled: true,
-      builder: (context) => App(),
-    ),
-  );
+  runApp(App());
 }
 
 class App extends StatelessWidget {
@@ -39,8 +31,6 @@ class App extends StatelessWidget {
         RepositoryProvider<LauncherService>(create: (_) => LauncherService()),
       ],
       child: MaterialApp(
-        locale: DevicePreview.of(context).locale,
-        builder: DevicePreview.appBuilder,
         debugShowCheckedModeBanner: false,
         title: 'Covid19 Info',
         theme: ThemeData(

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
 
 import 'package:covid19_info/core/models/capacity.dart';
@@ -56,20 +54,6 @@ class Hospital {
   bool get isValid =>
       !capacity.isEmpty && name.isNotEmpty && phone.isNotEmpty && address.isNotEmpty;
 
-  Map<String, dynamic> toMap() {
-    return {
-      '_id': id,
-      'name': name,
-      'contact_person': contactPerson,
-      'contact_person_number': contactPersonNumber,
-      'address': address,
-      'phone': phone,
-      'website': website,
-      'email': email,
-      'capacity': capacity.toMap(),
-    };
-  }
-
   static Hospital fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -85,10 +69,6 @@ class Hospital {
       capacity: Capacity.fromMap(map['capacity']),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static Hospital fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

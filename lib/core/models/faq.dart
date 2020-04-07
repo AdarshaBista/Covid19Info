@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
 
 class Faq {
@@ -29,15 +27,6 @@ class Faq {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      '_id': id,
-      'category': category,
-      'question': question,
-      'answer': answer,
-    };
-  }
-
   static Faq fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -48,10 +37,6 @@ class Faq {
       answer: map['answer'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static Faq fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -71,9 +56,6 @@ class Faq {
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        category.hashCode ^
-        question.hashCode ^
-        answer.hashCode;
+    return id.hashCode ^ category.hashCode ^ question.hashCode ^ answer.hashCode;
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
 
 class Myth {
@@ -33,16 +31,6 @@ class Myth {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      '_id': id,
-      'myth': myth,
-      'reality': reality,
-      'source_name': sourceName,
-      'source_url': sourceUrl,
-    };
-  }
-
   static Myth fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -54,10 +42,6 @@ class Myth {
       sourceUrl: map['source_url'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static Myth fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

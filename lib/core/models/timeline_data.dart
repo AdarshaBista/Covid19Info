@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
 
 class TimelineData {
@@ -32,15 +30,6 @@ class TimelineData {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'confirmed': confirmed,
-      'deaths': deaths,
-      'recovered': recovered,
-      'date': date,
-    };
-  }
-
   static TimelineData fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -51,10 +40,6 @@ class TimelineData {
       date: map['date'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static TimelineData fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

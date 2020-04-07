@@ -4,11 +4,11 @@ import 'package:covid19_info/ui/styles/styles.dart';
 
 class SearchBox extends StatelessWidget {
   final Function(String) onChanged;
-  final Function onFilter;
+  final String hintText;
 
   const SearchBox({
     this.onChanged,
-    this.onFilter,
+    this.hintText = 'Search',
   });
 
   @override
@@ -21,35 +21,18 @@ class SearchBox extends StatelessWidget {
         color: AppColors.dark,
         borderRadius: BorderRadius.circular(8.0),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Flexible(
-            child: TextFormField(
-              onChanged: onChanged,
-              maxLines: 1,
-              style: AppTextStyles.smallLight,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Search Hospitals',
-                prefixIcon: Icon(
-                  Icons.search,
-                  size: 20.0,
-                ),
-              ),
-            ),
+      child: TextFormField(
+        onChanged: onChanged,
+        maxLines: 1,
+        style: AppTextStyles.smallLight,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Search Hospitals',
+          prefixIcon: Icon(
+            Icons.search,
+            size: 20.0,
           ),
-          const SizedBox(width: 10.0),
-          if (onFilter != null)
-            IconButton(
-              icon: Icon(
-                Icons.filter,
-                size: 20.0,
-              ),
-              onPressed: null,
-            ),
-        ],
+        ),
       ),
     );
   }

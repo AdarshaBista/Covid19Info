@@ -1,5 +1,5 @@
 name: covid19_info
-description: App to read statistics and news about Covid19 especially in Nepal.
+description: App to monitor statistics and news about Covid19 especially in Nepal.
 
 version: 1.0.0+1
 
@@ -18,9 +18,9 @@ dependencies:
   auto_size_text: ^2.1.0
   url_launcher: ^5.4.2
   flutter_map: ^0.8.2
+  flutter_map_marker_cluster: ^0.2.7
   fl_chart: ^0.8.7
   intl: ^0.16.1
-  device_preview: ^0.4.0+1
 
 
 dev_dependencies:

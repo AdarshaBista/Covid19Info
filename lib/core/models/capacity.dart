@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
 
 class Capacity {
@@ -45,17 +43,6 @@ class Capacity {
       doctors.isEmpty &&
       nurses.isEmpty;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'beds': beds,
-      'ventilators': ventilators,
-      'isolation_beds': isolationBeds,
-      'occupied_beds': occupiedBeds,
-      'doctors': doctors,
-      'nurses': nurses,
-    };
-  }
-
   static Capacity fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -68,10 +55,6 @@ class Capacity {
       nurses: map['nurses'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static Capacity fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {

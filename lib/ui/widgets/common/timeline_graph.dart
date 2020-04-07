@@ -113,7 +113,6 @@ class _TimelineGraphState extends State<TimelineGraph> {
 
   LineChart _buildGraph() {
     final double labelSize = 40.0;
-    final double maxX = widget.timeline.length.toDouble();
     final double maxY = widget.timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
     final double verticalInterval = ((sliderValues.end - sliderValues.start) ~/ 4).toDouble();
     final double horizontalInterval = (maxY ~/ 5).toDouble();
