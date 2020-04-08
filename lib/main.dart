@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
+import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
 import 'package:covid19_info/core/services/launcher_service.dart';
 import 'package:covid19_info/core/services/nepal_api_service.dart';
 import 'package:covid19_info/core/services/global_api_service.dart';
 
+import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/pages/nav_page.dart';
 
 void main() {
@@ -46,7 +48,21 @@ class App extends StatelessWidget {
           accentColor: AppColors.secondary,
           fontFamily: 'Sen',
         ),
-        home: NavPage(),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => GlobalStatsBloc(
+                apiService: context.repository<GlobalApiService>(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => CountryBloc(
+                apiService: context.repository<GlobalApiService>(),
+              ),
+            ),
+          ],
+          child: NavPage(),
+        ),
       ),
     );
   }

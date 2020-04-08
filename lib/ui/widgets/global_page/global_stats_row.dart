@@ -33,11 +33,7 @@ class GlobalStatsRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(
-          'GLOBAL STATS',
-          style: AppTextStyles.largeLight,
-        ),
-        const SizedBox(height: 24.0),
+        const SizedBox(height: 16.0),
         _buildStatsRow(state),
         const SizedBox(height: 16.0),
         TimelineGraph(
