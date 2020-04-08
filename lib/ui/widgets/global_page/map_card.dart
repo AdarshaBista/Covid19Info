@@ -19,9 +19,7 @@ import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
-class MapPage extends StatelessWidget {
-  final MapController _mapController = MapController();
-
+class MapCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CountryBloc, CountryState>(
@@ -40,49 +38,45 @@ class MapPage extends StatelessWidget {
   }
 
   Widget _buildMap(List<Country> countries, BuildContext context) {
-    return Scaffold(
-      body: FlutterMap(
-        mapController: _mapController,
-        options: MapOptions(
-          zoom: 3.0,
-          maxZoom: 2.0,
-          minZoom: 6.0,
-          interactive: true,
-          center: LatLng(countries.first.lat, countries.first.lng),
-        ),
-        layers: [
-          TileLayerOptions(
-            backgroundColor: AppColors.background,
-            maxZoom: 2.0,
-            keepBuffer: 8,
-            urlTemplate: "https://api.tiles.mapbox.com/v4/"
-                "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
-            additionalOptions: {
-              'accessToken': MAPBOX_ACCESS_TOKEN,
-              'id': 'mapbox.dark',
-            },
-          ),
-          MarkerLayerOptions(
-            markers: countries.map(
-              (c) {
-                double radius = math.sqrt(c.totalConfirmed.toDouble()) / 8.0;
-                return Marker(
-                  height: radius,
-                  width: radius,
-                  point: LatLng(c.lat, c.lng),
-                  builder: (context) => GestureDetector(
-                    onTap: () => _navigateToDetailsPage(context, c),
-                    child: CircleAvatar(
-                      radius: math.sqrt(c.totalConfirmed.toDouble()) * 1800,
-                      backgroundColor: Colors.red.withOpacity(0.4),
-                    ),
-                  ),
-                );
-              },
-            ).toList(),
-          ),
-        ],
+    return FlutterMap(
+      options: MapOptions(
+        zoom: 3.0,
+        minZoom: 2.0,
+        maxZoom: 6.0,
+        interactive: true,
+        center: LatLng(countries.first.lat, countries.first.lng),
       ),
+      layers: [
+        TileLayerOptions(
+          backgroundColor: AppColors.background,
+          keepBuffer: 8,
+          urlTemplate: "https://api.tiles.mapbox.com/v4/"
+              "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
+          additionalOptions: {
+            'accessToken': MAPBOX_ACCESS_TOKEN,
+            'id': 'mapbox.dark',
+          },
+        ),
+        MarkerLayerOptions(
+          markers: countries.map(
+            (c) {
+              double radius = (math.sqrt(c.totalConfirmed.toDouble()) / 8.0).clamp(8.0, 120.0);
+              return Marker(
+                height: radius,
+                width: radius,
+                point: LatLng(c.lat, c.lng),
+                builder: (context) => GestureDetector(
+                  onTap: () => _navigateToDetailsPage(context, c),
+                  child: CircleAvatar(
+                    radius: radius,
+                    backgroundColor: Colors.red.withOpacity(0.4),
+                  ),
+                ),
+              );
+            },
+          ).toList(),
+        ),
+      ],
     );
   }
 

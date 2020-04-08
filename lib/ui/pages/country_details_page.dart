@@ -39,8 +39,8 @@ class _CountryDetailsPageState extends State<CountryDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
+        elevation: 8.0,
+        backgroundColor: AppColors.dark,
         centerTitle: true,
         title: Text(
           widget.country.name,

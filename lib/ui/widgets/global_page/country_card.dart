@@ -24,7 +24,7 @@ class CountryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => _navigateToDetailsPage(context),
       child: Container(
-        height: 128.0,
+        height: 120.0,
         margin: const EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
         padding: const EdgeInsets.only(top: 12.0, right: 12.0, bottom: 12.0),
         decoration: BoxDecoration(
@@ -107,17 +107,12 @@ class CountryCard extends StatelessWidget {
             deaths: country.totalDeaths,
           ),
           Container(
-            height: 44.0,
-            width: 44.0,
+            height: 48.0,
+            width: 48.0,
             clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage(
-                  'https://www.countryflags.io/${country.code}/flat/48.png',
-                ),
-                fit: BoxFit.cover,
-              ),
+            decoration: BoxDecoration(shape: BoxShape.circle),
+            child: Image.network(
+              'https://www.countryflags.io/${country.code}/flat/48.png',
             ),
           ),
         ],

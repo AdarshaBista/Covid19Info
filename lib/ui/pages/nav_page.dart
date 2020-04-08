@@ -11,12 +11,12 @@ import 'package:covid19_info/blocs/faq_bloc/faq_bloc.dart';
 import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
 
 import 'package:covid19_info/core/services/nepal_api_service.dart';
+import 'package:covid19_info/core/services/global_api_service.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 
-import 'package:covid19_info/ui/pages/map_page.dart';
 import 'package:covid19_info/ui/pages/global_page.dart';
 import 'package:covid19_info/ui/pages/nepal_page.dart';
 import 'package:covid19_info/ui/pages/news_page.dart';
@@ -31,12 +31,6 @@ class _NavPageState extends State<NavPage> {
   int _selectedIndex = 0;
 
   List<GButton> get tabs => [
-        GButton(
-          icon: LineAwesomeIcons.map,
-          text: 'Map',
-          iconColor: Colors.deepPurple,
-          backgroundColor: Colors.deepPurple,
-        ),
         GButton(
           icon: LineAwesomeIcons.globe,
           text: 'World',
@@ -62,13 +56,6 @@ class _NavPageState extends State<NavPage> {
           backgroundColor: Colors.blue,
         ),
       ];
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    context.bloc<GlobalStatsBloc>()..add(GetGlobalStatsEvent());
-    context.bloc<CountryBloc>()..add(GetCountryEvent());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +89,6 @@ class _NavPageState extends State<NavPage> {
       body: IndexedStack(
         index: _selectedIndex,
         children: <Widget>[
-          _buildMapPage(),
           _buildWorldPage(),
           _buildNepalPage(),
           _buildNewsPage(),
@@ -112,9 +98,21 @@ class _NavPageState extends State<NavPage> {
     );
   }
 
-  Widget _buildMapPage() => MapPage();
-
-  Widget _buildWorldPage() => GlobalPage();
+  Widget _buildWorldPage() => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => GlobalStatsBloc(
+              apiService: context.repository<GlobalApiService>(),
+            ),
+          ),
+          BlocProvider(
+            create: (context) => CountryBloc(
+              apiService: context.repository<GlobalApiService>(),
+            ),
+          ),
+        ],
+        child: GlobalPage(),
+      );
 
   Widget _buildNepalPage() => MultiBlocProvider(
         providers: [

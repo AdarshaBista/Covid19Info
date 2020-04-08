@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19_info/core/models/country.dart';
 
+import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
 import 'package:covid19_info/ui/widgets/common/country_stat_chart.dart';
 
@@ -17,12 +18,20 @@ class CountryPieChart extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        Text(
+          'CASES DISTRIBUTION',
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
+          style: AppTextStyles.mediumLight,
+        ),
         CountryStatChart(
           active: country.activeCases,
           recovered: country.totalRecovered,
           deaths: country.totalDeaths,
           centerSpaceRadius: 2.0,
           radius: 100.0,
+          showPercent: true,
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
