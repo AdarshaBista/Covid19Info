@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -48,6 +49,8 @@ class MapCard extends StatelessWidget {
       ),
       layers: [
         TileLayerOptions(
+          tileProvider:
+              Platform.isWindows ? NetworkTileProvider() : const CachedNetworkTileProvider(),
           backgroundColor: AppColors.background,
           keepBuffer: 8,
           urlTemplate: "https://api.tiles.mapbox.com/v4/"

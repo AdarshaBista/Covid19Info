@@ -48,7 +48,8 @@ class CountryStatChart extends StatelessWidget {
       radius: radius,
       showTitle: showPercent,
       title: '${percent.toStringAsFixed(1)} %',
-      titleStyle: AppTextStyles.smallDark,
+      titlePositionPercentageOffset: 1.15,
+      titleStyle: AppTextStyles.smallLight,
     );
   }
 }
