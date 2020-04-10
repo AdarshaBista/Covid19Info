@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
+import 'package:rxdart/rxdart.dart';
+
 import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/country.dart';
 
@@ -13,10 +15,24 @@ part 'country_state.dart';
 
 class CountryBloc extends Bloc<CountryEvent, CountryState> {
   final GlobalApiService apiService;
+  List<Country> _countries = [];
 
   CountryBloc({
     @required this.apiService,
   }) : assert(apiService != null);
+
+  @override
+  Stream<CountryState> transformEvents(
+    Stream<CountryEvent> events,
+    Stream<CountryState> Function(CountryEvent event) next,
+  ) {
+    return super.transformEvents(
+      events.debounceTime(
+        Duration(milliseconds: 500),
+      ),
+      next,
+    );
+  }
 
   @override
   CountryState get initialState => InitialCountryState();
@@ -26,14 +42,39 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     CountryEvent event,
   ) async* {
     if (event is GetCountryEvent) {
-      yield LoadingCountryState();
-      try {
-        final List<Country> countries = await apiService.fetchCountries();
-        yield LoadedCountryState(countries: countries.where((c) => c.isValid).take(190).toList());
-      } on AppError catch (e) {
-        print(e.error);
-        yield ErrorCountryState(message: e.message);
-      }
+      yield* _mapGetCountryToState();
     }
+
+    if (event is SearchCountryEvent) {
+      yield* _mapSearchCountryToState(event);
+    }
+  }
+
+  Stream<CountryState> _mapGetCountryToState() async* {
+    yield LoadingCountryState();
+    try {
+      _countries = await apiService.fetchCountries();
+      _countries = _countries.where((c) => c.isValid).toList();
+      yield LoadedCountryState(countries: _countries);
+    } on AppError catch (e) {
+      print(e.error);
+      yield ErrorCountryState(message: e.message);
+    }
+  }
+
+  Stream<CountryState> _mapSearchCountryToState(SearchCountryEvent event) async* {
+    if (event.searchTerm.isEmpty) {
+      yield LoadedCountryState(countries: _countries);
+    }
+    yield LoadingCountryState();
+
+    final List<Country> searchedCountries = _countries
+        .where((c) => c.name.toLowerCase().contains(event.searchTerm.toLowerCase()))
+        .toList();
+
+    if (searchedCountries.isEmpty) {
+      yield InitialCountryState();
+    }
+    yield LoadedCountryState(countries: searchedCountries);
   }
 }

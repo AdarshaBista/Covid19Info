@@ -121,6 +121,7 @@ class CountryCard extends StatelessWidget {
   }
 
   void _navigateToDetailsPage(BuildContext context) {
+    FocusScope.of(context).unfocus();
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => BlocProvider(

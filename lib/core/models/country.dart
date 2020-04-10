@@ -11,11 +11,11 @@ class Country {
   final int totalDeaths;
   final int totalRecovered;
   final int totalCritical;
-  final int activeCases;
   final int dailyConfirmed;
   final int dailyDeaths;
   final int confirmedPerMillion;
   final List<TimelineData> timeline;
+  int get activeCases => totalConfirmed - totalDeaths - totalRecovered;
 
   Country({
     @required this.code,
@@ -26,7 +26,6 @@ class Country {
     @required this.totalDeaths,
     @required this.totalRecovered,
     @required this.totalCritical,
-    @required this.activeCases,
     @required this.dailyConfirmed,
     @required this.dailyDeaths,
     @required this.confirmedPerMillion,
@@ -39,13 +38,12 @@ class Country {
         assert(totalDeaths != null),
         assert(totalRecovered != null),
         assert(totalCritical != null),
-        assert(activeCases != null),
         assert(dailyConfirmed != null),
         assert(dailyDeaths != null),
         assert(confirmedPerMillion != null),
         assert(timeline != null);
 
-  bool get isValid => code != 'Error' && lat != -1.0 && lng != -1.0;
+  bool get isValid => code != 'Error' && lat != -1.0 && lng != -1.0 && totalConfirmed > 0;
 
   Country copyWith({
     String code,
@@ -56,7 +54,6 @@ class Country {
     int totalDeaths,
     int totalRecovered,
     int totalCritical,
-    int activeCases,
     int dailyConfirmed,
     int dailyDeaths,
     int confirmedPerMillion,
@@ -71,7 +68,6 @@ class Country {
       totalDeaths: totalDeaths ?? this.totalDeaths,
       totalRecovered: totalRecovered ?? this.totalRecovered,
       totalCritical: totalCritical ?? this.totalCritical,
-      activeCases: activeCases ?? this.activeCases,
       dailyConfirmed: dailyConfirmed ?? this.dailyConfirmed,
       dailyDeaths: dailyDeaths ?? this.dailyDeaths,
       confirmedPerMillion: confirmedPerMillion ?? this.confirmedPerMillion,
@@ -91,7 +87,6 @@ class Country {
       totalDeaths: map['totalDeaths'],
       totalRecovered: map['totalRecovered'],
       totalCritical: map['totalCritical'],
-      activeCases: map['activeCases'],
       dailyConfirmed: map['dailyConfirmed'],
       dailyDeaths: map['dailyDeaths'],
       confirmedPerMillion: map['totalConfirmedPerMillionPopulation'] ?? 0,

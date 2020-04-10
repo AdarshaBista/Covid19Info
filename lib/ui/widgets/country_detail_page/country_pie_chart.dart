@@ -25,6 +25,7 @@ class CountryPieChart extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.mediumLight,
         ),
+        const SizedBox(height: 24.0),
         CountryStatChart(
           active: country.activeCases,
           recovered: country.totalRecovered,
@@ -33,6 +34,7 @@ class CountryPieChart extends StatelessWidget {
           radius: 100.0,
           showPercent: true,
         ),
+        const SizedBox(height: 8.0),
         Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[

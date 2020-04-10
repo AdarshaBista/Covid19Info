@@ -10,8 +10,6 @@ class LoadingCountryState extends CountryState {}
 class LoadedCountryState extends CountryState {
   final List<Country> countries;
 
-  List<Country> get mostInfected => countries.take(5).toList();
-
   LoadedCountryState({
     @required this.countries,
   }) : assert(countries != null);

@@ -11,7 +11,6 @@ import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:covid19_info/ui/widgets/global_page/map_card.dart';
 import 'package:covid19_info/ui/widgets/global_page/country_list.dart';
 import 'package:covid19_info/ui/widgets/global_page/global_stats_row.dart';
-import 'package:covid19_info/ui/widgets/global_page/top_infected_stats.dart';
 
 class GlobalPage extends StatefulWidget {
   @override
@@ -69,8 +68,6 @@ class _GlobalPageState extends State<GlobalPage> {
         ),
         const SizedBox(height: 6.0),
         GlobalStatsRow(),
-        const SizedBox(height: 16.0),
-        TopInfectedStats(),
         const SizedBox(height: 16.0),
         CountryList(),
       ],

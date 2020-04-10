@@ -5,21 +5,25 @@ import 'package:covid19_info/ui/styles/styles.dart';
 class SearchBox extends StatelessWidget {
   final Function(String) onChanged;
   final String hintText;
+  final EdgeInsets margin;
+  final BorderRadiusGeometry borderRadius;
 
   const SearchBox({
     this.onChanged,
     this.hintText = 'Search',
+    this.margin = const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+    this.borderRadius,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 50.0,
-      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      margin: margin,
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: AppColors.dark,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: borderRadius ?? BorderRadius.circular(8.0),
       ),
       child: TextFormField(
         onChanged: onChanged,
@@ -27,7 +31,7 @@ class SearchBox extends StatelessWidget {
         style: AppTextStyles.smallLight,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: 'Search Hospitals',
+          hintText: hintText,
           prefixIcon: Icon(
             Icons.search,
             size: 20.0,
