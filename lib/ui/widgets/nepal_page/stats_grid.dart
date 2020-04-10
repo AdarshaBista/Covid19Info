@@ -37,7 +37,7 @@ class StatsGrid extends StatelessWidget {
             StatCard(
               label: 'Negative',
               count: state.nepalStats.negative.toString(),
-              color: Colors.green,
+              color: Colors.teal,
             ),
             StatCard(
               label: 'Positive',
@@ -45,9 +45,24 @@ class StatsGrid extends StatelessWidget {
               color: Colors.yellow,
             ),
             StatCard(
+              label: 'Pending',
+              count: state.nepalStats.pendingResult.toString(),
+              color: Colors.pinkAccent,
+            ),
+            StatCard(
               label: 'Isolation',
               count: state.nepalStats.isolation.toString(),
               color: Colors.deepPurple,
+            ),
+            StatCard(
+              label: 'Recovered',
+              count: state.nepalStats.recovered.toString(),
+              color: Colors.green,
+            ),
+            StatCard(
+              label: 'Active',
+              count: state.nepalStats.active.toString(),
+              color: Colors.orange,
             ),
             StatCard(
               label: 'Deaths',
