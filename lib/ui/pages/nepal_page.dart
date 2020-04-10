@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
-import 'package:covid19_info/blocs/search_hospital_bloc/search_hospital_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/search_box.dart';
@@ -55,13 +54,13 @@ class _NepalPageState extends State<NepalPage> {
             SearchBox(
               hintText: 'Search Hospitals',
               onChanged: (String value) {
-                context.bloc<SearchHospitalBloc>()
-                  ..add(StartHospitalSearchEvent(
+                context.bloc<HospitalBloc>()
+                  ..add(SearchHospitalEvent(
                     searchTerm: value,
                   ));
               },
             ),
-            _buildHospitalSearchList(),
+            _buildHospitalList(),
           ],
         ),
       ),
@@ -77,22 +76,6 @@ class _NepalPageState extends State<NepalPage> {
           return StatsGrid(state: state);
         } else if (state is ErrorNepalStatsState) {
           return ErrorIcon(message: state.message);
-        } else {
-          return const BusyIndicator();
-        }
-      },
-    );
-  }
-
-  Widget _buildHospitalSearchList() {
-    return BlocBuilder<SearchHospitalBloc, SearchHospitalState>(
-      builder: (context, state) {
-        if (state is InitialSearchHospitalState) {
-          return _buildHospitalList();
-        } else if (state is EmptySearchHospitalState) {
-          return const EmptyIcon();
-        } else if (state is LoadedSearchHospitalState) {
-          return HospitalList(hospitals: state.searchedHospitals);
         } else {
           return const BusyIndicator();
         }
