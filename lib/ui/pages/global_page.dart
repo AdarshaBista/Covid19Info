@@ -21,8 +21,8 @@ class _GlobalPageState extends State<GlobalPage> {
   double panelPos = 0.0;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     context.bloc<GlobalStatsBloc>()..add(GetGlobalStatsEvent());
     context.bloc<CountryBloc>()..add(GetCountryEvent());
   }

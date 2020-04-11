@@ -17,8 +17,8 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     context.bloc<NewsBloc>()..add(GetNewsEvent());
   }
 

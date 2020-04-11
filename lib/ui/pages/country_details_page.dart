@@ -27,8 +27,8 @@ class CountryDetailsPage extends StatefulWidget {
 
 class _CountryDetailsPageState extends State<CountryDetailsPage> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     context.bloc<CountryDetailBloc>()
       ..add(
         GetCountryDetailEvent(country: widget.country),

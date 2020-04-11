@@ -22,8 +22,8 @@ class NepalPage extends StatefulWidget {
 
 class _NepalPageState extends State<NepalPage> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     context.bloc<NepalStatsBloc>()..add(GetNepalStatsEvent());
     context.bloc<HospitalBloc>()..add(GetHospitalEvent());
   }

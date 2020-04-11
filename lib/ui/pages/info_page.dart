@@ -21,8 +21,8 @@ class InfoPage extends StatefulWidget {
 
 class _InfoPageState extends State<InfoPage> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     context.bloc<MythBloc>()..add(GetMythEvent());
     context.bloc<FaqBloc>()..add(GetFaqEvent());
   }
