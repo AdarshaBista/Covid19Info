@@ -42,11 +42,17 @@ class _CountryDetailsPageState extends State<CountryDetailsPage> {
         elevation: 8.0,
         backgroundColor: AppColors.dark,
         centerTitle: true,
-        title: Text(
-          widget.country.name,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: AppTextStyles.largeLightSerif,
+        title: Hero(
+          tag: widget.country.name,
+          child: Material(
+            color: Colors.transparent,
+            child: Text(
+              widget.country.name,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.largeLightSerif,
+            ),
+          ),
         ),
       ),
       body: BlocBuilder<CountryDetailBloc, CountryDetailState>(

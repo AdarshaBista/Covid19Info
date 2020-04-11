@@ -25,14 +25,11 @@ class CountryCard extends StatelessWidget {
       onTap: () => _navigateToDetailsPage(context),
       child: Container(
         height: 128.0,
-        margin: const EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
+        margin: const EdgeInsets.all(10.0),
         padding: const EdgeInsets.only(top: 12.0, right: 12.0, bottom: 12.0),
         decoration: BoxDecoration(
           color: AppColors.dark,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(64.0),
-            bottomLeft: Radius.circular(64.0),
-          ),
+          borderRadius: BorderRadius.all(Radius.circular(12.0)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -52,11 +49,17 @@ class CountryCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Flexible(
-            child: Text(
-              country.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.mediumLight,
+            child: Hero(
+              tag: country.name,
+              child: Material(
+                color: Colors.transparent,
+                child: Text(
+                  country.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.mediumLight,
+                ),
+              ),
             ),
           ),
           const Divider(height: 12.0),

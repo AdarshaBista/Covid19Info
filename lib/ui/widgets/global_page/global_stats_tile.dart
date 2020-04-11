@@ -50,10 +50,10 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
 
   Positioned _buildArrowIcon(BuildContext context) {
     return Positioned(
-      left: MediaQuery.of(context).size.width / 2.0 - 16.0,
-      bottom: -4.0,
+      left: MediaQuery.of(context).size.width / 2.0 - 14.0,
+      bottom: -2.0,
       child: CircleAvatar(
-        radius: 16.0,
+        radius: 14.0,
         backgroundColor: AppColors.dark,
         child: Icon(
           isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
