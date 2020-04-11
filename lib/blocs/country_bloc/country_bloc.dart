@@ -41,13 +41,8 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   Stream<CountryState> mapEventToState(
     CountryEvent event,
   ) async* {
-    if (event is GetCountryEvent) {
-      yield* _mapGetCountryToState();
-    }
-
-    if (event is SearchCountryEvent) {
-      yield* _mapSearchCountryToState(event);
-    }
+    if (event is GetCountryEvent) yield* _mapGetCountryToState();
+    if (event is SearchCountryEvent) yield* _mapSearchCountryToState(event);
   }
 
   Stream<CountryState> _mapGetCountryToState() async* {
@@ -55,7 +50,10 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     try {
       _countries = await apiService.fetchCountries();
       _countries = _countries.where((c) => c.isValid).toList();
-      yield LoadedCountryState(countries: _countries);
+      yield LoadedCountryState(
+        allCountries: _countries,
+        searchedCountries: null,
+      );
     } on AppError catch (e) {
       print(e.error);
       yield ErrorCountryState(message: e.message);
@@ -64,17 +62,26 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
 
   Stream<CountryState> _mapSearchCountryToState(SearchCountryEvent event) async* {
     if (event.searchTerm.isEmpty) {
-      yield LoadedCountryState(countries: _countries);
+      yield LoadedCountryState(
+        allCountries: _countries,
+        searchedCountries: null,
+      );
+      return;
     }
-    yield LoadingCountryState();
 
     final List<Country> searchedCountries = _countries
         .where((c) => c.name.toLowerCase().contains(event.searchTerm.toLowerCase()))
         .toList();
 
     if (searchedCountries.isEmpty) {
-      yield InitialCountryState();
+      yield LoadedCountryState(
+        allCountries: _countries,
+        searchedCountries: [],
+      );
     }
-    yield LoadedCountryState(countries: searchedCountries);
+    yield LoadedCountryState(
+      allCountries: _countries,
+      searchedCountries: searchedCountries,
+    );
   }
 }

@@ -8,11 +8,22 @@ class InitialCountryState extends CountryState {}
 class LoadingCountryState extends CountryState {}
 
 class LoadedCountryState extends CountryState {
-  final List<Country> countries;
+  final List<Country> allCountries;
+  final List<Country> searchedCountries;
+
+  bool get shouldShowAllCountries => searchedCountries == null;
+  bool get isSearchEmpty => searchedCountries.isEmpty;
+  bool isCountryInSearch(Country c) {
+    if (shouldShowAllCountries) {
+      return false;
+    }
+    return searchedCountries.contains(c);
+  }
 
   LoadedCountryState({
-    @required this.countries,
-  }) : assert(countries != null);
+    @required this.allCountries,
+    @required this.searchedCountries,
+  }) : assert(allCountries != null);
 }
 
 class ErrorCountryState extends CountryState {

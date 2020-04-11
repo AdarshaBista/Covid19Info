@@ -17,7 +17,6 @@ class HospitalList extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      addAutomaticKeepAlives: false,
       itemCount: hospitals.length,
       itemBuilder: (_, index) => HospitalCard(
         hospital: hospitals[index],
