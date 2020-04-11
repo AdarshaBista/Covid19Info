@@ -10,6 +10,7 @@ import 'package:covid19_info/ui/pages/country_details_page.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
+import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
 import 'package:covid19_info/ui/widgets/common/country_stat_chart.dart';
 
 class CountryCard extends StatelessWidget {
@@ -21,23 +22,25 @@ class CountryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => _navigateToDetailsPage(context),
-      child: Container(
-        height: 128.0,
-        margin: const EdgeInsets.all(10.0),
-        padding: const EdgeInsets.only(top: 12.0, right: 12.0, bottom: 12.0),
-        decoration: BoxDecoration(
-          color: AppColors.dark,
-          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const SizedBox(width: 12.0),
-            _buildGraph(),
-            _buildStats(),
-          ],
+    return FadeAnimator(
+      child: GestureDetector(
+        onTap: () => _navigateToDetailsPage(context),
+        child: Container(
+          height: 128.0,
+          margin: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(top: 12.0, right: 12.0, bottom: 12.0),
+          decoration: BoxDecoration(
+            color: AppColors.dark,
+            borderRadius: BorderRadius.all(Radius.circular(12.0)),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const SizedBox(width: 12.0),
+              _buildGraph(),
+              _buildStats(),
+            ],
+          ),
         ),
       ),
     );

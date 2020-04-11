@@ -8,6 +8,7 @@ import 'package:covid19_info/core/models/timeline_data.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
+import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
 
 class TimelineGraph extends StatefulWidget {
   final String title;
@@ -47,54 +48,56 @@ class _TimelineGraphState extends State<TimelineGraph> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        const Divider(height: 24.0),
-        Flexible(
-          child: Text(
-            widget.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.mediumLight,
-          ),
-        ),
-        const SizedBox(height: 8.0),
-        Text(
-          'spread over time',
-          style: AppTextStyles.smallLight,
-        ),
-        const SizedBox(height: 20.0),
-        Padding(
-          padding: const EdgeInsets.only(right: 8.0),
-          child: _buildGraph(),
-        ),
-        _buildLabelRow(),
-        const SizedBox(height: 20.0),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: RangeSlider(
-            min: 0.0,
-            max: widget.timeline.length.toDouble() - 1.0,
-            divisions: widget.timeline.length,
-            activeColor: AppColors.primary.withOpacity(0.4),
-            labels: RangeLabels(
-              _getXTitle(sliderValues.start),
-              _getXTitle(sliderValues.end),
+    return FadeAnimator(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          const Divider(height: 24.0),
+          Flexible(
+            child: Text(
+              widget.title,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.mediumLight,
             ),
-            values: sliderValues,
-            onChanged: (values) {
-              if (values.end - values.start > 10.0)
-                setState(() {
-                  sliderValues = values;
-                });
-            },
           ),
-        ),
-        const SizedBox(height: 20.0),
-        const Divider(height: 8.0),
-      ],
+          const SizedBox(height: 8.0),
+          Text(
+            'spread over time',
+            style: AppTextStyles.smallLight,
+          ),
+          const SizedBox(height: 20.0),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: _buildGraph(),
+          ),
+          _buildLabelRow(),
+          const SizedBox(height: 20.0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: RangeSlider(
+              min: 0.0,
+              max: widget.timeline.length.toDouble() - 1.0,
+              divisions: widget.timeline.length,
+              activeColor: AppColors.primary.withOpacity(0.4),
+              labels: RangeLabels(
+                _getXTitle(sliderValues.start),
+                _getXTitle(sliderValues.end),
+              ),
+              values: sliderValues,
+              onChanged: (values) {
+                if (values.end - values.start > 10.0)
+                  setState(() {
+                    sliderValues = values;
+                  });
+              },
+            ),
+          ),
+          const SizedBox(height: 20.0),
+          const Divider(height: 8.0),
+        ],
+      ),
     );
   }
 

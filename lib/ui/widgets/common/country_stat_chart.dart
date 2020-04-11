@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
 class CountryStatChart extends StatelessWidget {
   final int active;
@@ -24,17 +25,19 @@ class CountryStatChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PieChart(
-      PieChartData(
-        sectionsSpace: 3.0,
-        centerSpaceRadius: centerSpaceRadius,
-        startDegreeOffset: -90.0,
-        borderData: FlBorderData(show: false),
-        sections: [
-          _makeSection(active.toDouble(), Colors.yellow),
-          _makeSection(recovered.toDouble(), Colors.green),
-          _makeSection(deaths.toDouble(), Colors.red),
-        ],
+    return ScaleAnimator(
+      child: PieChart(
+        PieChartData(
+          sectionsSpace: 3.0,
+          centerSpaceRadius: centerSpaceRadius,
+          startDegreeOffset: -90.0,
+          borderData: FlBorderData(show: false),
+          sections: [
+            _makeSection(active.toDouble(), Colors.yellow),
+            _makeSection(recovered.toDouble(), Colors.green),
+            _makeSection(deaths.toDouble(), Colors.red),
+          ],
+        ),
       ),
     );
   }
@@ -48,7 +51,7 @@ class CountryStatChart extends StatelessWidget {
       radius: radius,
       showTitle: showPercent,
       title: '${percent.toStringAsFixed(1)} %',
-      titlePositionPercentageOffset: 1.3,
+      titlePositionPercentageOffset: 1.2,
       titleStyle: AppTextStyles.smallLight,
     );
   }

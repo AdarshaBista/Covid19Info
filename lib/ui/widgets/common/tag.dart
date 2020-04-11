@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
 class Tag extends StatelessWidget {
   final String label;
@@ -17,31 +18,33 @@ class Tag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.8),
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            if (label != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  label,
-                  style: AppTextStyles.extraSmallLight,
+    return ScaleAnimator(
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.8),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              if (label != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Text(
+                    label,
+                    style: AppTextStyles.extraSmallLight,
+                  ),
                 ),
-              ),
-            if (iconData != null)
-              Icon(
-                iconData,
-                size: 14.0,
-              ),
-          ],
+              if (iconData != null)
+                Icon(
+                  iconData,
+                  size: 14.0,
+                ),
+            ],
+          ),
         ),
       ),
     );

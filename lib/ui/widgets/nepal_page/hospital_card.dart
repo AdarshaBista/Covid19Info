@@ -9,6 +9,7 @@ import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:covid19_info/ui/widgets/common/tag.dart';
 import 'package:covid19_info/ui/widgets/common/icon_row.dart';
+import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/hospital_details.dart';
 
 class HospitalCard extends StatelessWidget {
@@ -22,58 +23,60 @@ class HospitalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) => GestureDetector(
-        onTap: () => _openBottomSheet(context),
-        child: Container(
-          width: double.infinity,
-          margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-          padding: const EdgeInsets.all(10.0),
-          decoration: BoxDecoration(
-            color: AppColors.dark,
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              IconRow(
-                label: hospital.name,
-                iconData: LineAwesomeIcons.hospital_o,
-                labelStyle: AppTextStyles.mediumLight,
-                color: color,
-              ),
-              IconRow(
-                label: hospital.address.isEmpty ? 'N/A' : hospital.address,
-                iconData: LineAwesomeIcons.map,
-                labelStyle: AppTextStyles.smallLight,
-                color: color,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Flexible(
-                    child: IconRow(
-                      label: hospital.phone.isEmpty ? 'N/A' : hospital.phone,
-                      iconData: LineAwesomeIcons.phone,
-                      labelStyle: AppTextStyles.smallLight,
-                      color: color,
+    return FadeAnimator(
+      child: Builder(
+        builder: (context) => GestureDetector(
+          onTap: () => _openBottomSheet(context),
+          child: Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+            padding: const EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              color: AppColors.dark,
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                IconRow(
+                  label: hospital.name,
+                  iconData: LineAwesomeIcons.hospital_o,
+                  labelStyle: AppTextStyles.mediumLight,
+                  color: color,
+                ),
+                IconRow(
+                  label: hospital.address.isEmpty ? 'N/A' : hospital.address,
+                  iconData: LineAwesomeIcons.map,
+                  labelStyle: AppTextStyles.smallLight,
+                  color: color,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                      child: IconRow(
+                        label: hospital.phone.isEmpty ? 'N/A' : hospital.phone,
+                        iconData: LineAwesomeIcons.phone,
+                        labelStyle: AppTextStyles.smallLight,
+                        color: color,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 10.0),
-                  if (hospital.phone.isNotEmpty)
-                    Tag(
-                      label: 'Call',
-                      color: color,
-                      iconData: LineAwesomeIcons.phone,
-                      onPressed: () async {
-                        await context
-                            .repository<LauncherService>()
-                            .launchPhone(context, hospital.phone);
-                      },
-                    ),
-                ],
-              ),
-            ],
+                    const SizedBox(width: 10.0),
+                    if (hospital.phone.isNotEmpty)
+                      Tag(
+                        label: 'Call',
+                        color: color,
+                        iconData: LineAwesomeIcons.phone,
+                        onPressed: () async {
+                          await context
+                              .repository<LauncherService>()
+                              .launchPhone(context, hospital.phone);
+                        },
+                      ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

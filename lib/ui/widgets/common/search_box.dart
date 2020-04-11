@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
 
 class SearchBox extends StatelessWidget {
   final Function(String) onChanged;
@@ -17,24 +18,26 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50.0,
-      margin: margin,
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: AppColors.dark,
-        borderRadius: borderRadius ?? BorderRadius.circular(8.0),
-      ),
-      child: TextFormField(
-        onChanged: onChanged,
-        maxLines: 1,
-        style: AppTextStyles.smallLight,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: hintText,
-          prefixIcon: Icon(
-            Icons.search,
-            size: 20.0,
+    return FadeAnimator(
+      child: Container(
+        height: 50.0,
+        margin: margin,
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: AppColors.dark,
+          borderRadius: borderRadius ?? BorderRadius.circular(8.0),
+        ),
+        child: TextFormField(
+          onChanged: onChanged,
+          maxLines: 1,
+          style: AppTextStyles.smallLight,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: hintText,
+            prefixIcon: Icon(
+              Icons.search,
+              size: 20.0,
+            ),
           ),
         ),
       ),

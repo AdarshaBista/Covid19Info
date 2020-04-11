@@ -23,6 +23,7 @@ dependencies:
   fl_chart: ^0.8.7
   intl: ^0.16.1
   device_preview: ^0.4.4
+  animator: ^1.0.0+5
 
 
 dev_dependencies:

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 
 import 'package:covid19_info/ui/widgets/common/tag.dart';
+import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
 
 class InfoCard extends StatelessWidget {
   final String title;
@@ -21,18 +22,20 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      backgroundColor: color.withOpacity(0.2),
-      title: _buildTitle(),
-      children: <Widget>[
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildSubTitle(),
-            _buildTag(),
-          ],
-        ),
-      ],
+    return FadeAnimator(
+      child: ExpansionTile(
+        backgroundColor: color.withOpacity(0.2),
+        title: _buildTitle(),
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              _buildSubTitle(),
+              _buildTag(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
