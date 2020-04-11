@@ -33,32 +33,34 @@ class _GlobalPageState extends State<GlobalPage> {
       child: Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,
-        body: SlidingUpPanel(
-          color: AppColors.background,
-          parallaxOffset: 0.3,
-          isDraggable: true,
-          backdropEnabled: true,
-          parallaxEnabled: true,
-          backdropTapClosesPanel: true,
-          slideDirection: SlideDirection.UP,
-          margin: EdgeInsets.zero,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20.0),
-            topRight: Radius.circular(20.0),
-          ),
-          maxHeight: MediaQuery.of(context).size.height * 0.8,
-          minHeight: 96.0,
-          onPanelSlide: (value) => setState(() {
-            panelPos = value;
-          }),
-          body: Stack(
-            alignment: Alignment.topCenter,
-            children: <Widget>[
-              MapCard(),
-              GlobalStatsTile(),
-            ],
-          ),
-          panelBuilder: (sc) => _buildPanel(sc),
+        body: Stack(
+          children: <Widget>[
+            MapCard(),
+            SlidingUpPanel(
+              color: AppColors.background,
+              parallaxOffset: 0.3,
+              isDraggable: true,
+              backdropEnabled: true,
+              parallaxEnabled: true,
+              backdropTapClosesPanel: true,
+              slideDirection: SlideDirection.UP,
+              margin: EdgeInsets.zero,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.0),
+                topRight: Radius.circular(20.0),
+              ),
+              maxHeight: MediaQuery.of(context).size.height * 0.8,
+              minHeight: 96.0,
+              onPanelSlide: (value) => setState(() {
+                panelPos = value;
+              }),
+              panelBuilder: (sc) => _buildPanel(sc),
+            ),
+            Transform.scale(
+              scale: 1.0 - panelPos,
+              child: GlobalStatsTile(),
+            ),
+          ],
         ),
       ),
     );
