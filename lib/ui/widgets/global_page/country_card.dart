@@ -24,7 +24,7 @@ class CountryCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => _navigateToDetailsPage(context),
       child: Container(
-        height: 120.0,
+        height: 128.0,
         margin: const EdgeInsets.only(top: 8.0, left: 16.0, bottom: 8.0),
         padding: const EdgeInsets.only(top: 12.0, right: 12.0, bottom: 12.0),
         decoration: BoxDecoration(

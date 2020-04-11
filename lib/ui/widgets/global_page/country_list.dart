@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
-
 import 'package:covid19_info/core/models/country.dart';
-
-import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/global_page/country_card.dart';
+import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
-import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
 class CountryList extends StatelessWidget {
+  final ScrollController controller;
+
+  const CountryList({
+    @required this.controller,
+  }) : assert(controller != null);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CountryBloc, CountryState>(
@@ -31,14 +35,10 @@ class CountryList extends StatelessWidget {
   }
 
   Widget _buildList(BuildContext context, List<Country> countries) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return ListView(
+      shrinkWrap: true,
+      controller: controller,
       children: [
-        Text(
-          'COUNTRIES',
-          style: AppTextStyles.largeLight,
-        ),
-        const SizedBox(height: 16.0),
         SearchBox(
           margin: const EdgeInsets.only(top: 8.0, left: 20.0, bottom: 8.0),
           borderRadius: BorderRadius.only(

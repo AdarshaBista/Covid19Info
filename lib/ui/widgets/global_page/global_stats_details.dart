@@ -10,7 +10,7 @@ import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
-class GlobalStatsRow extends StatelessWidget {
+class GlobalStatsDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
@@ -33,10 +33,6 @@ class GlobalStatsRow extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(
-          'GLOBAL STATS',
-          style: AppTextStyles.largeLight,
-        ),
         const SizedBox(height: 16.0),
         _buildStatsRow(state),
         const SizedBox(height: 16.0),

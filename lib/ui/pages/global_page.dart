@@ -6,11 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
 import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
-import 'package:covid19_info/ui/styles/app_colors.dart';
+import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:covid19_info/ui/widgets/global_page/map_card.dart';
 import 'package:covid19_info/ui/widgets/global_page/country_list.dart';
-import 'package:covid19_info/ui/widgets/global_page/global_stats_row.dart';
+import 'package:covid19_info/ui/widgets/global_page/global_stats_tile.dart';
 
 class GlobalPage extends StatefulWidget {
   @override
@@ -29,35 +29,45 @@ class _GlobalPageState extends State<GlobalPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: false,
-      extendBodyBehindAppBar: false,
-      body: SlidingUpPanel(
-        color: AppColors.background,
-        parallaxOffset: 0.5,
-        isDraggable: true,
-        backdropEnabled: true,
-        parallaxEnabled: true,
-        backdropTapClosesPanel: true,
-        slideDirection: SlideDirection.UP,
-        margin: EdgeInsets.zero,
-        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-        maxHeight: MediaQuery.of(context).size.height * 0.9,
-        minHeight: 140.0,
-        onPanelSlide: (value) => setState(() {
-          panelPos = value;
-        }),
-        body: MapCard(),
-        panelBuilder: (sc) => _buildList(sc),
+    return SafeArea(
+      child: Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        body: SlidingUpPanel(
+          color: AppColors.background,
+          parallaxOffset: 0.3,
+          isDraggable: true,
+          backdropEnabled: true,
+          parallaxEnabled: true,
+          backdropTapClosesPanel: true,
+          slideDirection: SlideDirection.UP,
+          margin: EdgeInsets.zero,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+          ),
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+          minHeight: 96.0,
+          onPanelSlide: (value) => setState(() {
+            panelPos = value;
+          }),
+          body: Stack(
+            alignment: Alignment.topCenter,
+            children: <Widget>[
+              MapCard(),
+              GlobalStatsTile(),
+            ],
+          ),
+          panelBuilder: (sc) => _buildPanel(sc),
+        ),
       ),
     );
   }
 
-  ListView _buildList(ScrollController sc) {
-    return ListView(
-      controller: sc,
-      shrinkWrap: true,
+  Widget _buildPanel(ScrollController sc) {
+    return Column(
       children: <Widget>[
+        const SizedBox(height: 8.0),
         Transform.rotate(
           angle: panelPos * math.pi,
           child: Icon(
@@ -66,10 +76,9 @@ class _GlobalPageState extends State<GlobalPage> {
             size: 16.0,
           ),
         ),
-        const SizedBox(height: 6.0),
-        GlobalStatsRow(),
-        const SizedBox(height: 16.0),
-        CountryList(),
+        Expanded(
+          child: CountryList(controller: sc),
+        ),
       ],
     );
   }
