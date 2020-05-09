@@ -25,8 +25,18 @@ void main() {
   runApp(
     DevicePreview(
       enabled: Platform.isWindows,
-      usePreferences: false,
-      builder: (context) => App(),
+      isToolBarVisible: true,
+      style: DevicePreviewStyle(
+        background: BoxDecoration(color: Color(0xFF24292E)),
+        toolBar: DevicePreviewToolBarStyle.dark().copyWith(
+          position: DevicePreviewToolBarPosition.left,
+        ),
+      ),
+      data: DevicePreviewData(
+        deviceIndex: 3,
+        isFrameVisible: true,
+      ),
+      builder: (_) => (App()),
     ),
   );
 }

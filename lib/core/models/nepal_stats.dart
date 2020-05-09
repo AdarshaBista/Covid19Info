@@ -8,6 +8,7 @@ class NepalStats {
   final int positive;
   final int negative;
   final int isolation;
+  final int quarantine;
   final int recovered;
   final int deaths;
   final int pendingResult;
@@ -19,6 +20,7 @@ class NepalStats {
     @required this.positive,
     @required this.negative,
     @required this.isolation,
+    @required this.quarantine,
     @required this.recovered,
     @required this.deaths,
     @required this.pendingResult,
@@ -27,6 +29,7 @@ class NepalStats {
         assert(positive != null),
         assert(negative != null),
         assert(isolation != null),
+        assert(quarantine != null),
         assert(recovered != null),
         assert(deaths != null),
         assert(pendingResult != null),
@@ -37,6 +40,7 @@ class NepalStats {
     int positive,
     int negative,
     int isolation,
+    int quarantine,
     int recovered,
     int deaths,
     int pendingResult,
@@ -47,6 +51,7 @@ class NepalStats {
       positive: positive ?? this.positive,
       negative: negative ?? this.negative,
       isolation: isolation ?? this.isolation,
+      quarantine: quarantine ?? this.quarantine,
       recovered: recovered ?? this.recovered,
       deaths: deaths ?? this.deaths,
       pendingResult: pendingResult ?? this.pendingResult,
@@ -62,6 +67,7 @@ class NepalStats {
       positive: map['tested_positive'],
       negative: map['tested_negative'],
       isolation: map['in_isolation'],
+      quarantine: map['quarantined'],
       recovered: map['recovered'],
       deaths: map['deaths'],
       pendingResult: map['pending_result'],
@@ -73,7 +79,7 @@ class NepalStats {
 
   @override
   String toString() {
-    return 'NepalStats(total: $total, positive: $positive, negative: $negative, isolation: $isolation, recovered: $recovered, deaths: $deaths, pendingResult: $pendingResult, timeline: $timeline)';
+    return 'NepalStats(total: $total, positive: $positive, negative: $negative, isolation: $isolation, quarantine: $quarantine, recovered: $recovered, deaths: $deaths, pendingResult: $pendingResult, timeline: $timeline)';
   }
 
   @override
@@ -85,6 +91,7 @@ class NepalStats {
         o.positive == positive &&
         o.negative == negative &&
         o.isolation == isolation &&
+        o.quarantine == quarantine &&
         o.recovered == recovered &&
         o.deaths == deaths &&
         o.pendingResult == pendingResult &&
@@ -97,6 +104,7 @@ class NepalStats {
         positive.hashCode ^
         negative.hashCode ^
         isolation.hashCode ^
+        quarantine.hashCode ^
         recovered.hashCode ^
         deaths.hashCode ^
         pendingResult.hashCode ^

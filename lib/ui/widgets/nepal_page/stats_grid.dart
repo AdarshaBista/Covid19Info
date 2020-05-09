@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 
-import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/stat_card.dart';
 import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
 
@@ -18,11 +17,6 @@ class StatsGrid extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        Text(
-          'TESTED',
-          style: AppTextStyles.largeLight,
-        ),
-        const SizedBox(height: 16.0),
         GridView.count(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
           crossAxisCount: 3,
@@ -30,7 +24,7 @@ class StatsGrid extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           children: <Widget>[
             StatCard(
-              label: 'Total',
+              label: 'Tested',
               count: state.nepalStats.total.toString(),
               color: Colors.blue,
             ),
@@ -53,6 +47,11 @@ class StatsGrid extends StatelessWidget {
               label: 'Isolation',
               count: state.nepalStats.isolation.toString(),
               color: Colors.deepPurple,
+            ),
+            StatCard(
+              label: 'Quarantine',
+              count: state.nepalStats.quarantine.toString(),
+              color: Colors.grey,
             ),
             StatCard(
               label: 'Recovered',
