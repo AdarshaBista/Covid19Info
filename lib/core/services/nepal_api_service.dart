@@ -7,6 +7,7 @@ import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/faq.dart';
 import 'package:covid19_info/core/models/myth.dart';
 import 'package:covid19_info/core/models/news.dart';
+import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/core/models/hospital.dart';
 import 'package:covid19_info/core/models/nepal_stats.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
@@ -75,6 +76,19 @@ class NepalApiService extends ApiService {
     } catch (e) {
       throw AppError(
         message: "Couldn't load FAQ!",
+        error: e.toString(),
+      );
+    }
+  }
+
+  Future<List<Podcast>> fetchPodcasts(int start) async {
+    try {
+      http.Response res = await http.get(NEPAL_CORONA_BASE + 'podcasts?start=$start');
+      Map<String, dynamic> resMap = jsonDecode(res.body) as Map<String, dynamic>;
+      return (resMap['data'] as List).map((m) => Podcast.fromMap(m)).toList();
+    } catch (e) {
+      throw AppError(
+        message: "Couldn't load Podcasts!",
         error: e.toString(),
       );
     }

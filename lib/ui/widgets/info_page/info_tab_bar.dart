@@ -22,6 +22,9 @@ class InfoTabBar extends StatelessWidget {
             const Tab(
               text: 'FAQ',
             ),
+            const Tab(
+              text: 'PODCASTS',
+            ),
           ],
         ),
       ),
@@ -43,8 +46,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => tabBar.preferredSize.height;
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Material(
       elevation: 8.0,
       color: AppColors.background,
