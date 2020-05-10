@@ -105,12 +105,12 @@ class _NavPageState extends State<NavPage> {
           BlocProvider(
             create: (context) => GlobalStatsBloc(
               apiService: context.repository<GlobalApiService>(),
-            ),
+            )..add(GetGlobalStatsEvent()),
           ),
           BlocProvider(
             create: (context) => CountryBloc(
               apiService: context.repository<GlobalApiService>(),
-            ),
+            )..add(GetCountryEvent()),
           ),
         ],
         child: GlobalPage(),
@@ -121,12 +121,12 @@ class _NavPageState extends State<NavPage> {
           BlocProvider(
             create: (context) => NepalStatsBloc(
               apiService: context.repository<NepalApiService>(),
-            ),
+            )..add(GetNepalStatsEvent()),
           ),
           BlocProvider(
             create: (context) => HospitalBloc(
               apiService: context.repository<NepalApiService>(),
-            ),
+            )..add(GetHospitalEvent()),
           ),
         ],
         child: NepalPage(),
@@ -135,7 +135,7 @@ class _NavPageState extends State<NavPage> {
   Widget _buildNewsPage() => BlocProvider(
         create: (context) => NewsBloc(
           apiService: context.repository<NepalApiService>(),
-        ),
+        )..add(GetNewsEvent()),
         child: NewsPage(),
       );
 
@@ -144,17 +144,17 @@ class _NavPageState extends State<NavPage> {
           BlocProvider(
             create: (context) => FaqBloc(
               apiService: context.repository<NepalApiService>(),
-            ),
+            )..add(GetFaqEvent()),
           ),
           BlocProvider(
             create: (context) => MythBloc(
               apiService: context.repository<NepalApiService>(),
-            ),
+            )..add(GetMythEvent()),
           ),
           BlocProvider(
             create: (context) => PodcastBloc(
               apiService: context.repository<NepalApiService>(),
-            ),
+            )..add(GetPodcastEvent()),
           ),
           BlocProvider(
             create: (context) => PodcastPlayerBloc(

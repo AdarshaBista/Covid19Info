@@ -14,26 +14,12 @@ import 'package:covid19_info/ui/widgets/country_detail_page/daily_stats_row.dart
 import 'package:covid19_info/ui/widgets/country_detail_page/country_pie_chart.dart';
 import 'package:covid19_info/ui/widgets/country_detail_page/country_stats_grid.dart';
 
-class CountryDetailsPage extends StatefulWidget {
+class CountryDetailsPage extends StatelessWidget {
   final Country country;
 
   const CountryDetailsPage({
     @required this.country,
   }) : assert(country != null);
-
-  @override
-  _CountryDetailsPageState createState() => _CountryDetailsPageState();
-}
-
-class _CountryDetailsPageState extends State<CountryDetailsPage> {
-  @override
-  void initState() {
-    super.initState();
-    context.bloc<CountryDetailBloc>()
-      ..add(
-        GetCountryDetailEvent(country: widget.country),
-      );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +29,11 @@ class _CountryDetailsPageState extends State<CountryDetailsPage> {
         backgroundColor: AppColors.dark,
         centerTitle: true,
         title: Hero(
-          tag: widget.country.name,
+          tag: country.name,
           child: Material(
             color: Colors.transparent,
             child: Text(
-              widget.country.name,
+              country.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.largeLightSerif,

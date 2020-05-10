@@ -161,7 +161,7 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
         builder: (_) => BlocProvider(
           create: (_) => CountryDetailBloc(
             apiService: context.repository<GlobalApiService>(),
-          ),
+          )..add(GetCountryDetailEvent(country: country)),
           child: CountryDetailsPage(
             country: country,
           ),

@@ -14,21 +14,8 @@ import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
-class InfoPage extends StatefulWidget {
+class InfoPage extends StatelessWidget {
   const InfoPage();
-
-  @override
-  _InfoPageState createState() => _InfoPageState();
-}
-
-class _InfoPageState extends State<InfoPage> {
-  @override
-  void initState() {
-    super.initState();
-    context.bloc<FaqBloc>()..add(GetFaqEvent());
-    context.bloc<MythBloc>()..add(GetMythEvent());
-    context.bloc<PodcastBloc>()..add(GetPodcastEvent());
-  }
 
   @override
   Widget build(BuildContext context) {

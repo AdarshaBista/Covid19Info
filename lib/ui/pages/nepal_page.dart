@@ -13,20 +13,8 @@ import 'package:covid19_info/ui/widgets/nepal_page/hospital_list.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 import 'package:covid19_info/ui/widgets/common/collapsible_appbar.dart';
 
-class NepalPage extends StatefulWidget {
+class NepalPage extends StatelessWidget {
   const NepalPage();
-
-  @override
-  _NepalPageState createState() => _NepalPageState();
-}
-
-class _NepalPageState extends State<NepalPage> {
-  @override
-  void initState() {
-    super.initState();
-    context.bloc<NepalStatsBloc>()..add(GetNepalStatsEvent());
-    context.bloc<HospitalBloc>()..add(GetHospitalEvent());
-  }
 
   @override
   Widget build(BuildContext context) {
