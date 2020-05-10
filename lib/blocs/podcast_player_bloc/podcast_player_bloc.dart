@@ -6,17 +6,17 @@ import 'package:meta/meta.dart';
 import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 
-import 'package:covid19_info/core/services/podcast_service.dart';
+import 'package:covid19_info/core/services/podcast_player_service.dart';
 
 part 'podcast_player_event.dart';
 part 'podcast_player_state.dart';
 
 class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
-  final PodcastService podcastService;
+  final PodcastPlayerService podcastPlayerService;
 
   PodcastPlayerBloc({
-    @required this.podcastService,
-  }) : assert(podcastService != null);
+    @required this.podcastPlayerService,
+  }) : assert(podcastPlayerService != null);
 
   @override
   PodcastPlayerState get initialState => InitialPodcastPlayerState();
@@ -31,15 +31,16 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
     if (event is StopPodcastEvent) yield* _mapStopToState();
     if (event is SeekPodcastEvent) yield* _mapSeekToState(event.seconds);
     if (event is SetSpeedPodcastEvent) yield* _mapSetSpeedToState(event.speed);
+    if (event is CompletedPodcastEvent) yield* _mapCompletedToState();
   }
 
   Stream<PodcastPlayerState> _mapInitToState(Podcast podcast) async* {
     yield LoadingPodcastPlayerState();
     try {
-      await podcastService.init(podcast);
-      podcastService.play();
+      await podcastPlayerService.init(podcast);
+      podcastPlayerService.play();
       yield LoadedPodcastPlayerState(
-        podcastService: podcastService,
+        podcastPlayerService: podcastPlayerService,
       );
     } on AppError catch (e) {
       yield ErrorPodcastPlayerState(message: e.message);
@@ -48,35 +49,40 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
   }
 
   Stream<PodcastPlayerState> _mapPlayToState() async* {
-    podcastService.play();
+    podcastPlayerService.play();
     yield LoadedPodcastPlayerState(
-      podcastService: podcastService,
+      podcastPlayerService: podcastPlayerService,
     );
   }
 
   Stream<PodcastPlayerState> _mapPauseToState() async* {
-    await podcastService.pause();
+    await podcastPlayerService.pause();
     yield LoadedPodcastPlayerState(
-      podcastService: podcastService,
+      podcastPlayerService: podcastPlayerService,
     );
   }
 
   Stream<PodcastPlayerState> _mapStopToState() async* {
-    await podcastService.stop();
+    await podcastPlayerService.stop();
     yield InitialPodcastPlayerState();
   }
 
   Stream<PodcastPlayerState> _mapSeekToState(double seconds) async* {
-    await podcastService.seekTo(Duration(seconds: seconds.toInt()));
+    podcastPlayerService.seekTo(Duration(seconds: seconds.toInt()));
     yield LoadedPodcastPlayerState(
-      podcastService: podcastService,
+      podcastPlayerService: podcastPlayerService,
     );
   }
 
   Stream<PodcastPlayerState> _mapSetSpeedToState(double speed) async* {
-    await podcastService.setSpeed(speed);
+    await podcastPlayerService.setSpeed(speed);
     yield LoadedPodcastPlayerState(
-      podcastService: podcastService,
+      podcastPlayerService: podcastPlayerService,
     );
+  }
+
+  Stream<PodcastPlayerState> _mapCompletedToState() async* {
+    await podcastPlayerService.stop();
+    yield InitialPodcastPlayerState();
   }
 }

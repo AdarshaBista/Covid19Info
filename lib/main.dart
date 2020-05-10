@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:covid19_info/core/services/podcast_service.dart';
 import 'package:covid19_info/core/services/launcher_service.dart';
 import 'package:covid19_info/core/services/nepal_api_service.dart';
 import 'package:covid19_info/core/services/global_api_service.dart';
+import 'package:covid19_info/core/services/podcast_player_service.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/pages/nav_page.dart';
@@ -47,10 +47,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<PodcastService>(create: (_) => PodcastService()),
         RepositoryProvider<LauncherService>(create: (_) => LauncherService()),
         RepositoryProvider<NepalApiService>(create: (_) => NepalApiService()),
         RepositoryProvider<GlobalApiService>(create: (_) => GlobalApiService()),
+        RepositoryProvider<PodcastPlayerService>(create: (_) => PodcastPlayerService()),
       ],
       child: MaterialApp(
         builder: DevicePreview.appBuilder,

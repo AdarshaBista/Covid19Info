@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
+import 'package:covid19_info/core/services/podcast_player_service.dart';
+
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/core/models/podcast.dart';
 
 import 'package:covid19_info/ui/widgets/common/tag.dart';
-import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 import 'package:covid19_info/ui/widgets/info_page/podcast_controls.dart';
@@ -24,7 +25,9 @@ class PodcastCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FadeAnimator(
+    final podcastPlayerService = context.repository<PodcastPlayerService>();
+
+    return ScaleAnimator(
       child: Card(
         color: AppColors.dark,
         clipBehavior: Clip.antiAlias,
@@ -33,6 +36,8 @@ class PodcastCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: ExpansionTile(
+          initiallyExpanded:
+              podcastPlayerService.isPlaying && podcastPlayerService.currentPodcast == podcast,
           tilePadding: const EdgeInsets.symmetric(horizontal: 8.0),
           backgroundColor: color.withOpacity(0.2),
           title: Row(

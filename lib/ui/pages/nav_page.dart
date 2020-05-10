@@ -11,9 +11,9 @@ import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
 import 'package:covid19_info/blocs/podcast_bloc/podcast_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
-import 'package:covid19_info/core/services/podcast_service.dart';
 import 'package:covid19_info/core/services/nepal_api_service.dart';
 import 'package:covid19_info/core/services/global_api_service.dart';
+import 'package:covid19_info/core/services/podcast_player_service.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -158,7 +158,7 @@ class _NavPageState extends State<NavPage> {
           ),
           BlocProvider(
             create: (context) => PodcastPlayerBloc(
-              podcastService: context.repository<PodcastService>(),
+              podcastPlayerService: context.repository<PodcastPlayerService>(),
             ),
           ),
         ],

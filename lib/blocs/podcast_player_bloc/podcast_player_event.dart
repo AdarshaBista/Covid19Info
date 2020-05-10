@@ -32,3 +32,5 @@ class SetSpeedPodcastEvent extends PodcastPlayerEvent {
     @required this.speed,
   }) : assert(speed != null);
 }
+
+class CompletedPodcastEvent extends PodcastPlayerEvent {}
