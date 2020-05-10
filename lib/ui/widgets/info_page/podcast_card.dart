@@ -143,7 +143,7 @@ class PodcastCard extends StatelessWidget {
       child: ScaleAnimator(
         child: FlatButton.icon(
           onPressed: () => context.bloc<PodcastPlayerBloc>()
-            ..add(PlayPodcastEvent(
+            ..add(InitPodcastEvent(
               podcast: podcast,
             )),
           icon: Icon(

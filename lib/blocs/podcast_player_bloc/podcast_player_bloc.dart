@@ -25,23 +25,58 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
   Stream<PodcastPlayerState> mapEventToState(
     PodcastPlayerEvent event,
   ) async* {
-    if (event is PlayPodcastEvent) {
-      yield LoadingPodcastPlayerState();
-      try {
-        await podcastService.init(event.podcast);
-        yield LoadedPodcastPlayerState(
-          podcast: event.podcast,
-          duration: const Duration(seconds: 90),
-        );
-        podcastService.play();
-      } on AppError catch (e) {
-        yield ErrorPodcastPlayerState(message: e.message);
-      }
-    }
+    if (event is InitPodcastEvent) yield* _mapInitToState(event.podcast);
+    if (event is PlayPodcastEvent) yield* _mapPlayToState();
+    if (event is PausePodcastEvent) yield* _mapPauseToState();
+    if (event is StopPodcastEvent) yield* _mapStopToState();
+    if (event is SeekPodcastEvent) yield* _mapSeekToState(event.seconds);
+    if (event is SetSpeedPodcastEvent) yield* _mapSetSpeedToState(event.speed);
+  }
 
-    if (event is PausePodcastEvent) {
-      await podcastService.pause();
+  Stream<PodcastPlayerState> _mapInitToState(Podcast podcast) async* {
+    yield LoadingPodcastPlayerState();
+    try {
+      await podcastService.init(podcast);
+      podcastService.play();
+      yield LoadedPodcastPlayerState(
+        podcastService: podcastService,
+      );
+    } on AppError catch (e) {
+      yield ErrorPodcastPlayerState(message: e.message);
       yield InitialPodcastPlayerState();
     }
+  }
+
+  Stream<PodcastPlayerState> _mapPlayToState() async* {
+    podcastService.play();
+    yield LoadedPodcastPlayerState(
+      podcastService: podcastService,
+    );
+  }
+
+  Stream<PodcastPlayerState> _mapPauseToState() async* {
+    await podcastService.pause();
+    yield LoadedPodcastPlayerState(
+      podcastService: podcastService,
+    );
+  }
+
+  Stream<PodcastPlayerState> _mapStopToState() async* {
+    await podcastService.stop();
+    yield InitialPodcastPlayerState();
+  }
+
+  Stream<PodcastPlayerState> _mapSeekToState(double seconds) async* {
+    await podcastService.seekTo(Duration(seconds: seconds.toInt()));
+    yield LoadedPodcastPlayerState(
+      podcastService: podcastService,
+    );
+  }
+
+  Stream<PodcastPlayerState> _mapSetSpeedToState(double speed) async* {
+    await podcastService.setSpeed(speed);
+    yield LoadedPodcastPlayerState(
+      podcastService: podcastService,
+    );
   }
 }
