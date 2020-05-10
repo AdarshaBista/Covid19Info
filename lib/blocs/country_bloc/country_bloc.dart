@@ -22,15 +22,15 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   }) : assert(apiService != null);
 
   @override
-  Stream<CountryState> transformEvents(
+  Stream<Transition<CountryEvent, CountryState>> transformEvents(
     Stream<CountryEvent> events,
-    Stream<CountryState> Function(CountryEvent event) next,
+    TransitionFunction<CountryEvent, CountryState> transitionFn,
   ) {
     return super.transformEvents(
       events.debounceTime(
         Duration(milliseconds: 500),
       ),
-      next,
+      transitionFn,
     );
   }
 

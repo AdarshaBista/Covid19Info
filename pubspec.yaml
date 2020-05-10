@@ -10,8 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.12.0+4
-  rxdart: ^0.23.1
-  flutter_bloc: ^3.2.0
+  flutter_bloc: ^4.0.0
+  just_audio: ^0.1.8
   line_awesome_icons: ^1.0.4+2
   google_nav_bar: ^2.1.0
   simple_coverflow: ^0.0.8

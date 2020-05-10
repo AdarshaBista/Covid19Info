@@ -81,6 +81,11 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
   );
 
+  static final TextStyle smallDarkSerif = _baseSerif.copyWith(
+    fontSize: 15.0,
+    fontWeight: FontWeight.w200,
+  );
+
   // Light Serif
   static final TextStyle extraLargeLightSerif = extraLargeDarkSerif.copyWith(
     color: AppColors.light,
@@ -92,5 +97,9 @@ class AppTextStyles {
 
   static final TextStyle mediumLightSerif = mediumDarkSerif.copyWith(
     color: AppColors.light,
+  );
+
+  static final TextStyle smallLightSerif = smallDarkSerif.copyWith(
+    color: Colors.white70,
   );
 }

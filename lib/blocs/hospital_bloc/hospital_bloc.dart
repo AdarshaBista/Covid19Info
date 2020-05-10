@@ -22,15 +22,15 @@ class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
   }) : assert(apiService != null);
 
   @override
-  Stream<HospitalState> transformEvents(
+  Stream<Transition<HospitalEvent, HospitalState>> transformEvents(
     Stream<HospitalEvent> events,
-    Stream<HospitalState> Function(HospitalEvent event) next,
+    TransitionFunction<HospitalEvent, HospitalState> transitionFn,
   ) {
     return super.transformEvents(
       events.debounceTime(
         Duration(milliseconds: 500),
       ),
-      next,
+      transitionFn,
     );
   }
 
