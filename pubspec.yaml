@@ -13,6 +13,7 @@ dependencies:
   rxdart: ^0.24.0
   flutter_bloc: ^4.0.0
   audioplayers: ^0.15.1
+  flutter_media_notification: ^1.2.6
   line_awesome_icons: ^1.0.4+2
   google_nav_bar: ^2.1.0
   simple_coverflow: ^0.0.8

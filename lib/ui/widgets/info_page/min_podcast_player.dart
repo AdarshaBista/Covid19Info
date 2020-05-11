@@ -25,7 +25,7 @@ class MinPodcastPlayer extends StatelessWidget {
             const SizedBox(width: 8.0),
             _buildTitle(state.currentPodcast.title.trim()),
             const SizedBox(width: 8.0),
-            _buildPlayPauseIcon(context, state.isPlaying),
+            _buildPlayPauseIcon(context),
             const SizedBox(width: 8.0),
             _buildCloseIcon(context),
           ],
@@ -62,20 +62,27 @@ class MinPodcastPlayer extends StatelessWidget {
     );
   }
 
-  Widget _buildPlayPauseIcon(BuildContext context, bool isPlaying) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(32.0),
-      onTap: () {
-        if (isPlaying)
-          context.bloc<PodcastPlayerBloc>()..add(PausePodcastEvent());
-        else
-          context.bloc<PodcastPlayerBloc>()..add(PlayPodcastEvent());
+  Widget _buildPlayPauseIcon(BuildContext context) {
+    return StreamBuilder<bool>(
+      stream: state.isPlaying,
+      initialData: true,
+      builder: (context, snapshot) {
+        bool isPlaying = snapshot.data;
+        return InkWell(
+          borderRadius: BorderRadius.circular(32.0),
+          onTap: () {
+            if (isPlaying)
+              context.bloc<PodcastPlayerBloc>()..add(PausePodcastEvent());
+            else
+              context.bloc<PodcastPlayerBloc>()..add(PlayPodcastEvent());
+          },
+          child: Icon(
+            isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+            size: 28.0,
+            color: AppColors.light,
+          ),
+        );
       },
-      child: Icon(
-        isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-        size: 28.0,
-        color: AppColors.light,
-      ),
     );
   }
 

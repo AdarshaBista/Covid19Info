@@ -181,6 +181,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.8.2"
+  flutter_media_notification:
+    dependency: "direct main"
+    description:
+      name: flutter_media_notification
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.6"
   flutter_native_splash:
     dependency: "direct dev"
     description:

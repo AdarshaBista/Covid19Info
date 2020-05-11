@@ -35,7 +35,7 @@ class PodcastPlayer extends StatelessWidget {
             children: [
               _buildSpeedIcon(context),
               const SizedBox(width: 4.0),
-              _buildPlayIcon(context),
+              _buildPlayPauseIcon(context),
               const SizedBox(width: 8.0),
               _buildStopIcon(context),
             ],
@@ -58,6 +58,15 @@ class PodcastPlayer extends StatelessWidget {
         fit: BoxFit.cover,
         width: 150,
         height: 150.0,
+        errorBuilder: (_, __, ___) => Padding(
+          padding: const EdgeInsets.all(50.0),
+          child: Image.asset(
+            'assets/images/error.png',
+            fit: BoxFit.cover,
+            width: 50.0,
+            height: 50.0,
+          ),
+        ),
       ),
     );
   }
@@ -72,23 +81,29 @@ class PodcastPlayer extends StatelessWidget {
     );
   }
 
-  Widget _buildPlayIcon(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        if (state.isPlaying)
-          context.bloc<PodcastPlayerBloc>()..add(PausePodcastEvent());
-        else
-          context.bloc<PodcastPlayerBloc>()..add(PlayPodcastEvent());
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Icon(
-          state.isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-          size: 60.0,
-          color: AppColors.light,
-        ),
-      ),
-    );
+  Widget _buildPlayPauseIcon(BuildContext context) {
+    return StreamBuilder<bool>(
+        stream: state.isPlaying,
+        initialData: true,
+        builder: (context, snapshot) {
+          bool isPlaying = snapshot.data;
+          return InkWell(
+            onTap: () {
+              if (isPlaying)
+                context.bloc<PodcastPlayerBloc>()..add(PausePodcastEvent());
+              else
+                context.bloc<PodcastPlayerBloc>()..add(PlayPodcastEvent());
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+                size: 60.0,
+                color: AppColors.light,
+              ),
+            ),
+          );
+        });
   }
 
   Widget _buildStopIcon(BuildContext context) {

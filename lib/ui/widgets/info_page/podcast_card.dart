@@ -75,6 +75,15 @@ class PodcastCard extends StatelessWidget {
         fit: BoxFit.cover,
         width: 64.0,
         height: 64.0,
+        errorBuilder: (_, __, ___) => Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Image.asset(
+            'assets/images/error.png',
+            fit: BoxFit.cover,
+            width: 44.0,
+            height: 44.0,
+          ),
+        ),
       ),
     );
   }
