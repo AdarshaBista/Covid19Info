@@ -5,12 +5,11 @@ import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart'
 
 import 'package:covid19_info/ui/styles/styles.dart';
 
-import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
+import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 import 'package:covid19_info/ui/widgets/info_page/podcast_slider.dart';
 
 class PodcastControls extends StatelessWidget {
   final LoadedPodcastPlayerState state;
-  final List<double> speedValues = const [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
 
   const PodcastControls({
     @required this.state,
@@ -18,7 +17,7 @@ class PodcastControls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FadeAnimator(
+    return ScaleAnimator(
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -82,7 +81,7 @@ class PodcastControls extends StatelessWidget {
 
   Widget _buildSheet(BuildContext context) {
     return ListView(
-      children: speedValues
+      children: state.speedValues
           .map((speed) => InkWell(
                 onTap: () {
                   Navigator.of(context).pop();

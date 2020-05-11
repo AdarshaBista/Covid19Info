@@ -3,30 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
-import 'package:covid19_info/core/services/podcast_player_service.dart';
-
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/core/models/podcast.dart';
 
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:covid19_info/ui/widgets/common/tag.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
-import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_controls.dart';
 
 class PodcastCard extends StatelessWidget {
   final Podcast podcast;
   final Color color;
+  final bool isPlaying;
 
   const PodcastCard({
     @required this.podcast,
     @required this.color,
+    @required this.isPlaying,
   })  : assert(podcast != null),
-        assert(color != null);
+        assert(color != null),
+        assert(isPlaying != null);
 
   @override
   Widget build(BuildContext context) {
-    final podcastPlayerService = context.repository<PodcastPlayerService>();
-
     return ScaleAnimator(
       child: Card(
         color: AppColors.dark,
@@ -36,22 +34,24 @@ class PodcastCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: ExpansionTile(
-          initiallyExpanded:
-              podcastPlayerService.isPlaying && podcastPlayerService.currentPodcast == podcast,
-          tilePadding: const EdgeInsets.symmetric(horizontal: 8.0),
+          initiallyExpanded: isPlaying,
           backgroundColor: color.withOpacity(0.2),
+          tilePadding: EdgeInsets.zero,
+          trailing: Offstage(),
           title: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
               _buildImage(),
-              const SizedBox(width: 16.0),
+              const SizedBox(width: 8.0),
               _buildTitle(),
+              const SizedBox(width: 8.0),
+              isPlaying ? _buildPlayingIndicator() : _buildPlayIcon(context),
             ],
           ),
           children: <Widget>[
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                _buildPlayer(),
                 _buildSubTitle(),
                 _buildTag(),
               ],
@@ -79,7 +79,7 @@ class PodcastCard extends StatelessWidget {
   }
 
   Widget _buildTitle() {
-    return Flexible(
+    return Expanded(
       child: Text(
         podcast.title.trim(),
         textAlign: TextAlign.left,
@@ -112,53 +112,27 @@ class PodcastCard extends StatelessWidget {
     );
   }
 
-  Widget _buildPlayer() {
-    return BlocConsumer<PodcastPlayerBloc, PodcastPlayerState>(
-      listener: (context, state) {
-        if (state is ErrorPodcastPlayerState) {
-          Scaffold.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: color,
-              duration: const Duration(seconds: 1),
-              content: Text(
-                state.message,
-                style: AppTextStyles.smallLight,
-              ),
-            ),
-          );
-        }
-      },
-      builder: (context, state) {
-        if (state is InitialPodcastPlayerState) {
-          return _buildPlayIcon(context);
-        } else if (state is LoadedPodcastPlayerState) {
-          return PodcastControls(state: state);
-        } else if (state is ErrorPodcastPlayerState) {
-          return _buildPlayIcon(context);
-        } else {
-          return const BusyIndicator();
-        }
-      },
+  Widget _buildPlayingIndicator() {
+    return SizedBox(
+      width: 24.0,
+      height: 24.0,
+      child: LoadingIndicator(
+        indicatorType: Indicator.audioEqualizer,
+        color: AppColors.light,
+      ),
     );
   }
 
   Widget _buildPlayIcon(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      child: ScaleAnimator(
-        child: FlatButton.icon(
-          onPressed: () => context.bloc<PodcastPlayerBloc>()
-            ..add(InitPodcastEvent(
-              podcast: podcast,
-            )),
-          icon: Icon(
-            Icons.play_circle_filled,
-          ),
-          label: Text(
-            'PLAY',
-            style: AppTextStyles.mediumLight,
-          ),
-        ),
+    return InkWell(
+      borderRadius: BorderRadius.circular(32.0),
+      onTap: () => context.bloc<PodcastPlayerBloc>()
+        ..add(InitPodcastEvent(
+          podcast: podcast,
+        )),
+      child: Icon(
+        Icons.play_circle_filled,
+        size: 28.0,
       ),
     );
   }

@@ -18,6 +18,8 @@ class PodcastPlayerService {
   Stream<Duration> get currentPosition => _player.onAudioPositionChanged;
 
   Future<void> init(Podcast podcast) async {
+    stop();
+
     int result = await _player.setUrl(podcast.audioUrl);
     if (result != 1) {
       throw AppError(message: 'Couldn\'t play podcast.');
@@ -29,11 +31,6 @@ class PodcastPlayerService {
 
     _player.onDurationChanged.listen((Duration d) {
       _duration = d;
-    });
-
-    _player.onPlayerCompletion.listen((_) {
-      _isPlaying = false;
-      seekTo(Duration());
     });
 
     _player.onPlayerError.listen((message) {
