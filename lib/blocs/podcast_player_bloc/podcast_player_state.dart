@@ -11,6 +11,7 @@ class LoadedPodcastPlayerState extends PodcastPlayerState {
   final PodcastPlayerService podcastPlayerService;
 
   Podcast get currentPodcast => podcastPlayerService.currentPodcast;
+  double get speed => podcastPlayerService.speed;
   bool get isPlaying => podcastPlayerService.isPlaying;
   Duration get duration => podcastPlayerService.duration;
   Stream<Duration> get currentPosition => podcastPlayerService.currentPosition;

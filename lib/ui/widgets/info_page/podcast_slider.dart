@@ -15,54 +15,59 @@ class PodcastSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Duration>(
-        stream: state.currentPosition,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final Duration currentDuration = snapshot.data;
+      stream: state.currentPosition,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final Duration currentDuration = snapshot.data;
 
-            if (currentDuration.inSeconds == state.duration.inSeconds - 1) {
-              context.bloc<PodcastPlayerBloc>()..add(CompletedPodcastEvent());
-            }
-
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  format(currentDuration),
-                  style: AppTextStyles.extraSmallLight,
-                ),
-                SliderTheme(
-                  data: SliderTheme.of(context).copyWith(
-                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0),
-                    valueIndicatorColor: AppColors.light.withOpacity(0.5),
-                    valueIndicatorTextStyle: AppTextStyles.smallDark,
-                  ),
-                  child: Slider(
-                    activeColor: AppColors.light,
-                    inactiveColor: AppColors.light.withOpacity(0.2),
-                    divisions: state.duration.inSeconds,
-                    min: 0.0,
-                    max: state.duration.inSeconds.toDouble(),
-                    value: currentDuration.inSeconds.toDouble(),
-                    label: format(currentDuration),
-                    onChanged: (value) {
-                      context.bloc<PodcastPlayerBloc>()
-                        ..add(SeekPodcastEvent(
-                          seconds: value,
-                        ));
-                    },
-                  ),
-                ),
-                Text(
-                  format(state.duration),
-                  style: AppTextStyles.extraSmallLight,
-                ),
-              ],
-            );
+          if (currentDuration.inSeconds >= state.duration.inSeconds - 1) {
+            context.bloc<PodcastPlayerBloc>()..add(CompletedPodcastEvent());
           }
-          return CircularProgressIndicator();
-        });
+
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                format(currentDuration),
+                style: AppTextStyles.extraSmallLight,
+              ),
+              SliderTheme(
+                data: SliderTheme.of(context).copyWith(
+                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0),
+                  valueIndicatorColor: AppColors.light.withOpacity(0.5),
+                  valueIndicatorTextStyle: AppTextStyles.smallDark,
+                ),
+                child: Slider(
+                  activeColor: AppColors.light,
+                  inactiveColor: AppColors.light.withOpacity(0.2),
+                  divisions: state.duration.inSeconds,
+                  min: 0.0,
+                  max: state.duration.inSeconds.toDouble(),
+                  value: currentDuration.inSeconds.toDouble(),
+                  label: format(currentDuration),
+                  onChanged: (value) {
+                    context.bloc<PodcastPlayerBloc>()
+                      ..add(SeekPodcastEvent(
+                        seconds: value,
+                      ));
+                  },
+                ),
+              ),
+              Text(
+                format(state.duration),
+                style: AppTextStyles.extraSmallLight,
+              ),
+            ],
+          );
+        }
+        return Center(
+          child: CircularProgressIndicator(
+            backgroundColor: AppColors.light,
+          ),
+        );
+      },
+    );
   }
 
   String format(Duration d) {

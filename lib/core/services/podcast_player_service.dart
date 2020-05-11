@@ -9,6 +9,9 @@ class PodcastPlayerService {
   Podcast _currentPodcast;
   Podcast get currentPodcast => _currentPodcast;
 
+  double _speed;
+  double get speed => _speed;
+
   bool _isPlaying;
   bool get isPlaying => _isPlaying;
 
@@ -25,6 +28,7 @@ class PodcastPlayerService {
       throw AppError(message: 'Couldn\'t play podcast.');
     }
 
+    _speed = 1.0;
     _isPlaying = false;
     _duration = Duration();
     _currentPodcast = podcast;
@@ -65,6 +69,7 @@ class PodcastPlayerService {
   }
 
   Future<void> setSpeed(double speed) async {
-    await _player.setPlaybackRate(playbackRate: speed);
+    _speed = speed;
+    await _player.setPlaybackRate(playbackRate: _speed);
   }
 }

@@ -41,6 +41,7 @@ class PodcastCard extends StatelessWidget {
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              const SizedBox(width: 8.0),
               _buildImage(),
               const SizedBox(width: 8.0),
               _buildTitle(),
@@ -118,7 +119,7 @@ class PodcastCard extends StatelessWidget {
       height: 24.0,
       child: LoadingIndicator(
         indicatorType: Indicator.audioEqualizer,
-        color: AppColors.light,
+        color: color,
       ),
     );
   }
@@ -133,6 +134,7 @@ class PodcastCard extends StatelessWidget {
       child: Icon(
         Icons.play_circle_filled,
         size: 28.0,
+        color: color,
       ),
     );
   }
