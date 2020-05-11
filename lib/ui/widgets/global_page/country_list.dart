@@ -50,7 +50,7 @@ class CountryList extends StatelessWidget {
               ));
           },
         ),
-        const Divider(height: 12.0),
+        const SizedBox(height: 8.0),
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,

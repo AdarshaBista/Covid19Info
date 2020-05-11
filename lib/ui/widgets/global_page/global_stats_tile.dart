@@ -1,9 +1,12 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
@@ -16,69 +19,66 @@ class GlobalStatsTile extends StatefulWidget {
 }
 
 class _GlobalStatsTileState extends State<GlobalStatsTile> {
-  bool isExpanded = false;
+  double panelPos = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      overflow: Overflow.visible,
-      children: <Widget>[
-        Card(
-          elevation: 8.0,
-          margin: EdgeInsets.all(12.0),
-          clipBehavior: Clip.antiAlias,
-          color: AppColors.dark,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-          child: BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
-            builder: (context, state) {
-              if (state is InitialGlobalStatsState) {
-                return const EmptyIcon();
-              } else if (state is LoadedGlobalStatsState) {
-                return _buildTile(state, context);
-              } else if (state is ErrorGlobalStatsState) {
-                return ErrorIcon(message: state.message);
-              } else {
-                return const BusyIndicator();
-              }
-            },
-          ),
-        ),
-        _buildArrowIcon(context),
-      ],
+    return BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
+      builder: (context, state) {
+        if (state is InitialGlobalStatsState) {
+          return const EmptyIcon();
+        } else if (state is LoadedGlobalStatsState) {
+          return _buildPanel(state);
+        } else if (state is ErrorGlobalStatsState) {
+          return ErrorIcon(message: state.message);
+        } else {
+          return const BusyIndicator();
+        }
+      },
     );
   }
 
-  Positioned _buildArrowIcon(BuildContext context) {
-    return Positioned(
-      left: MediaQuery.of(context).size.width / 2.0 - 14.0,
-      bottom: -2.0,
-      child: CircleAvatar(
-        radius: 14.0,
-        backgroundColor: AppColors.dark,
-        child: Icon(
-          isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-          size: 14.0,
+  Widget _buildPanel(LoadedGlobalStatsState state) {
+    return SlidingUpPanel(
+      color: AppColors.dark,
+      parallaxOffset: 0.2,
+      isDraggable: true,
+      backdropEnabled: true,
+      parallaxEnabled: true,
+      backdropTapClosesPanel: true,
+      slideDirection: SlideDirection.DOWN,
+      margin: const EdgeInsets.all(12.0),
+      borderRadius: BorderRadius.circular(16.0),
+      maxHeight: MediaQuery.of(context).size.height * 0.7,
+      minHeight: 96.0,
+      onPanelSlide: (value) => setState(() {
+        panelPos = value;
+      }),
+      collapsed: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildStatsRow(state, context),
+          _buildArrowIcon(),
+        ],
+      ),
+      panel: Transform.scale(
+        scale: panelPos,
+        child: TimelineGraph(
+          title: 'Global',
+          timeline: state.globalTimeline,
         ),
       ),
     );
   }
 
-  ExpansionTile _buildTile(LoadedGlobalStatsState state, BuildContext context) {
-    return ExpansionTile(
-      backgroundColor: AppColors.dark,
-      title: _buildStatsRow(state, context),
-      trailing: Offstage(),
-      onExpansionChanged: (value) {
-        setState(() {
-          isExpanded = value;
-        });
-      },
-      children: [
-        TimelineGraph(
-          title: 'Global',
-          timeline: state.globalTimeline,
-        ),
-      ],
+  Widget _buildArrowIcon() {
+    return Transform.rotate(
+      angle: panelPos * math.pi,
+      child: Icon(
+        Icons.keyboard_arrow_down,
+        color: Colors.white54,
+        size: 14.0,
+      ),
     );
   }
 

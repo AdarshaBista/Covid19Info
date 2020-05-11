@@ -80,7 +80,8 @@ class _TimelineGraphState extends State<TimelineGraph> {
               min: 0.0,
               max: widget.timeline.length.toDouble() - 1.0,
               divisions: widget.timeline.length,
-              activeColor: AppColors.primary.withOpacity(0.4),
+              activeColor: AppColors.secondary,
+              inactiveColor: AppColors.secondary.withOpacity(0.4),
               labels: RangeLabels(
                 _getXTitle(sliderValues.start),
                 _getXTitle(sliderValues.end),
