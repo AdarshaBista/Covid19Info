@@ -76,23 +76,29 @@ class _TimelineGraphState extends State<TimelineGraph> {
           const SizedBox(height: 20.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: RangeSlider(
-              min: 0.0,
-              max: widget.timeline.length.toDouble() - 1.0,
-              divisions: widget.timeline.length,
-              activeColor: AppColors.secondary,
-              inactiveColor: AppColors.secondary.withOpacity(0.4),
-              labels: RangeLabels(
-                _getXTitle(sliderValues.start),
-                _getXTitle(sliderValues.end),
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                valueIndicatorColor: AppColors.secondary.withOpacity(0.5),
+                valueIndicatorTextStyle: AppTextStyles.smallLight,
               ),
-              values: sliderValues,
-              onChanged: (values) {
-                if (values.end - values.start > 10.0)
-                  setState(() {
-                    sliderValues = values;
-                  });
-              },
+              child: RangeSlider(
+                min: 0.0,
+                max: widget.timeline.length.toDouble() - 1.0,
+                divisions: widget.timeline.length,
+                activeColor: AppColors.secondary,
+                inactiveColor: AppColors.secondary.withOpacity(0.4),
+                labels: RangeLabels(
+                  _getXTitle(sliderValues.start),
+                  _getXTitle(sliderValues.end),
+                ),
+                values: sliderValues,
+                onChanged: (values) {
+                  if (values.end - values.start > 10.0)
+                    setState(() {
+                      sliderValues = values;
+                    });
+                },
+              ),
             ),
           ),
           const SizedBox(height: 20.0),

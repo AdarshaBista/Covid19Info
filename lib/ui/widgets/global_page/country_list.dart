@@ -40,6 +40,7 @@ class CountryList extends StatelessWidget {
 
   Widget _buildList(BuildContext context, List<Country> countries) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SearchBox(
           hintText: 'Search Countries',
