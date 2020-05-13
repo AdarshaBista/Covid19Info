@@ -33,8 +33,8 @@ class StatsGrid extends StatelessWidget {
           color: Colors.yellow,
         ),
         StatCard(
-          label: 'Pending',
-          count: nepalStats.pendingResult.toString(),
+          label: 'Tested RDT',
+          count: nepalStats.testedRdt.toString(),
           color: Colors.pinkAccent,
         ),
         StatCard(

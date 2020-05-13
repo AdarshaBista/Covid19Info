@@ -11,7 +11,7 @@ class NepalStats {
   final int quarantine;
   final int recovered;
   final int deaths;
-  final int pendingResult;
+  final int testedRdt;
   final List<TimelineData> timeline;
   int get active => positive - recovered - deaths;
 
@@ -23,7 +23,7 @@ class NepalStats {
     @required this.quarantine,
     @required this.recovered,
     @required this.deaths,
-    @required this.pendingResult,
+    @required this.testedRdt,
     @required this.timeline,
   })  : assert(total != null),
         assert(positive != null),
@@ -32,7 +32,7 @@ class NepalStats {
         assert(quarantine != null),
         assert(recovered != null),
         assert(deaths != null),
-        assert(pendingResult != null),
+        assert(testedRdt != null),
         assert(timeline != null);
 
   NepalStats copyWith({
@@ -54,7 +54,7 @@ class NepalStats {
       quarantine: quarantine ?? this.quarantine,
       recovered: recovered ?? this.recovered,
       deaths: deaths ?? this.deaths,
-      pendingResult: pendingResult ?? this.pendingResult,
+      testedRdt: pendingResult ?? this.testedRdt,
       timeline: timeline ?? this.timeline,
     );
   }
@@ -70,7 +70,7 @@ class NepalStats {
       quarantine: map['quarantined'],
       recovered: map['recovered'],
       deaths: map['deaths'],
-      pendingResult: map['pending_result'],
+      testedRdt: map['tested_rdt'],
       timeline: map.containsKey('timeline')
           ? List<TimelineData>.from(map['timeline']?.map((x) => TimelineData.fromMap(x)))
           : [],
@@ -79,7 +79,7 @@ class NepalStats {
 
   @override
   String toString() {
-    return 'NepalStats(total: $total, positive: $positive, negative: $negative, isolation: $isolation, quarantine: $quarantine, recovered: $recovered, deaths: $deaths, pendingResult: $pendingResult, timeline: $timeline)';
+    return 'NepalStats(total: $total, positive: $positive, negative: $negative, isolation: $isolation, quarantine: $quarantine, recovered: $recovered, deaths: $deaths, pendingResult: $testedRdt, timeline: $timeline)';
   }
 
   @override
@@ -94,7 +94,7 @@ class NepalStats {
         o.quarantine == quarantine &&
         o.recovered == recovered &&
         o.deaths == deaths &&
-        o.pendingResult == pendingResult &&
+        o.testedRdt == testedRdt &&
         listEquals(o.timeline, timeline);
   }
 
@@ -107,7 +107,7 @@ class NepalStats {
         quarantine.hashCode ^
         recovered.hashCode ^
         deaths.hashCode ^
-        pendingResult.hashCode ^
+        testedRdt.hashCode ^
         timeline.hashCode;
   }
 }

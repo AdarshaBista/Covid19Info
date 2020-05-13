@@ -46,13 +46,13 @@ class CountryStatChart extends StatelessWidget {
     double total = (active + recovered + deaths).toDouble();
     double percent = value / total * 100.0;
     return PieChartSectionData(
-      color: color,
+      color: color.withOpacity(0.4),
       value: value,
       radius: radius,
       showTitle: showPercent,
       title: '${percent.toStringAsFixed(1)} %',
-      titlePositionPercentageOffset: 1.2,
-      titleStyle: AppTextStyles.smallLight,
+      titlePositionPercentageOffset: 1.0,
+      titleStyle: AppTextStyles.smallLight.copyWith(color: color),
     );
   }
 }

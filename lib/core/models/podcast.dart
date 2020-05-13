@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:meta/meta.dart';
 
 class Podcast {
@@ -37,16 +35,6 @@ class Podcast {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'source': source,
-      'summary': summary,
-      'image_url': imageUrl,
-      'audio_url': audioUrl,
-    };
-  }
-
   static Podcast fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
@@ -58,10 +46,6 @@ class Podcast {
       audioUrl: map['audio_url'],
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  static Podcast fromJson(String source) => fromMap(json.decode(source));
 
   @override
   String toString() {
