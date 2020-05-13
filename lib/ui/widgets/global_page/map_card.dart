@@ -14,7 +14,6 @@ import 'package:covid19_info/blocs/country_detail_bloc/country_detail_bloc.dart'
 import 'package:covid19_info/core/models/country.dart';
 import 'package:covid19_info/core/services/global_api_service.dart';
 
-import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
@@ -22,6 +21,8 @@ import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 import 'package:covid19_info/ui/pages/country_details_page.dart';
 
 class MapCard extends StatefulWidget {
+  const MapCard();
+
   @override
   _MapCardState createState() => _MapCardState();
 }
@@ -78,13 +79,14 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
   TileLayerOptions _buildTiles() {
     return TileLayerOptions(
       tileProvider: Platform.isWindows ? NetworkTileProvider() : const CachedNetworkTileProvider(),
-      backgroundColor: AppColors.background,
       keepBuffer: 8,
-      urlTemplate: "https://api.tiles.mapbox.com/v4/"
-          "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
+      tileSize: 512,
+      zoomOffset: -1,
+      urlTemplate:
+          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}",
       additionalOptions: {
         'accessToken': MAPBOX_ACCESS_TOKEN,
-        'id': 'mapbox.dark',
+        'id': 'mapbox/dark-v10',
       },
     );
   }
