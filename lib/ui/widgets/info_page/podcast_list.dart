@@ -15,74 +15,42 @@ import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_card.d
 import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_player.dart';
 import 'package:covid19_info/ui/widgets/info_page/podcast_details/min_podcast_player.dart';
 
-class PodcastList extends StatelessWidget {
+class PodcastList extends StatefulWidget {
   const PodcastList();
+
+  @override
+  _PodcastListState createState() => _PodcastListState();
+}
+
+class _PodcastListState extends State<PodcastList> {
+  double _panelPos = 0.0;
+  double _minPanelHeight = 0.0;
+  PanelController _panelController;
+
+  @override
+  void initState() {
+    super.initState();
+    _panelController = PanelController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PodcastBloc, PodcastState>(
-      builder: (context, podcastState) {
-        if (podcastState is InitialPodcastState) {
+      builder: (context, state) {
+        if (state is InitialPodcastState) {
           return const EmptyIcon();
-        } else if (podcastState is LoadedPodcastState) {
-          return BlocBuilder<PodcastPlayerBloc, PodcastPlayerState>(
-            builder: (context, podcastPlayerState) {
-              if (podcastPlayerState is LoadingPodcastPlayerState) {
-                return _PodcastListBody(
-                  podcasts: podcastState.podcasts,
-                  playerHeight: 0.0,
-                );
-              } else if (podcastPlayerState is LoadedPodcastPlayerState) {
-                return _PodcastListBody(
-                  podcasts: podcastState.podcasts,
-                  currentPodcast: podcastPlayerState.currentPodcast,
-                  playerHeight: 90.0,
-                );
-              } else if (podcastPlayerState is ErrorPodcastPlayerState) {
-                return _PodcastListBody(
-                  podcasts: podcastState.podcasts,
-                  playerHeight: 0.0,
-                );
-              } else {
-                return _PodcastListBody(
-                  podcasts: podcastState.podcasts,
-                  playerHeight: 0.0,
-                );
-              }
-            },
-          );
-        } else if (podcastState is ErrorPodcastState) {
-          return ErrorIcon(message: podcastState.message);
+        } else if (state is LoadedPodcastState) {
+          return _buildScaffold(state);
+        } else if (state is ErrorPodcastState) {
+          return ErrorIcon(message: state.message);
         } else {
           return const BusyIndicator();
         }
       },
     );
   }
-}
 
-class _PodcastListBody extends StatefulWidget {
-  final List<Podcast> podcasts;
-  final Podcast currentPodcast;
-  final double playerHeight;
-
-  const _PodcastListBody({
-    @required this.podcasts,
-    @required this.playerHeight,
-    this.currentPodcast,
-  })  : assert(podcasts != null),
-        assert(playerHeight != null);
-
-  @override
-  _PodcastListBodyState createState() => _PodcastListBodyState();
-}
-
-class _PodcastListBodyState extends State<_PodcastListBody> {
-  double _panelOpenPercent = 0.0;
-  PanelController _panelController = PanelController();
-
-  @override
-  Widget build(BuildContext context) {
+  SlidingUpPanel _buildScaffold(LoadedPodcastState state) {
     return SlidingUpPanel(
       controller: _panelController,
       color: AppColors.secondary,
@@ -90,48 +58,66 @@ class _PodcastListBodyState extends State<_PodcastListBody> {
       backdropEnabled: true,
       backdropTapClosesPanel: true,
       slideDirection: SlideDirection.UP,
-      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 70.0),
+      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 72.0),
       borderRadius: BorderRadius.circular(12.0),
       maxHeight: MediaQuery.of(context).size.height * 0.6,
-      minHeight: widget.playerHeight,
-      onPanelSlide: (value) => setState(() {
-        _panelOpenPercent = value;
-      }),
-      body: _buildList(),
+      minHeight: _minPanelHeight,
+      onPanelSlide: (value) => setState(() => _panelPos = value),
+      body: _buildList(state.podcasts),
       collapsed: _buildMinimizedPlayer(),
       panelBuilder: (sc) => Transform.scale(
-        scale: _panelOpenPercent,
+        scale: _panelPos,
         child: _buildPlayer(sc),
       ),
     );
   }
 
-  ListView _buildList() {
+  ListView _buildList(List<Podcast> podcasts) {
     return ListView.builder(
-      padding: EdgeInsets.only(top: 16.0, bottom: widget.playerHeight + 72.0),
-      itemCount: widget.podcasts.length,
+      padding: EdgeInsets.only(top: 16.0, bottom: _minPanelHeight + 72.0),
+      itemCount: podcasts.length,
       itemBuilder: (_, index) {
-        final podcast = widget.podcasts[index];
-        return PodcastCard(
-          podcast: podcast,
-          color: AppColors.accentColors[index % AppColors.accentColors.length],
-          isPlaying: widget.currentPodcast != null && widget.currentPodcast == podcast,
+        final podcast = podcasts[index];
+        return BlocBuilder<PodcastPlayerBloc, PodcastPlayerState>(
+          builder: (context, state) {
+            return PodcastCard(
+              podcast: podcast,
+              color: AppColors.accentColors[index % AppColors.accentColors.length],
+              isPlaying:
+                  (state is LoadedPodcastPlayerState) ? state.currentPodcast == podcast : false,
+            );
+          },
         );
       },
     );
   }
 
   Widget _buildMinimizedPlayer() {
-    return BlocBuilder<PodcastPlayerBloc, PodcastPlayerState>(
-      builder: (context, state) {
-        if (state is LoadingPodcastPlayerState) {
-          return const BusyIndicator();
+    return BlocConsumer<PodcastPlayerBloc, PodcastPlayerState>(
+      listener: (context, state) {
+        if (state is ErrorPodcastPlayerState) {
+          setState(() => _minPanelHeight = 0.0);
+          Scaffold.of(context).showSnackBar(
+            SnackBar(
+              backgroundColor: AppColors.secondary,
+              duration: const Duration(milliseconds: 1500),
+              content: Text(
+                state.message,
+                style: AppTextStyles.smallLight,
+              ),
+            ),
+          );
         } else if (state is LoadedPodcastPlayerState) {
-          return MinPodcastPlayer(state: state);
-        } else if (state is ErrorPodcastPlayerState) {
-          return const Offstage();
+          setState(() => _minPanelHeight = 90.0);
         } else {
-          return const Offstage();
+          setState(() => _minPanelHeight = 0.0);
+        }
+      },
+      builder: (context, state) {
+        if (state is LoadedPodcastPlayerState) {
+          return MinPodcastPlayer(state: state);
+        } else {
+          return Offstage();
         }
       },
     );

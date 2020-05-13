@@ -77,7 +77,7 @@ class MinPodcastPlayer extends StatelessWidget {
           },
           child: Icon(
             isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-            size: 28.0,
+            size: 32.0,
             color: AppColors.light,
           ),
         );

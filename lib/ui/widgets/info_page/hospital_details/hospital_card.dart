@@ -102,7 +102,7 @@ class HospitalCard extends StatelessWidget {
       ),
       builder: (context) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * 0.7,
           child: HospitalDetails(
             hospital: hospital,
             color: color,

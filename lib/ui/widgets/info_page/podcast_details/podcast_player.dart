@@ -82,27 +82,28 @@ class PodcastPlayer extends StatelessWidget {
 
   Widget _buildPlayPauseIcon(BuildContext context) {
     return StreamBuilder<bool>(
-        stream: state.isPlaying,
-        initialData: true,
-        builder: (context, snapshot) {
-          bool isPlaying = snapshot.data;
-          return InkWell(
-            onTap: () {
-              if (isPlaying)
-                context.bloc<PodcastPlayerBloc>()..add(PausePodcastEvent());
-              else
-                context.bloc<PodcastPlayerBloc>()..add(PlayPodcastEvent());
-            },
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(
-                isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
-                size: 60.0,
-                color: AppColors.light,
-              ),
+      stream: state.isPlaying,
+      initialData: true,
+      builder: (context, snapshot) {
+        bool isPlaying = snapshot.data;
+        return InkWell(
+          onTap: () {
+            if (isPlaying)
+              context.bloc<PodcastPlayerBloc>()..add(PausePodcastEvent());
+            else
+              context.bloc<PodcastPlayerBloc>()..add(PlayPodcastEvent());
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(
+              isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
+              size: 60.0,
+              color: AppColors.light,
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildStopIcon(BuildContext context) {
@@ -153,25 +154,27 @@ class PodcastPlayer extends StatelessWidget {
   Widget _buildSheet(BuildContext context) {
     return ListView(
       children: state.speedValues
-          .map((speed) => InkWell(
-                onTap: () {
-                  Navigator.of(context).pop();
-                  context.bloc<PodcastPlayerBloc>()
-                    ..add(SetSpeedPodcastEvent(
-                      speed: speed,
-                    ));
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(16.0),
-                  child: Center(
-                    child: Text(
-                      speed.toString(),
-                      style: AppTextStyles.mediumLight,
-                    ),
+          .map(
+            (speed) => InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+                context.bloc<PodcastPlayerBloc>()
+                  ..add(SetSpeedPodcastEvent(
+                    speed: speed,
+                  ));
+              },
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Text(
+                    speed.toString(),
+                    style: AppTextStyles.mediumLight,
                   ),
                 ),
-              ))
+              ),
+            ),
+          )
           .toList(),
     );
   }

@@ -31,20 +31,18 @@ class HospitalList extends StatelessWidget {
           },
         ),
         const SizedBox(height: 8.0),
-        Expanded(
-          child: BlocBuilder<HospitalBloc, HospitalState>(
-            builder: (context, state) {
-              if (state is InitialHospitalState) {
-                return const EmptyIcon();
-              } else if (state is LoadedHospitalState) {
-                return _buildList(state.hospitals);
-              } else if (state is ErrorHospitalState) {
-                return ErrorIcon(message: state.message);
-              } else {
-                return const BusyIndicator();
-              }
-            },
-          ),
+        BlocBuilder<HospitalBloc, HospitalState>(
+          builder: (context, state) {
+            if (state is InitialHospitalState) {
+              return const EmptyIcon();
+            } else if (state is LoadedHospitalState) {
+              return _buildList(state.hospitals);
+            } else if (state is ErrorHospitalState) {
+              return ErrorIcon(message: state.message);
+            } else {
+              return const BusyIndicator();
+            }
+          },
         ),
       ],
     );
