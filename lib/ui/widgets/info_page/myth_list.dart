@@ -4,13 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-
 import 'package:covid19_info/ui/widgets/info_page/info_card.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
 class MythList extends StatelessWidget {
+  const MythList();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MythBloc, MythState>(
@@ -19,7 +20,8 @@ class MythList extends StatelessWidget {
           return const EmptyIcon();
         } else if (state is LoadedMythState) {
           return ListView.separated(
-            separatorBuilder: (_, __) => Divider(height: 16.0),
+            padding: const EdgeInsets.only(bottom: 64.0),
+            separatorBuilder: (_, __) => const Divider(height: 0.0),
             itemCount: state.myths.length,
             itemBuilder: (_, index) {
               final myth = state.myths[index];

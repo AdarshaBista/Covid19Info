@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
 class MinPodcastPlayer extends StatelessWidget {

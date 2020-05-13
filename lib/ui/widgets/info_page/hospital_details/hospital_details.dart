@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/core/models/hospital.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/action_row.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/contact_card.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/capacity_card.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/hospital_details/hospital_info.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital_details/action_row.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital_details/contact_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital_details/capacity_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital_details/hospital_info.dart';
 
 class HospitalDetails extends StatelessWidget {
   final Hospital hospital;

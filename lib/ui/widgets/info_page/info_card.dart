@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-
 import 'package:covid19_info/ui/widgets/common/tag.dart';
 import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
 

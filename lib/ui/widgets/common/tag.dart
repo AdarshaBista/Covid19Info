@@ -42,6 +42,7 @@ class Tag extends StatelessWidget {
                 Icon(
                   iconData,
                   size: 14.0,
+                  color: AppColors.light.withOpacity(0.6),
                 ),
             ],
           ),

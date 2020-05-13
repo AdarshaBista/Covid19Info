@@ -4,18 +4,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_bloc/podcast_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
-import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/core/models/podcast.dart';
 
+import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_card.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_player.dart';
-import 'package:covid19_info/ui/widgets/info_page/min_podcast_player.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_player.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast_details/min_podcast_player.dart';
 
 class PodcastList extends StatelessWidget {
+  const PodcastList();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PodcastBloc, PodcastState>(
@@ -106,8 +108,7 @@ class _PodcastListBodyState extends State<_PodcastListBody> {
 
   ListView _buildList() {
     return ListView.builder(
-      shrinkWrap: true,
-      padding: EdgeInsets.only(bottom: widget.playerHeight + 72.0),
+      padding: EdgeInsets.only(top: 16.0, bottom: widget.playerHeight + 72.0),
       itemCount: widget.podcasts.length,
       itemBuilder: (_, index) {
         final podcast = widget.podcasts[index];

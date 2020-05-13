@@ -9,13 +9,19 @@ class InfoTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       pinned: true,
-      delegate: const _SliverAppBarDelegate(
-        tabBar: const TabBar(
+      delegate: _SliverAppBarDelegate(
+        tabBar: TabBar(
+          isScrollable: true,
+          labelStyle: AppTextStyles.smallLight,
+          labelColor: AppColors.secondary,
+          unselectedLabelColor: AppColors.light,
+          indicatorWeight: 2.0,
+          indicatorColor: AppColors.secondary,
           indicatorSize: TabBarIndicatorSize.label,
-          indicatorColor: AppColors.primary,
-          indicatorWeight: 1.0,
-          // isScrollable: true,
           tabs: <Widget>[
+            const Tab(
+              text: 'PODCASTS',
+            ),
             const Tab(
               text: 'MYTHS',
             ),
@@ -23,7 +29,7 @@ class InfoTabBar extends StatelessWidget {
               text: 'FAQ',
             ),
             const Tab(
-              text: 'PODCASTS',
+              text: 'HOSPITALS',
             ),
           ],
         ),

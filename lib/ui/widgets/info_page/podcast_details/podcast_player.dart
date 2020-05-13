@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-
-import 'package:covid19_info/ui/widgets/info_page/podcast_slider.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_slider.dart';
 
 class PodcastPlayer extends StatelessWidget {
   final LoadedPodcastPlayerState state;

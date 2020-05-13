@@ -123,11 +123,6 @@ class _NavPageState extends State<NavPage> {
               apiService: context.repository<NepalApiService>(),
             )..add(GetNepalStatsEvent()),
           ),
-          BlocProvider(
-            create: (context) => HospitalBloc(
-              apiService: context.repository<NepalApiService>(),
-            )..add(GetHospitalEvent()),
-          ),
         ],
         child: NepalPage(),
       );
@@ -160,6 +155,11 @@ class _NavPageState extends State<NavPage> {
             create: (context) => PodcastPlayerBloc(
               podcastPlayerService: context.repository<PodcastPlayerService>(),
             ),
+          ),
+          BlocProvider(
+            create: (context) => HospitalBloc(
+              apiService: context.repository<NepalApiService>(),
+            )..add(GetHospitalEvent()),
           ),
         ],
         child: InfoPage(),
