@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
+import 'package:covid19_info/core/models/podcast_player_data.dart';
+
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
 class MinPodcastPlayer extends StatelessWidget {
-  final LoadedPodcastPlayerState state;
+  final PodcastPlayerData playerState;
 
   const MinPodcastPlayer({
-    @required this.state,
-  }) : assert(state != null);
+    @required this.playerState,
+  }) : assert(playerState != null);
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +22,9 @@ class MinPodcastPlayer extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
           children: [
-            _buildImage(state.currentPodcast.imageUrl),
+            _buildImage(playerState.currentPodcast.imageUrl),
             const SizedBox(width: 8.0),
-            _buildTitle(state.currentPodcast.title.trim()),
+            _buildTitle(playerState.currentPodcast.title.trim()),
             const SizedBox(width: 8.0),
             _buildPlayPauseIcon(context),
             const SizedBox(width: 8.0),
@@ -63,7 +65,7 @@ class MinPodcastPlayer extends StatelessWidget {
 
   Widget _buildPlayPauseIcon(BuildContext context) {
     return StreamBuilder<bool>(
-      stream: state.isPlaying,
+      stream: playerState.isPlaying.stream,
       initialData: true,
       builder: (context, snapshot) {
         bool isPlaying = snapshot.data;

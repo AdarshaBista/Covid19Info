@@ -40,7 +40,7 @@ class _PodcastListState extends State<PodcastList> {
         if (state is InitialPodcastState) {
           return const EmptyIcon();
         } else if (state is LoadedPodcastState) {
-          return _buildScaffold(state);
+          return _buildScaffold(state.podcasts);
         } else if (state is ErrorPodcastState) {
           return ErrorIcon(message: state.message);
         } else {
@@ -50,7 +50,7 @@ class _PodcastListState extends State<PodcastList> {
     );
   }
 
-  SlidingUpPanel _buildScaffold(LoadedPodcastState state) {
+  SlidingUpPanel _buildScaffold(List<Podcast> podcasts) {
     return SlidingUpPanel(
       controller: _panelController,
       color: AppColors.secondary,
@@ -63,7 +63,7 @@ class _PodcastListState extends State<PodcastList> {
       maxHeight: MediaQuery.of(context).size.height * 0.6,
       minHeight: _minPanelHeight,
       onPanelSlide: (value) => setState(() => _panelPos = value),
-      body: _buildList(state.podcasts),
+      body: _buildList(podcasts),
       collapsed: _buildMinimizedPlayer(),
       panelBuilder: (sc) => Transform.scale(
         scale: _panelPos,
@@ -83,8 +83,9 @@ class _PodcastListState extends State<PodcastList> {
             return PodcastCard(
               podcast: podcast,
               color: AppColors.accentColors[index % AppColors.accentColors.length],
-              isPlaying:
-                  (state is LoadedPodcastPlayerState) ? state.currentPodcast == podcast : false,
+              isPlaying: (state is LoadedPodcastPlayerState)
+                  ? state.playerState.currentPodcast == podcast
+                  : false,
             );
           },
         );
@@ -115,7 +116,7 @@ class _PodcastListState extends State<PodcastList> {
       },
       builder: (context, state) {
         if (state is LoadedPodcastPlayerState) {
-          return MinPodcastPlayer(state: state);
+          return MinPodcastPlayer(playerState: state.playerState);
         } else {
           return Offstage();
         }
@@ -130,7 +131,7 @@ class _PodcastListState extends State<PodcastList> {
           return const BusyIndicator();
         } else if (state is LoadedPodcastPlayerState) {
           return PodcastPlayer(
-            state: state,
+            playerState: state.playerState,
             controller: controller,
           );
         } else if (state is ErrorPodcastPlayerState) {

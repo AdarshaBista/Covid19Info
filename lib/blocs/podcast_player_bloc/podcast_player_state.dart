@@ -8,18 +8,11 @@ class InitialPodcastPlayerState extends PodcastPlayerState {}
 class LoadingPodcastPlayerState extends PodcastPlayerState {}
 
 class LoadedPodcastPlayerState extends PodcastPlayerState {
-  final PodcastPlayerService podcastPlayerService;
-
-  Podcast get currentPodcast => podcastPlayerService.currentPodcast;
-  double get speed => podcastPlayerService.speed;
-  Stream<bool> get isPlaying => podcastPlayerService.isPlaying;
-  Duration get duration => podcastPlayerService.duration;
-  Stream<Duration> get currentPosition => podcastPlayerService.currentPosition;
-  List<double> get speedValues => const [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
+  final PodcastPlayerData playerState;
 
   LoadedPodcastPlayerState({
-    @required this.podcastPlayerService,
-  }) : assert(podcastPlayerService != null);
+    @required this.playerState,
+  }) : assert(playerState != null);
 }
 
 class ErrorPodcastPlayerState extends PodcastPlayerState {

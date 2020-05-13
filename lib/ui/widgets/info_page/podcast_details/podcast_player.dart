@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
+import 'package:covid19_info/core/models/podcast_player_data.dart';
+
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_slider.dart';
 
 class PodcastPlayer extends StatelessWidget {
-  final LoadedPodcastPlayerState state;
+  final PodcastPlayerData playerState;
   final ScrollController controller;
 
   const PodcastPlayer({
-    @required this.state,
+    @required this.playerState,
     @required this.controller,
-  })  : assert(state != null),
+  })  : assert(playerState != null),
         assert(controller != null);
 
   @override
@@ -27,7 +29,7 @@ class PodcastPlayer extends StatelessWidget {
           const SizedBox(height: 16.0),
           _buildTitle(),
           const SizedBox(height: 16.0),
-          PodcastSlider(state: state),
+          PodcastSlider(playerState: playerState),
           Row(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,7 +55,7 @@ class PodcastPlayer extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
       ),
       child: Image.network(
-        state.currentPodcast.imageUrl,
+        playerState.currentPodcast.imageUrl,
         fit: BoxFit.cover,
         width: 150,
         height: 150.0,
@@ -72,7 +74,7 @@ class PodcastPlayer extends StatelessWidget {
 
   Widget _buildTitle() {
     return Text(
-      state.currentPodcast.title,
+      playerState.currentPodcast.title,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
       textAlign: TextAlign.center,
@@ -82,7 +84,7 @@ class PodcastPlayer extends StatelessWidget {
 
   Widget _buildPlayPauseIcon(BuildContext context) {
     return StreamBuilder<bool>(
-      stream: state.isPlaying,
+      stream: playerState.isPlaying.stream,
       initialData: true,
       builder: (context, snapshot) {
         bool isPlaying = snapshot.data;
@@ -141,7 +143,7 @@ class PodcastPlayer extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: Text(
-          '${state.speed.toString()}x',
+          '${playerState.speed.toString()}x',
           style: AppTextStyles.smallDark.copyWith(
             fontSize: 12.0,
             color: AppColors.secondary,
@@ -153,7 +155,7 @@ class PodcastPlayer extends StatelessWidget {
 
   Widget _buildSheet(BuildContext context) {
     return ListView(
-      children: state.speedValues
+      children: playerState.speedValues
           .map(
             (speed) => InkWell(
               onTap: () {

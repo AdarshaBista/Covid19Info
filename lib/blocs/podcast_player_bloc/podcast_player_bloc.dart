@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 
 import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/core/models/app_error.dart';
+import 'package:covid19_info/core/models/podcast_player_data.dart';
 
 import 'package:covid19_info/core/services/podcast_player_service.dart';
 
@@ -40,7 +41,7 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
       await podcastPlayerService.init(podcast);
       podcastPlayerService.play();
       yield LoadedPodcastPlayerState(
-        podcastPlayerService: podcastPlayerService,
+        playerState: podcastPlayerService.state,
       );
     } on AppError catch (e) {
       yield ErrorPodcastPlayerState(message: e.message);
@@ -51,14 +52,14 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
   Stream<PodcastPlayerState> _mapPlayToState() async* {
     podcastPlayerService.play();
     yield LoadedPodcastPlayerState(
-      podcastPlayerService: podcastPlayerService,
+      playerState: podcastPlayerService.state,
     );
   }
 
   Stream<PodcastPlayerState> _mapPauseToState() async* {
     await podcastPlayerService.pause();
     yield LoadedPodcastPlayerState(
-      podcastPlayerService: podcastPlayerService,
+      playerState: podcastPlayerService.state,
     );
   }
 
@@ -70,14 +71,14 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
   Stream<PodcastPlayerState> _mapSeekToState(double seconds) async* {
     podcastPlayerService.seekTo(Duration(seconds: seconds.toInt()));
     yield LoadedPodcastPlayerState(
-      podcastPlayerService: podcastPlayerService,
+      playerState: podcastPlayerService.state,
     );
   }
 
   Stream<PodcastPlayerState> _mapSetSpeedToState(double speed) async* {
     await podcastPlayerService.setSpeed(speed);
     yield LoadedPodcastPlayerState(
-      podcastPlayerService: podcastPlayerService,
+      playerState: podcastPlayerService.state,
     );
   }
 

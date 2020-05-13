@@ -3,24 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
 
+import 'package:covid19_info/core/models/podcast_player_data.dart';
+
 import 'package:covid19_info/ui/styles/styles.dart';
 
 class PodcastSlider extends StatelessWidget {
-  final LoadedPodcastPlayerState state;
+  final PodcastPlayerData playerState;
 
   const PodcastSlider({
-    @required this.state,
-  }) : assert(state != null);
+    @required this.playerState,
+  }) : assert(playerState != null);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<Duration>(
-      stream: state.currentPosition,
+      stream: playerState.currentPosition,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final Duration currentDuration = snapshot.data;
 
-          if (currentDuration.inSeconds >= state.duration.inSeconds - 1) {
+          if (currentDuration.inSeconds >= playerState.duration.inSeconds - 1) {
             context.bloc<PodcastPlayerBloc>()..add(CompletedPodcastEvent());
           }
 
@@ -41,9 +43,9 @@ class PodcastSlider extends StatelessWidget {
                 child: Slider(
                   activeColor: AppColors.light,
                   inactiveColor: AppColors.light.withOpacity(0.2),
-                  divisions: state.duration.inSeconds,
+                  divisions: playerState.duration.inSeconds,
                   min: 0.0,
-                  max: state.duration.inSeconds.toDouble(),
+                  max: playerState.duration.inSeconds.toDouble(),
                   value: currentDuration.inSeconds.toDouble(),
                   label: format(currentDuration),
                   onChanged: (value) {
@@ -55,7 +57,7 @@ class PodcastSlider extends StatelessWidget {
                 ),
               ),
               Text(
-                format(state.duration),
+                format(playerState.duration),
                 style: AppTextStyles.extraSmallLight,
               ),
             ],

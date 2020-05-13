@@ -5,35 +5,24 @@ import 'package:flutter_media_notification/flutter_media_notification.dart';
 
 import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/core/models/app_error.dart';
+import 'package:covid19_info/core/models/podcast_player_data.dart';
 
 class PodcastPlayerService {
   AudioPlayer _player = AudioPlayer();
-
-  Podcast _currentPodcast;
-  Podcast get currentPodcast => _currentPodcast;
-
-  double _speed;
-  double get speed => _speed;
-
-  StreamController _isPlaying;
-  Stream<bool> get isPlaying => _isPlaying.stream;
-
-  Duration _duration;
-  Duration get duration => _duration;
-
-  Stream<Duration> get currentPosition => _player.onAudioPositionChanged;
+  PodcastPlayerData state = PodcastPlayerData();
 
   Future<void> init(Podcast podcast) async {
-    _isPlaying = StreamController<bool>.broadcast()..add(false);
+    state.isPlaying = StreamController<bool>.broadcast()..add(false);
     await stop();
 
     int result = await _player.setUrl(podcast.audioUrl);
     if (result != 1) throw AppError(message: 'Couldn\'t play podcast.');
 
-    _speed = 1.0;
-    _currentPodcast = podcast;
+    state.speed = 1.0;
+    state.currentPodcast = podcast;
+    state.currentPosition = _player.onAudioPositionChanged;
     _player.onDurationChanged.listen((Duration d) {
-      _duration = d;
+      state.duration = d;
     });
 
     MediaNotification.setListener('play', () {
@@ -46,19 +35,19 @@ class PodcastPlayerService {
   }
 
   Future<void> play() async {
-    _isPlaying.add(true);
-    await _player.play(_currentPodcast.audioUrl);
+    state.isPlaying.add(true);
+    await _player.play(state.currentPodcast.audioUrl);
     _showNotification(true);
   }
 
   Future<void> pause() async {
-    _isPlaying.add(false);
+    state.isPlaying.add(false);
     await _player.pause();
     _showNotification(false);
   }
 
   Future<void> stop() async {
-    _isPlaying.add(false);
+    state.isPlaying.add(false);
     await _player.stop();
     _hideNotification();
   }
@@ -68,8 +57,8 @@ class PodcastPlayerService {
   }
 
   Future<void> setSpeed(double speed) async {
-    _speed = speed;
-    await _player.setPlaybackRate(playbackRate: _speed);
+    state.speed = speed;
+    await _player.setPlaybackRate(playbackRate: speed);
   }
 
   Future<void> _hideNotification() async {
@@ -78,13 +67,9 @@ class PodcastPlayerService {
 
   Future<void> _showNotification(bool playing) async {
     await MediaNotification.showNotification(
-      title: _currentPodcast.title,
-      author: _currentPodcast.source,
+      title: state.currentPodcast.title,
+      author: state.currentPodcast.source,
       isPlaying: playing,
     );
-  }
-
-  void dispose() {
-    _isPlaying.close();
   }
 }
