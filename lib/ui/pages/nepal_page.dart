@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
+import 'package:covid19_info/blocs/nepal_district_bloc/nepal_district_bloc.dart';
 
 import 'package:covid19_info/core/models/nepal_stats.dart';
 
@@ -18,6 +19,11 @@ class NepalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // TODO: Remove this
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        context.bloc<NepalDistrictBloc>()..add(GetDistrictEvent());
+      }),
       body: NestedScrollView(
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
           const CollapsibleAppBar(
@@ -50,6 +56,30 @@ class NepalPage extends StatelessWidget {
         TimelineGraph(
           title: 'Nepal',
           timeline: nepalStats.timeline,
+        ),
+        BlocBuilder<NepalDistrictBloc, NepalDistrictState>(
+          builder: (context, state) {
+            if (state is InitialDistrictState) {
+              return const EmptyIcon();
+            } else if (state is LoadedDistrictState) {
+              return Column(
+                children: state.allDistricts
+                    .map(
+                      (d) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          d.title,
+                        ),
+                      ),
+                    )
+                    .toList(),
+              );
+            } else if (state is ErrorDistrictState) {
+              return ErrorIcon(message: state.message);
+            } else {
+              return const BusyIndicator();
+            }
+          },
         ),
       ],
     );

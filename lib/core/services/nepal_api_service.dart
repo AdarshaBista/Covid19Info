@@ -8,6 +8,7 @@ import 'package:covid19_info/core/models/faq.dart';
 import 'package:covid19_info/core/models/myth.dart';
 import 'package:covid19_info/core/models/news.dart';
 import 'package:covid19_info/core/models/podcast.dart';
+import 'package:covid19_info/core/models/district.dart';
 import 'package:covid19_info/core/models/hospital.dart';
 import 'package:covid19_info/core/models/nepal_stats.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
@@ -15,6 +16,7 @@ import 'package:covid19_info/core/models/timeline_data.dart';
 class NepalApiService extends ApiService {
   static const String COVID_API_BASE = 'https://covidapi.info/api/v1/';
   static const String NEPAL_CORONA_BASE = 'https://nepalcorona.info/api/v1/';
+  static const String NEPAL_CORONA_DATA_BASE = 'https://data.nepalcorona.info/api/v1/';
 
   Future<NepalStats> fetchNepalStats() async {
     try {
@@ -37,6 +39,34 @@ class NepalApiService extends ApiService {
     } catch (e) {
       throw AppError(
         message: "Couldn't load Nepal timeline data!",
+        error: e.toString(),
+      );
+    }
+  }
+
+  Future<List<int>> fetchDistrictsIds() async {
+    try {
+      http.Response res = await http.get(NEPAL_CORONA_DATA_BASE + 'districts');
+      final List<dynamic> resList = jsonDecode(res.body);
+      return resList.map((m) => m['id'] as int).toList();
+    } catch (e) {
+      throw AppError(
+        message: "Couldn't load district ids!",
+        error: e.toString(),
+      );
+    }
+  }
+
+  Future<District> fetchDistrict(int id) async {
+    try {
+      print('Fetching id $id...');
+      http.Response res = await http.get(NEPAL_CORONA_DATA_BASE + 'districts/$id');
+      final Map<String, dynamic> resMap = jsonDecode(res.body);
+      if ((resMap['covid_cases'] as List).isEmpty) return null;
+      return District.fromMap(resMap);
+    } catch (e) {
+      throw AppError(
+        message: "Couldn't load districts!",
         error: e.toString(),
       );
     }
