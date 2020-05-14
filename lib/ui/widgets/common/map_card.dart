@@ -7,7 +7,10 @@ import 'package:flutter_map/flutter_map.dart';
 
 import 'package:covid19_info/api_keys.dart';
 
+import 'package:covid19_info/ui/styles/styles.dart';
+
 class MapCard extends StatefulWidget {
+  final bool interactive;
   final LatLng center;
   final double zoom;
   final double minZoom;
@@ -18,6 +21,7 @@ class MapCard extends StatefulWidget {
   final MarkerLayerOptions Function() markerLayerBuilder;
 
   const MapCard({
+    this.interactive = true,
     this.center,
     @required this.zoom,
     @required this.minZoom,
@@ -52,7 +56,7 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
     return FlutterMap(
       mapController: _mapController,
       options: MapOptions(
-        interactive: true,
+        interactive: widget.interactive,
         center: widget.center,
         zoom: widget.zoom,
         minZoom: widget.minZoom,
@@ -73,6 +77,7 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
       keepBuffer: 8,
       tileSize: 512,
       zoomOffset: -1,
+      backgroundColor: AppColors.background.withOpacity(0.5),
       urlTemplate:
           "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}",
       additionalOptions: {

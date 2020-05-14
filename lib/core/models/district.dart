@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:covid19_info/core/models/district_case.dart';
+import 'package:covid19_info/core/models/covid_case.dart';
 
 class District {
   final int id;
@@ -8,7 +8,7 @@ class District {
   final int province;
   final double lat;
   final double lng;
-  final List<DistrictCase> cases;
+  final List<CovidCase> cases;
 
   const District({
     @required this.id,
@@ -30,7 +30,7 @@ class District {
     int province,
     double lat,
     double lng,
-    List<DistrictCase> cases,
+    List<CovidCase> cases,
   }) {
     return District(
       id: id ?? this.id,
@@ -51,7 +51,7 @@ class District {
       province: map['province'],
       lat: (map['centroid']['coordinates'][1] as num).toDouble(),
       lng: (map['centroid']['coordinates'][0] as num).toDouble(),
-      cases: List<DistrictCase>.from(map['covid_cases']?.map((x) => DistrictCase.fromMap(x))),
+      cases: List<CovidCase>.from(map['covid_cases']?.map((x) => CovidCase.fromMap(x))),
     );
   }
 

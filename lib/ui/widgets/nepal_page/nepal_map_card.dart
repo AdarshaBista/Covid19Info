@@ -39,10 +39,7 @@ class NepalMapCard extends StatelessWidget {
 
   Widget _buildMap(LoadedDistrictState state) {
     return MapCard(
-      center: LatLng(
-        state.allDistricts.first.lat,
-        state.allDistricts.first.lng,
-      ),
+      center: LatLng(27.728201, 85.347351),
       zoom: 7.0,
       minZoom: 7.0,
       maxZoom: 10.0,
