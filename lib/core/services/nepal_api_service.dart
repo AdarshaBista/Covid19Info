@@ -59,7 +59,6 @@ class NepalApiService extends ApiService {
 
   Future<District> fetchDistrict(int id) async {
     try {
-      print('Fetching id $id...');
       http.Response res = await http.get(NEPAL_CORONA_DATA_BASE + 'districts/$id');
       final Map<String, dynamic> resMap = jsonDecode(res.body);
       if ((resMap['covid_cases'] as List).isEmpty) return null;

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/global_page/pill.dart';
-import 'package:covid19_info/ui/widgets/global_page/map_card.dart';
+import 'package:covid19_info/ui/widgets/common/pill.dart';
 import 'package:covid19_info/ui/widgets/global_page/country_list.dart';
+import 'package:covid19_info/ui/widgets/global_page/global_map_card.dart';
 import 'package:covid19_info/ui/widgets/global_page/global_stats_tile.dart';
 
 class GlobalPage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _GlobalPageState extends State<GlobalPage> {
         extendBodyBehindAppBar: true,
         body: Stack(
           children: <Widget>[
-            const MapCard(),
+            const GlobalMapCard(),
             SlidingUpPanel(
               color: AppColors.background,
               parallaxOffset: 0.3,
