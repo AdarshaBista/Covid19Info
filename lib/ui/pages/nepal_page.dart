@@ -20,9 +20,6 @@ class NepalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {
-          context.bloc<NepalDistrictBloc>()..add(GetDistrictEvent());
-        }),
         extendBody: true,
         extendBodyBehindAppBar: true,
         body: Stack(

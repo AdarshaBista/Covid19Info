@@ -53,7 +53,7 @@ class _PodcastListState extends State<PodcastList> {
   SlidingUpPanel _buildScaffold(List<Podcast> podcasts) {
     return SlidingUpPanel(
       controller: _panelController,
-      color: AppColors.secondary,
+      color: AppColors.primary,
       isDraggable: true,
       backdropEnabled: true,
       backdropTapClosesPanel: true,
@@ -100,7 +100,7 @@ class _PodcastListState extends State<PodcastList> {
           setState(() => _minPanelHeight = 0.0);
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              backgroundColor: AppColors.secondary,
+              backgroundColor: AppColors.primary,
               duration: const Duration(milliseconds: 1500),
               content: Text(
                 state.message,

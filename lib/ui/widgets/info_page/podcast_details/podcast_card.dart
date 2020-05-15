@@ -78,7 +78,7 @@ class PodcastCard extends StatelessWidget {
         errorBuilder: (_, __, ___) => Padding(
           padding: const EdgeInsets.all(10.0),
           child: Image.asset(
-            'assets/images/error.png',
+            'assets/icon/icon.png',
             fit: BoxFit.cover,
             width: 44.0,
             height: 44.0,

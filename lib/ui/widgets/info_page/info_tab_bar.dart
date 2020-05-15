@@ -13,10 +13,10 @@ class InfoTabBar extends StatelessWidget {
         tabBar: TabBar(
           isScrollable: true,
           labelStyle: AppTextStyles.smallLight,
-          labelColor: AppColors.secondary,
+          labelColor: AppColors.primary,
           unselectedLabelColor: AppColors.light,
           indicatorWeight: 2.0,
-          indicatorColor: AppColors.secondary,
+          indicatorColor: AppColors.primary,
           indicatorSize: TabBarIndicatorSize.label,
           tabs: <Widget>[
             const Tab(

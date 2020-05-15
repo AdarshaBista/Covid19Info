@@ -78,15 +78,15 @@ class _TimelineGraphState extends State<TimelineGraph> {
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: SliderTheme(
               data: SliderTheme.of(context).copyWith(
-                valueIndicatorColor: AppColors.secondary.withOpacity(0.5),
+                valueIndicatorColor: AppColors.primary.withOpacity(0.5),
                 valueIndicatorTextStyle: AppTextStyles.smallLight,
               ),
               child: RangeSlider(
                 min: 0.0,
                 max: widget.timeline.length.toDouble() - 1.0,
                 divisions: widget.timeline.length,
-                activeColor: AppColors.secondary,
-                inactiveColor: AppColors.secondary.withOpacity(0.4),
+                activeColor: AppColors.primary,
+                inactiveColor: AppColors.primary.withOpacity(0.4),
                 labels: RangeLabels(
                   _getXTitle(sliderValues.start),
                   _getXTitle(sliderValues.end),

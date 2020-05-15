@@ -62,7 +62,7 @@ class PodcastPlayer extends StatelessWidget {
         errorBuilder: (_, __, ___) => Padding(
           padding: const EdgeInsets.all(50.0),
           child: Image.asset(
-            'assets/images/error.png',
+            'assets/icon/icon.png',
             fit: BoxFit.cover,
             width: 50.0,
             height: 50.0,
@@ -120,7 +120,7 @@ class PodcastPlayer extends StatelessWidget {
         child: Icon(
           Icons.stop,
           size: 24.0,
-          color: AppColors.secondary,
+          color: AppColors.primary,
         ),
       ),
     );
@@ -146,7 +146,7 @@ class PodcastPlayer extends StatelessWidget {
           '${playerState.speed.toString()}x',
           style: AppTextStyles.smallDark.copyWith(
             fontSize: 12.0,
-            color: AppColors.secondary,
+            color: AppColors.primary,
           ),
         ),
       ),

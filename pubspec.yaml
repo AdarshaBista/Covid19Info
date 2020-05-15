@@ -42,7 +42,7 @@ flutter_icons:
 
 flutter_native_splash:
   image: assets/icon/splash.png
-  color: "FFE9E3"
+  color: "00796B"
   android_disable_fullscreen: true
   
 
@@ -52,6 +52,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icon/icon.png
 
   fonts:
     - family: Sen

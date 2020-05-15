@@ -59,15 +59,15 @@ class App extends StatelessWidget {
         title: 'Covid19 Info',
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.background,
-          iconTheme: IconThemeData(color: AppColors.secondary),
+          iconTheme: IconThemeData(color: AppColors.primary),
           appBarTheme: AppBarTheme(
             brightness: Brightness.dark,
             color: AppColors.primary,
-            iconTheme: IconThemeData(color: AppColors.secondary),
+            iconTheme: IconThemeData(color: AppColors.primary),
           ),
           brightness: Brightness.dark,
           primaryColor: AppColors.primary,
-          accentColor: AppColors.secondary,
+          accentColor: AppColors.primary,
           fontFamily: 'Sen',
         ),
         home: NavPage(),
