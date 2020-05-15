@@ -120,9 +120,9 @@ class CovidCaseDetailPage extends StatelessWidget {
       ),
       child: MapCard(
         interactive: true,
-        zoom: 14.0,
-        minZoom: 16.0,
-        maxZoom: 12.0,
+        zoom: 15.0,
+        minZoom: 12.0,
+        maxZoom: 16.0,
         nePanBoundary: LatLng(covidCase.lat + 0.03, covidCase.lng + 0.03),
         swPanBoundary: LatLng(covidCase.lat - 0.03, covidCase.lng - 0.03),
         center: LatLng(covidCase.lat + 0.0025, covidCase.lng - 0.0012),

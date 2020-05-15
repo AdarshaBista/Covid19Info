@@ -11,6 +11,7 @@ class CountryStatChart extends StatelessWidget {
   final double radius;
   final double centerSpaceRadius;
   final bool showPercent;
+  final double opacity;
 
   const CountryStatChart({
     @required this.active,
@@ -19,6 +20,7 @@ class CountryStatChart extends StatelessWidget {
     this.radius = 8.0,
     this.centerSpaceRadius = 30.0,
     this.showPercent = false,
+    this.opacity = 1.0,
   })  : assert(active != null),
         assert(recovered != null),
         assert(deaths != null);
@@ -46,7 +48,7 @@ class CountryStatChart extends StatelessWidget {
     double total = (active + recovered + deaths).toDouble();
     double percent = value / total * 100.0;
     return PieChartSectionData(
-      color: color.withOpacity(0.4),
+      color: color.withOpacity(opacity),
       value: value,
       radius: radius,
       showTitle: showPercent,

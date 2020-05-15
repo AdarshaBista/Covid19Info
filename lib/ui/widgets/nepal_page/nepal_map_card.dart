@@ -61,7 +61,9 @@ class NepalMapCard extends StatelessWidget {
     return MarkerLayerOptions(
       markers: state.allDistricts.map(
         (d) {
-          double diameter = (math.sqrt(d.cases.length.toDouble()) * 8.0).clamp(8.0, 40.0);
+          double diameter = (math.sqrt(d.cases.length.toDouble()) * 6.0).clamp(16.0, 64.0);
+          final double opacity =
+              (d.cases.length.toDouble() / state.maxCase.toDouble()).clamp(0.3, 0.7);
           return Marker(
             height: diameter,
             width: diameter,
@@ -70,8 +72,8 @@ class NepalMapCard extends StatelessWidget {
               onTap: () => _openDetails(context, d),
               child: CircleAvatar(
                 backgroundColor: state.isDistrictInSearch(d)
-                    ? Colors.blue.withOpacity(0.4)
-                    : Colors.red.withOpacity(0.4),
+                    ? Colors.blue.withOpacity(opacity)
+                    : Colors.red.withOpacity(opacity),
               ),
             ),
           );

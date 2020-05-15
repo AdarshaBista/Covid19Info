@@ -27,6 +27,7 @@ class CountryPieChart extends StatelessWidget {
         ),
         const SizedBox(height: 24.0),
         CountryStatChart(
+          opacity: 0.4,
           active: country.activeCases,
           recovered: country.totalRecovered,
           deaths: country.totalDeaths,

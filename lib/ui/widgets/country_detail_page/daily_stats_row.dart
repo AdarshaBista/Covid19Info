@@ -19,9 +19,9 @@ class DailyStatsRow extends StatelessWidget {
       children: <Widget>[
         Text(
           'DAILY UPDATE',
-          style: AppTextStyles.largeLight,
+          style: AppTextStyles.mediumLight,
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 8.0),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
           child: Row(

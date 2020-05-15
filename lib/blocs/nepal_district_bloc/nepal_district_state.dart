@@ -11,6 +11,8 @@ class LoadedDistrictState extends NepalDistrictState {
   final List<District> allDistricts;
   final List<District> searchedDistricts;
 
+  int get maxCase => allDistricts.map((d) => d.cases.length).reduce(math.max);
+  int get minCase => allDistricts.map((d) => d.cases.length).reduce(math.min);
   bool get shouldShowAllDistricts => searchedDistricts == null;
   bool get isSearchEmpty => searchedDistricts.isEmpty;
   bool isDistrictInSearch(District d) {

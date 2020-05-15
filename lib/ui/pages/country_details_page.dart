@@ -33,7 +33,7 @@ class CountryDetailsPage extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: Text(
-              country.name,
+              country.name.toUpperCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyles.largeLightSerif,

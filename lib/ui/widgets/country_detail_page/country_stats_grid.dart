@@ -18,11 +18,11 @@ class CountryStatsGrid extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
-          '${country.name.toUpperCase()} STATS',
+          'STATS',
           textAlign: TextAlign.center,
-          style: AppTextStyles.largeLight,
+          style: AppTextStyles.mediumLight,
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 8.0),
         GridView.count(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
           crossAxisCount: 3,

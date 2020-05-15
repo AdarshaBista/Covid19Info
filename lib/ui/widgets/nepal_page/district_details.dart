@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/core/models/district.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/common/stat_card.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/covid_case_card.dart';
 
 class DistrictDetails extends StatelessWidget {
@@ -25,9 +24,11 @@ class DistrictDetails extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 8.0),
+        const Divider(height: 16.0, indent: 32.0, endIndent: 32.0),
         _buildStat(),
-        const SizedBox(height: 16.0),
+        const Divider(height: 16.0, indent: 32.0, endIndent: 32.0),
+        const SizedBox(height: 8.0),
         Text(
           'Individual Cases',
           style: AppTextStyles.mediumLight,
@@ -41,21 +42,32 @@ class DistrictDetails extends StatelessWidget {
   }
 
   Widget _buildStat() {
-    return Center(
-      child: Row(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 32.0),
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          StatCard(
-            label: 'Province',
-            count: district.province.toString(),
-            color: Colors.grey,
-            backgroundColor: AppColors.background.withOpacity(0.5),
+          ListTile(
+            title: Text(
+              'Province',
+              style: AppTextStyles.smallLight,
+            ),
+            leading: Icon(Icons.map),
+            trailing: Text(
+              district.province.toString(),
+              style: AppTextStyles.mediumLight.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
-          StatCard(
-            label: 'Confirmed',
-            count: district.cases.length.toString(),
-            color: Colors.blue,
-            backgroundColor: AppColors.background.withOpacity(0.5),
+          ListTile(
+            title: Text(
+              'Confirmed',
+              style: AppTextStyles.smallLight,
+            ),
+            leading: Icon(Icons.local_hospital, color: Colors.red),
+            trailing: Text(
+              district.cases.length.toString(),
+              style: AppTextStyles.mediumLight.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
