@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
 import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
+import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
+import 'package:covid19_info/blocs/country_detail_bloc/country_detail_bloc.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 import 'package:covid19_info/blocs/nepal_district_bloc/nepal_district_bloc.dart';
-import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 import 'package:covid19_info/blocs/news_bloc/news_bloc.dart';
-import 'package:covid19_info/blocs/faq_bloc/faq_bloc.dart';
-import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
 import 'package:covid19_info/blocs/podcast_bloc/podcast_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
+import 'package:covid19_info/blocs/faq_bloc/faq_bloc.dart';
+import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
+import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 
 import 'package:covid19_info/core/services/nepal_api_service.dart';
 import 'package:covid19_info/core/services/global_api_service.dart';
@@ -112,6 +113,11 @@ class _NavPageState extends State<NavPage> {
             create: (context) => CountryBloc(
               apiService: context.repository<GlobalApiService>(),
             )..add(GetCountryEvent()),
+          ),
+          BlocProvider(
+            create: (_) => CountryDetailBloc(
+              apiService: context.repository<GlobalApiService>(),
+            ),
           ),
         ],
         child: GlobalPage(),

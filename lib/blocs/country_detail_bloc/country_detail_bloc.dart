@@ -14,6 +14,7 @@ part 'country_detail_state.dart';
 
 class CountryDetailBloc extends Bloc<CountryDetailEvent, CountryDetailState> {
   final GlobalApiService apiService;
+  final Map<String, Country> _countriesCache = {};
 
   CountryDetailBloc({
     @required this.apiService,
@@ -27,11 +28,17 @@ class CountryDetailBloc extends Bloc<CountryDetailEvent, CountryDetailState> {
     CountryDetailEvent event,
   ) async* {
     if (event is GetCountryDetailEvent) {
+      if (_countriesCache.containsKey(event.country.code)) {
+        yield LoadedCountryDetailState(country: _countriesCache[event.country.code]);
+        return;
+      }
+
       yield LoadingCountryDetailState();
       try {
         final List<TimelineData> timeline =
             await apiService.fetchCountryTimeline(countryISOMapping[event.country.code]);
         final Country country = event.country.copyWith(timeline: timeline);
+        _countriesCache[country.code] = country;
         yield LoadedCountryDetailState(country: country);
       } on AppError catch (e) {
         print(e.error);

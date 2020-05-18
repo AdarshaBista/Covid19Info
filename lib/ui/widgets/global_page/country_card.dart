@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/country_detail_bloc/country_detail_bloc.dart';
 
 import 'package:covid19_info/core/models/country.dart';
-import 'package:covid19_info/core/services/global_api_service.dart';
 
 import 'package:covid19_info/ui/pages/country_details_page.dart';
 
@@ -128,12 +127,11 @@ class CountryCard extends StatelessWidget {
 
   void _navigateToDetailsPage(BuildContext context) {
     FocusScope.of(context).unfocus();
+    context.bloc<CountryDetailBloc>()..add(GetCountryDetailEvent(country: country));
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => BlocProvider(
-          create: (_) => CountryDetailBloc(
-            apiService: context.repository<GlobalApiService>(),
-          )..add(GetCountryDetailEvent(country: country)),
+        builder: (_) => BlocProvider.value(
+          value: context.bloc<CountryDetailBloc>(),
           child: CountryDetailsPage(
             country: country,
           ),
