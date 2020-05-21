@@ -1,75 +1,69 @@
 import 'dart:async';
 
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter_media_notification/flutter_media_notification.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/podcast_player_data.dart';
 
 class PodcastPlayerService {
-  AudioPlayer _player = AudioPlayer();
-  PodcastPlayerData state = PodcastPlayerData();
+  AssetsAudioPlayer _player;
+
+  PodcastPlayerData _state;
+  PodcastPlayerData get state => _state;
 
   Future<void> init(Podcast podcast) async {
-    state.isPlaying = StreamController<bool>.broadcast()..add(false);
-    await stop();
+    _player = AssetsAudioPlayer();
 
-    int result = await _player.setUrl(podcast.audioUrl);
-    if (result != 1) throw AppError(message: 'Couldn\'t play podcast.');
+    try {
+      await _player.open(
+        Audio.network(
+          podcast.audioUrl,
+          metas: Metas(
+            title: podcast.title,
+            artist: podcast.source,
+            image: MetasImage.network(podcast.imageUrl),
+          ),
+        ),
+        playSpeed: 1.0,
+        autoStart: true,
+        showNotification: true,
+        respectSilentMode: false,
+      );
+    } catch (e) {
+      print(e.toString());
+      throw AppError(message: 'Couldn\'t play ${podcast.title}.');
+    }
 
-    state.speed = 1.0;
-    state.currentPodcast = podcast;
-    state.currentPosition = _player.onAudioPositionChanged;
-    _player.onDurationChanged.listen((Duration d) {
-      state.duration = d;
-    });
-
-    MediaNotification.setListener('play', () {
-      play();
-    });
-
-    MediaNotification.setListener('pause', () {
-      pause();
-    });
+    _state = PodcastPlayerData(
+      speed: 1.0,
+      duration: _player.current.value.audio.duration,
+      currentPodcast: podcast,
+      isPlaying: _player.isPlaying,
+      currentPosition: _player.currentPosition,
+    );
   }
 
   Future<void> play() async {
-    state.isPlaying.add(true);
-    await _player.play(state.currentPodcast.audioUrl);
-    _showNotification(true);
+    await _player.play();
   }
 
   Future<void> pause() async {
-    state.isPlaying.add(false);
     await _player.pause();
-    _showNotification(false);
   }
 
   Future<void> stop() async {
-    state.isPlaying.add(false);
+    await _player.pause();
     await _player.stop();
-    _hideNotification();
+    _player.dispose();
   }
 
-  void seekTo(Duration duration) {
-    _player.seek(duration);
+  Future<void> seekTo(Duration duration) async {
+    await _player.seek(duration);
   }
 
   Future<void> setSpeed(double speed) async {
     state.speed = speed;
-    await _player.setPlaybackRate(playbackRate: speed);
-  }
-
-  Future<void> _hideNotification() async {
-    await MediaNotification.hideNotification();
-  }
-
-  Future<void> _showNotification(bool playing) async {
-    await MediaNotification.showNotification(
-      title: state.currentPodcast.title,
-      author: state.currentPodcast.source,
-      isPlaying: playing,
-    );
+    await _player.setPlaySpeed(speed);
   }
 }

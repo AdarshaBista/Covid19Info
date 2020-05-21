@@ -84,7 +84,7 @@ class PodcastPlayer extends StatelessWidget {
 
   Widget _buildPlayPauseIcon(BuildContext context) {
     return StreamBuilder<bool>(
-      stream: playerState.isPlaying.stream,
+      stream: playerState.isPlaying,
       initialData: true,
       builder: (context, snapshot) {
         bool isPlaying = snapshot.data;

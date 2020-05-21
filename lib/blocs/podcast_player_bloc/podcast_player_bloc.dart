@@ -39,7 +39,6 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
     yield LoadingPodcastPlayerState();
     try {
       await podcastPlayerService.init(podcast);
-      podcastPlayerService.play();
       yield LoadedPodcastPlayerState(
         playerState: podcastPlayerService.state,
       );

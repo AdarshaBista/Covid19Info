@@ -26,42 +26,7 @@ class PodcastSlider extends StatelessWidget {
             context.bloc<PodcastPlayerBloc>()..add(CompletedPodcastEvent());
           }
 
-          return Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                format(currentDuration),
-                style: AppTextStyles.extraSmallLight,
-              ),
-              SliderTheme(
-                data: SliderTheme.of(context).copyWith(
-                  thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0),
-                  valueIndicatorColor: AppColors.light.withOpacity(0.5),
-                  valueIndicatorTextStyle: AppTextStyles.smallDark,
-                ),
-                child: Slider(
-                  activeColor: AppColors.light,
-                  inactiveColor: AppColors.light.withOpacity(0.2),
-                  divisions: playerState.duration.inSeconds,
-                  min: 0.0,
-                  max: playerState.duration.inSeconds.toDouble(),
-                  value: currentDuration.inSeconds.toDouble(),
-                  label: format(currentDuration),
-                  onChanged: (value) {
-                    context.bloc<PodcastPlayerBloc>()
-                      ..add(SeekPodcastEvent(
-                        seconds: value,
-                      ));
-                  },
-                ),
-              ),
-              Text(
-                format(playerState.duration),
-                style: AppTextStyles.extraSmallLight,
-              ),
-            ],
-          );
+          return _buildSlider(currentDuration, context);
         }
         return Center(
           child: CircularProgressIndicator(
@@ -69,6 +34,45 @@ class PodcastSlider extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Row _buildSlider(Duration currentDuration, BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          format(currentDuration),
+          style: AppTextStyles.extraSmallLight,
+        ),
+        SliderTheme(
+          data: SliderTheme.of(context).copyWith(
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0),
+            valueIndicatorColor: AppColors.light.withOpacity(0.5),
+            valueIndicatorTextStyle: AppTextStyles.smallDark,
+          ),
+          child: Slider(
+            activeColor: AppColors.light,
+            inactiveColor: AppColors.light.withOpacity(0.2),
+            divisions: playerState.duration.inSeconds,
+            min: 0.0,
+            max: playerState.duration.inSeconds.toDouble(),
+            value: currentDuration.inSeconds.toDouble(),
+            label: format(currentDuration),
+            onChanged: (value) {
+              context.bloc<PodcastPlayerBloc>()
+                ..add(SeekPodcastEvent(
+                  seconds: value,
+                ));
+            },
+          ),
+        ),
+        Text(
+          format(playerState.duration),
+          style: AppTextStyles.extraSmallLight,
+        ),
+      ],
     );
   }
 

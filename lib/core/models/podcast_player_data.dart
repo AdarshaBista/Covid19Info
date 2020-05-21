@@ -1,35 +1,39 @@
-import 'dart:async';
+import 'package:flutter/material.dart';
 
 import 'package:covid19_info/core/models/podcast.dart';
 
 class PodcastPlayerData {
-  Podcast currentPodcast;
   double speed;
-  Duration duration;
-  Stream<Duration> currentPosition;
-  StreamController<bool> isPlaying;
+  final Duration duration;
+  final Podcast currentPodcast;
+  final Stream<bool> isPlaying;
+  final Stream<Duration> currentPosition;
 
   PodcastPlayerData({
-    this.currentPodcast,
-    this.speed,
-    this.duration,
-    this.isPlaying,
-    this.currentPosition,
-  });
+    @required this.speed,
+    @required this.duration,
+    @required this.currentPodcast,
+    @required this.isPlaying,
+    @required this.currentPosition,
+  })  : assert(speed != null),
+        assert(duration != null),
+        assert(currentPodcast != null),
+        assert(isPlaying != null),
+        assert(currentPosition != null);
 
   List<double> get speedValues => const [0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0];
 
   PodcastPlayerData copyWith({
-    Podcast currentPodcast,
     double speed,
     Duration duration,
+    Podcast currentPodcast,
     Stream<bool> isPlaying,
     Stream<Duration> currentPosition,
   }) {
     return PodcastPlayerData(
-      currentPodcast: currentPodcast ?? this.currentPodcast,
       speed: speed ?? this.speed,
       duration: duration ?? this.duration,
+      currentPodcast: currentPodcast ?? this.currentPodcast,
       isPlaying: isPlaying ?? this.isPlaying,
       currentPosition: currentPosition ?? this.currentPosition,
     );
@@ -45,9 +49,9 @@ class PodcastPlayerData {
     if (identical(this, o)) return true;
 
     return o is PodcastPlayerData &&
-        o.currentPodcast == currentPodcast &&
         o.speed == speed &&
         o.duration == duration &&
+        o.currentPodcast == currentPodcast &&
         o.isPlaying == isPlaying &&
         o.currentPosition == currentPosition;
   }
