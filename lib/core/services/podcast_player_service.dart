@@ -7,13 +7,15 @@ import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/podcast_player_data.dart';
 
 class PodcastPlayerService {
+  static const String PLAYER_ID = 'podcast_player';
+
   AssetsAudioPlayer _player;
 
   PodcastPlayerData _state;
   PodcastPlayerData get state => _state;
 
   Future<void> init(Podcast podcast) async {
-    _player = AssetsAudioPlayer();
+    _player = AssetsAudioPlayer.withId(PLAYER_ID);
 
     try {
       await _player.open(
@@ -27,7 +29,7 @@ class PodcastPlayerService {
         ),
         playSpeed: 1.0,
         autoStart: true,
-        showNotification: true,
+        showNotification: false,
         respectSilentMode: false,
       );
     } catch (e) {
@@ -53,7 +55,6 @@ class PodcastPlayerService {
   }
 
   Future<void> stop() async {
-    await _player.pause();
     await _player.stop();
     _player.dispose();
   }

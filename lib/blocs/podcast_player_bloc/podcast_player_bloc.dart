@@ -3,10 +3,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/core/models/app_error.dart';
+import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/core/models/podcast_player_data.dart';
-
 import 'package:covid19_info/core/services/podcast_player_service.dart';
 
 part 'podcast_player_event.dart';
@@ -36,7 +35,7 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
   }
 
   Stream<PodcastPlayerState> _mapInitToState(Podcast podcast) async* {
-    yield LoadingPodcastPlayerState();
+    yield LoadingPodcastPlayerState(currentPodcast: podcast);
     try {
       await podcastPlayerService.init(podcast);
       yield LoadedPodcastPlayerState(

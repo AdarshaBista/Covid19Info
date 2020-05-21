@@ -13,14 +13,17 @@ import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 class PodcastCard extends StatelessWidget {
   final Podcast podcast;
   final Color color;
+  final bool isLoading;
   final bool isPlaying;
 
   const PodcastCard({
     @required this.podcast,
     @required this.color,
+    @required this.isLoading,
     @required this.isPlaying,
   })  : assert(podcast != null),
         assert(color != null),
+        assert(isLoading != null),
         assert(isPlaying != null);
 
   @override
@@ -46,7 +49,9 @@ class PodcastCard extends StatelessWidget {
               const SizedBox(width: 8.0),
               _buildTitle(),
               const SizedBox(width: 8.0),
-              isPlaying ? _buildPlayingIndicator() : _buildPlayIcon(context),
+              isLoading
+                  ? _buildLoadingIndicator()
+                  : isPlaying ? _buildPlayingIndicator() : _buildPlayIcon(context),
             ],
           ),
           children: <Widget>[
@@ -118,6 +123,16 @@ class PodcastCard extends StatelessWidget {
         label: podcast.source,
         color: color,
         iconData: null,
+      ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return SizedBox(
+      width: 24.0,
+      height: 24.0,
+      child: CircularProgressIndicator(
+        backgroundColor: color,
       ),
     );
   }

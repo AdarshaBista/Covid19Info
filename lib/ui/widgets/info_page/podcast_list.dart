@@ -83,6 +83,8 @@ class _PodcastListState extends State<PodcastList> {
             return PodcastCard(
               podcast: podcast,
               color: AppColors.accentColors[index % AppColors.accentColors.length],
+              isLoading:
+                  (state is LoadingPodcastPlayerState) ? state.currentPodcast == podcast : false,
               isPlaying: (state is LoadedPodcastPlayerState)
                   ? state.playerState.currentPodcast == podcast
                   : false,

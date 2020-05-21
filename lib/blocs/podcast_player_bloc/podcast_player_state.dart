@@ -5,7 +5,13 @@ abstract class PodcastPlayerState {}
 
 class InitialPodcastPlayerState extends PodcastPlayerState {}
 
-class LoadingPodcastPlayerState extends PodcastPlayerState {}
+class LoadingPodcastPlayerState extends PodcastPlayerState {
+  final Podcast currentPodcast;
+
+  LoadingPodcastPlayerState({
+    @required this.currentPodcast,
+  }) : assert(currentPodcast != null);
+}
 
 class LoadedPodcastPlayerState extends PodcastPlayerState {
   final PodcastPlayerData playerState;
