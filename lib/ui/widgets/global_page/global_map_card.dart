@@ -60,7 +60,31 @@ class GlobalMapCard extends StatelessWidget {
     return MarkerLayerOptions(
       markers: state.allCountries.map(
         (c) {
-          double diameter = (math.sqrt(c.totalConfirmed.toDouble()) / 8.0).clamp(8.0, 120.0);
+          int metric;
+          Color color;
+
+          switch (state.filterType) {
+            case CountryFilterType.Confirmed:
+              metric = c.totalConfirmed;
+              color = Colors.blue;
+              break;
+            case CountryFilterType.Active:
+              metric = c.activeCases;
+              color = Colors.yellow;
+              break;
+            case CountryFilterType.Recovered:
+              metric = c.totalRecovered;
+              color = Colors.green;
+              break;
+            case CountryFilterType.Deaths:
+              metric = c.totalDeaths;
+              color = Colors.red;
+              break;
+
+            default:
+          }
+
+          double diameter = (math.sqrt(metric.toDouble()) / 8.0).clamp(8.0, 120.0);
           return Marker(
             height: diameter,
             width: diameter,
@@ -69,8 +93,8 @@ class GlobalMapCard extends StatelessWidget {
               onTap: () => _navigateToDetailsPage(context, c),
               child: CircleAvatar(
                 backgroundColor: state.isCountryInSearch(c)
-                    ? Colors.blue.withOpacity(0.4)
-                    : Colors.red.withOpacity(0.4),
+                    ? Colors.deepPurple.withOpacity(0.4)
+                    : color.withOpacity(0.4),
               ),
             ),
           );

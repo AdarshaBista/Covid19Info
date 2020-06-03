@@ -43,7 +43,8 @@ class Country {
         assert(confirmedPerMillion != null),
         assert(timeline != null);
 
-  bool get isValid => code != 'Error' && lat != -1.0 && lng != -1.0 && totalConfirmed > 0;
+  bool get isValid =>
+      code != 'Error' && lat != -1.0 && lng != -1.0 && totalConfirmed > 0 && activeCases >= 0;
 
   Country copyWith({
     String code,

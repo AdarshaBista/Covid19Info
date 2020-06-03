@@ -12,3 +12,11 @@ class SearchCountryEvent extends CountryEvent {
     @required this.searchTerm,
   }) : assert(searchTerm != null);
 }
+
+class FilterCountryEvent extends CountryEvent {
+  final CountryFilterType filterType;
+
+  FilterCountryEvent({
+    @required this.filterType,
+  }) : assert(filterType != null);
+}

@@ -5,17 +5,20 @@ import 'package:meta/meta.dart';
 
 import 'package:rxdart/rxdart.dart';
 
-import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/country.dart';
+import 'package:covid19_info/core/models/app_error.dart';
 
 import 'package:covid19_info/core/services/global_api_service.dart';
 
 part 'country_event.dart';
 part 'country_state.dart';
 
+enum CountryFilterType { Confirmed, Active, Recovered, Deaths }
+
 class CountryBloc extends Bloc<CountryEvent, CountryState> {
   final GlobalApiService apiService;
   List<Country> _countries = [];
+  CountryFilterType _filterType = CountryFilterType.Confirmed;
 
   CountryBloc({
     @required this.apiService,
@@ -43,6 +46,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   ) async* {
     if (event is GetCountryEvent) yield* _mapGetCountryToState();
     if (event is SearchCountryEvent) yield* _mapSearchCountryToState(event);
+    if (event is FilterCountryEvent) yield* _mapFilterCountryToState(event.filterType);
   }
 
   Stream<CountryState> _mapGetCountryToState() async* {
@@ -51,6 +55,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
       _countries = await apiService.fetchCountries();
       _countries = _countries.where((c) => c.isValid).toList();
       yield LoadedCountryState(
+        filterType: _filterType,
         allCountries: _countries,
         searchedCountries: null,
       );
@@ -63,6 +68,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   Stream<CountryState> _mapSearchCountryToState(SearchCountryEvent event) async* {
     if (event.searchTerm.isEmpty) {
       yield LoadedCountryState(
+        filterType: _filterType,
         allCountries: _countries,
         searchedCountries: null,
       );
@@ -75,13 +81,24 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
 
     if (searchedCountries.isEmpty) {
       yield LoadedCountryState(
+        filterType: _filterType,
         allCountries: _countries,
         searchedCountries: [],
       );
     }
     yield LoadedCountryState(
+      filterType: _filterType,
       allCountries: _countries,
       searchedCountries: searchedCountries,
+    );
+  }
+
+  Stream<CountryState> _mapFilterCountryToState(CountryFilterType filterType) async* {
+    _filterType = filterType;
+    yield LoadedCountryState(
+      filterType: _filterType,
+      allCountries: _countries,
+      searchedCountries: (state as LoadedCountryState).searchedCountries,
     );
   }
 }

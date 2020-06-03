@@ -10,6 +10,7 @@ class LoadingCountryState extends CountryState {}
 class LoadedCountryState extends CountryState {
   final List<Country> allCountries;
   final List<Country> searchedCountries;
+  final CountryFilterType filterType;
 
   bool get shouldShowAllCountries => searchedCountries == null;
   bool get isSearchEmpty => searchedCountries.isEmpty;
@@ -21,9 +22,11 @@ class LoadedCountryState extends CountryState {
   }
 
   LoadedCountryState({
+    @required this.filterType,
     @required this.allCountries,
     @required this.searchedCountries,
-  }) : assert(allCountries != null);
+  })  : assert(filterType != null),
+        assert(allCountries != null);
 }
 
 class ErrorCountryState extends CountryState {
