@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math' as math;
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -39,9 +38,7 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
   NepalDistrictState get initialState => InitialDistrictState();
 
   @override
-  Stream<NepalDistrictState> mapEventToState(
-    NepalDistrictEvent event,
-  ) async* {
+  Stream<NepalDistrictState> mapEventToState(NepalDistrictEvent event) async* {
     if (event is GetDistrictEvent) yield* _mapGetDistrictToState();
     if (event is SearchDistrictEvent) yield* _mapSearchDistrictToState(event);
   }
@@ -51,10 +48,18 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
     try {
       final List<int> districtsIds = await apiService.fetchDistrictsIds();
       for (int id in districtsIds) {
-        District district = await apiService.fetchDistrict(id);
-        if (district != null) _districts.add(district);
+        final district = await apiService.fetchDistrict(id);
+        if (district != null) {
+          _districts.add(district);
+          yield LoadedDistrictState(
+            shouldShowSearch: false,
+            allDistricts: _districts,
+            searchedDistricts: null,
+          );
+        }
       }
       yield LoadedDistrictState(
+        shouldShowSearch: true,
         allDistricts: _districts,
         searchedDistricts: null,
       );
@@ -73,6 +78,7 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
       return;
     }
 
+    yield LoadingDistrictState();
     final List<District> searchedDistricts = _districts
         .where((d) => d.title.toLowerCase().contains(event.searchTerm.toLowerCase()))
         .toList();

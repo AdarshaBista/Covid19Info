@@ -12,6 +12,7 @@ import 'package:covid19_info/blocs/nepal_district_bloc/nepal_district_bloc.dart'
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/map_card.dart';
+import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
@@ -27,7 +28,12 @@ class NepalMapCard extends StatelessWidget {
         if (state is InitialDistrictState) {
           return const EmptyIcon();
         } else if (state is LoadedDistrictState) {
-          return _buildMap(state);
+          return Stack(
+            children: [
+              _buildMap(state),
+              if (state.shouldShowSearch) _buildDistrictSearchBox(context),
+            ],
+          );
         } else if (state is ErrorDistrictState) {
           return ErrorIcon(message: state.message);
         } else {
@@ -61,9 +67,8 @@ class NepalMapCard extends StatelessWidget {
     return MarkerLayerOptions(
       markers: state.allDistricts.map(
         (d) {
-          double diameter = (math.sqrt(d.cases.length.toDouble()) * 6.0).clamp(16.0, 64.0);
-          final double opacity =
-              (d.cases.length.toDouble() / state.maxCase.toDouble()).clamp(0.3, 0.7);
+          double diameter =
+              (math.sqrt(d.cases.length.toDouble()) * 6.0).clamp(16.0, 64.0);
           return Marker(
             height: diameter,
             width: diameter,
@@ -72,8 +77,8 @@ class NepalMapCard extends StatelessWidget {
               onTap: () => _openDetails(context, d),
               child: CircleAvatar(
                 backgroundColor: state.isDistrictInSearch(d)
-                    ? Colors.blue.withOpacity(opacity)
-                    : Colors.red.withOpacity(opacity),
+                    ? Colors.blue.withOpacity(0.6)
+                    : Colors.red.withOpacity(0.6),
               ),
             ),
           );
@@ -106,6 +111,21 @@ class NepalMapCard extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildDistrictSearchBox(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SearchBox(
+        hintText: 'Search Districts',
+        onChanged: (String value) {
+          context.bloc<NepalDistrictBloc>()
+            ..add(SearchDistrictEvent(
+              searchTerm: value,
+            ));
+        },
+      ),
     );
   }
 }

@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
-import 'package:covid19_info/blocs/nepal_district_bloc/nepal_district_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/nepal_stats_list.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/nepal_map_card.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
@@ -42,7 +40,6 @@ class NepalPage extends StatelessWidget {
               minHeight: 64.0,
               panelBuilder: _buildNepalStatsPanel,
             ),
-            _buildDistrictSearchBox(context),
           ],
         ),
       ),
@@ -65,21 +62,6 @@ class NepalPage extends StatelessWidget {
           return const BusyIndicator();
         }
       },
-    );
-  }
-
-  Widget _buildDistrictSearchBox(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SearchBox(
-        hintText: 'Search Districts',
-        onChanged: (String value) {
-          context.bloc<NepalDistrictBloc>()
-            ..add(SearchDistrictEvent(
-              searchTerm: value,
-            ));
-        },
-      ),
     );
   }
 }

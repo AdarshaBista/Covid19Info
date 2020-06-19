@@ -8,24 +8,23 @@ class InitialDistrictState extends NepalDistrictState {}
 class LoadingDistrictState extends NepalDistrictState {}
 
 class LoadedDistrictState extends NepalDistrictState {
+  final bool shouldShowSearch;
   final List<District> allDistricts;
   final List<District> searchedDistricts;
 
-  int get maxCase => allDistricts.map((d) => d.cases.length).reduce(math.max);
-  int get minCase => allDistricts.map((d) => d.cases.length).reduce(math.min);
   bool get shouldShowAllDistricts => searchedDistricts == null;
   bool get isSearchEmpty => searchedDistricts.isEmpty;
   bool isDistrictInSearch(District d) {
-    if (shouldShowAllDistricts) {
-      return false;
-    }
+    if (shouldShowAllDistricts) return false;
     return searchedDistricts.contains(d);
   }
 
   LoadedDistrictState({
+    this.shouldShowSearch = true,
     @required this.allDistricts,
     @required this.searchedDistricts,
-  }) : assert(allDistricts != null);
+  })  : assert(allDistricts != null),
+        assert(shouldShowSearch != null);
 }
 
 class ErrorDistrictState extends NepalDistrictState {
