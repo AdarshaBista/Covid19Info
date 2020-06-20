@@ -8,7 +8,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:covid19_info/core/models/country.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 
-import 'package:covid19_info/core/services/global_api_service.dart';
+import 'package:covid19_info/core/services/api_service.dart';
 
 part 'country_event.dart';
 part 'country_state.dart';
@@ -16,7 +16,7 @@ part 'country_state.dart';
 enum CountryFilterType { Confirmed, Active, Recovered, Deaths }
 
 class CountryBloc extends Bloc<CountryEvent, CountryState> {
-  final GlobalApiService apiService;
+  final ApiService apiService;
   List<Country> _countries = [];
   CountryFilterType _filterType = CountryFilterType.Confirmed;
 

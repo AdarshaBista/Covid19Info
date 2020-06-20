@@ -10,7 +10,7 @@ import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
 import 'package:covid19_info/blocs/country_detail_bloc/country_detail_bloc.dart';
 
 import 'package:covid19_info/core/models/country.dart';
-import 'package:covid19_info/core/services/global_api_service.dart';
+import 'package:covid19_info/core/services/api_service.dart';
 
 import 'package:covid19_info/ui/widgets/common/map_card.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
@@ -109,7 +109,7 @@ class GlobalMapCard extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => BlocProvider(
           create: (_) => CountryDetailBloc(
-            apiService: context.repository<GlobalApiService>(),
+            apiService: context.repository<ApiService>(),
           )..add(GetCountryDetailEvent(country: country)),
           child: CountryDetailsPage(
             country: country,

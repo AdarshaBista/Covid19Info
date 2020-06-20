@@ -6,13 +6,13 @@ import 'package:meta/meta.dart';
 import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 
-import 'package:covid19_info/core/services/nepal_api_service.dart';
+import 'package:covid19_info/core/services/api_service.dart';
 
 part 'podcast_event.dart';
 part 'podcast_state.dart';
 
 class PodcastBloc extends Bloc<PodcastEvent, PodcastState> {
-  final NepalApiService apiService;
+  final ApiService apiService;
 
   PodcastBloc({
     @required this.apiService,

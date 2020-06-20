@@ -8,13 +8,13 @@ import 'package:rxdart/rxdart.dart';
 import 'package:covid19_info/core/models/district.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 
-import 'package:covid19_info/core/services/nepal_api_service.dart';
+import 'package:covid19_info/core/services/api_service.dart';
 
 part 'nepal_district_event.dart';
 part 'nepal_district_state.dart';
 
 class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
-  final NepalApiService apiService;
+  final ApiService apiService;
   List<District> _districts = [];
 
   NepalDistrictBloc({

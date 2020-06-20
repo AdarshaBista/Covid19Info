@@ -7,13 +7,13 @@ import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/country.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
-import 'package:covid19_info/core/services/global_api_service.dart';
+import 'package:covid19_info/core/services/api_service.dart';
 
 part 'country_detail_event.dart';
 part 'country_detail_state.dart';
 
 class CountryDetailBloc extends Bloc<CountryDetailEvent, CountryDetailState> {
-  final GlobalApiService apiService;
+  final ApiService apiService;
   final Map<String, Country> _countriesCache = {};
 
   CountryDetailBloc({

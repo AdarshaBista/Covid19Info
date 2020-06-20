@@ -6,13 +6,13 @@ import 'package:meta/meta.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
-import 'package:covid19_info/core/services/global_api_service.dart';
+import 'package:covid19_info/core/services/api_service.dart';
 
 part 'global_stats_event.dart';
 part 'global_stats_state.dart';
 
 class GlobalStatsBloc extends Bloc<GlobalStatsEvent, GlobalStatsState> {
-  final GlobalApiService apiService;
+  final ApiService apiService;
 
   GlobalStatsBloc({
     @required this.apiService,
@@ -28,8 +28,7 @@ class GlobalStatsBloc extends Bloc<GlobalStatsEvent, GlobalStatsState> {
     if (event is GetGlobalStatsEvent) {
       yield LoadingGlobalStatsState();
       try {
-        List<TimelineData> globalTimeline =
-            await apiService.fetchGlobalTimeline();
+        List<TimelineData> globalTimeline = await apiService.fetchGlobalTimeline();
         yield LoadedGlobalStatsState(globalTimeline: globalTimeline);
       } on AppError catch (e) {
         print(e.error);

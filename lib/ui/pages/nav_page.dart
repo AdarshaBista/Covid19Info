@@ -13,8 +13,7 @@ import 'package:covid19_info/blocs/faq_bloc/faq_bloc.dart';
 import 'package:covid19_info/blocs/myth_bloc/myth_bloc.dart';
 import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
 
-import 'package:covid19_info/core/services/nepal_api_service.dart';
-import 'package:covid19_info/core/services/global_api_service.dart';
+import 'package:covid19_info/core/services/api_service.dart';
 import 'package:covid19_info/core/services/podcast_player_service.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
@@ -106,17 +105,17 @@ class _NavPageState extends State<NavPage> {
         providers: [
           BlocProvider(
             create: (context) => GlobalStatsBloc(
-              apiService: context.repository<GlobalApiService>(),
+              apiService: context.repository<ApiService>(),
             )..add(GetGlobalStatsEvent()),
           ),
           BlocProvider(
             create: (context) => CountryBloc(
-              apiService: context.repository<GlobalApiService>(),
+              apiService: context.repository<ApiService>(),
             )..add(GetCountryEvent()),
           ),
           BlocProvider(
             create: (_) => CountryDetailBloc(
-              apiService: context.repository<GlobalApiService>(),
+              apiService: context.repository<ApiService>(),
             ),
           ),
         ],
@@ -127,12 +126,12 @@ class _NavPageState extends State<NavPage> {
         providers: [
           BlocProvider(
             create: (context) => NepalStatsBloc(
-              apiService: context.repository<NepalApiService>(),
+              apiService: context.repository<ApiService>(),
             )..add(GetNepalStatsEvent()),
           ),
           BlocProvider(
             create: (context) => NepalDistrictBloc(
-              apiService: context.repository<NepalApiService>(),
+              apiService: context.repository<ApiService>(),
             )..add(GetDistrictEvent()),
           ),
         ],
@@ -141,7 +140,7 @@ class _NavPageState extends State<NavPage> {
 
   Widget _buildNewsPage() => BlocProvider(
         create: (context) => NewsBloc(
-          apiService: context.repository<NepalApiService>(),
+          apiService: context.repository<ApiService>(),
         )..add(GetNewsEvent()),
         child: NewsPage(),
       );
@@ -150,17 +149,17 @@ class _NavPageState extends State<NavPage> {
         providers: [
           BlocProvider(
             create: (context) => FaqBloc(
-              apiService: context.repository<NepalApiService>(),
+              apiService: context.repository<ApiService>(),
             )..add(GetFaqEvent()),
           ),
           BlocProvider(
             create: (context) => MythBloc(
-              apiService: context.repository<NepalApiService>(),
+              apiService: context.repository<ApiService>(),
             )..add(GetMythEvent()),
           ),
           BlocProvider(
             create: (context) => PodcastBloc(
-              apiService: context.repository<NepalApiService>(),
+              apiService: context.repository<ApiService>(),
             )..add(GetPodcastEvent()),
           ),
           BlocProvider(
@@ -170,7 +169,7 @@ class _NavPageState extends State<NavPage> {
           ),
           BlocProvider(
             create: (context) => HospitalBloc(
-              apiService: context.repository<NepalApiService>(),
+              apiService: context.repository<ApiService>(),
             )..add(GetHospitalEvent()),
           ),
         ],

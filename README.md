@@ -23,6 +23,7 @@ App to monitor statistics and news about Covid19 especially in Nepal.
 - List of myths and facts about the coronavirus.
 - List of podcasts providing information about the virus.
 - Fully featured podcast player.
+- Caching of api responses
 
 ## API Used
 
