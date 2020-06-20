@@ -120,10 +120,8 @@ class ApiService {
       await cacheService.insert(url, res.body);
       return _decodeDistrict(res.body);
     } catch (e) {
-      throw AppError(
-        message: "Couldn't load districts!",
-        error: e.toString(),
-      );
+      print(e.toString());
+      return null;
     }
   }
 
