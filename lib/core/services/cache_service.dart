@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart';
 
+import 'package:data_connection_checker/data_connection_checker.dart';
+
 class CacheService {
   static const int kCacheDuration = 20;
   static const String kUpdatedAtKey = 'updatedAt';
@@ -11,17 +13,22 @@ class CacheService {
     final box = await cacheBox;
     String value = box.get(key);
 
-    final DateTime lastUpdated = DateTime.tryParse(
-          box.get(kUpdatedAtKey, defaultValue: ''),
-        ) ??
-        DateTime.now();
-
-    if (DateTime.now().difference(lastUpdated) >
-        const Duration(minutes: kCacheDuration)) {
+    if (await _shouldInvalidate()) {
       _delete(key);
       return null;
     }
     return value;
+  }
+
+  Future<bool> _shouldInvalidate() async {
+    final box = await cacheBox;
+
+    final bool isConnected = await DataConnectionChecker().hasConnection;
+    final DateTime lastUpdated =
+        DateTime.tryParse(box.get(kUpdatedAtKey, defaultValue: '')) ?? DateTime.now();
+
+    return isConnected &&
+        DateTime.now().difference(lastUpdated) > const Duration(minutes: kCacheDuration);
   }
 
   Future<void> insert(String key, String value) async {
