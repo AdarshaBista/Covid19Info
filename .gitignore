@@ -1,5 +1,6 @@
 api_keys.dart
 /windows/
+/cache/
 
 # Miscellaneous
 *.class
