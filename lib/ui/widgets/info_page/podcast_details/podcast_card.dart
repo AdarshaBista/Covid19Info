@@ -100,7 +100,7 @@ class PodcastCard extends StatelessWidget {
         textAlign: TextAlign.left,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.largeLightSerif,
+        style: AppTextStyles.mediumLightSerif,
       ),
     );
   }

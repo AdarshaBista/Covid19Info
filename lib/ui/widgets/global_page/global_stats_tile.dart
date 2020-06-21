@@ -5,9 +5,8 @@ import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/common/pill.dart';
-import 'package:covid19_info/ui/widgets/global_page/stat_column.dart';
 import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
+import 'package:covid19_info/ui/widgets/global_page/stat_column.dart';
 
 class GlobalStatsTile extends StatefulWidget {
   @override
@@ -43,9 +42,9 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
       backdropEnabled: false,
       slideDirection: SlideDirection.DOWN,
       margin: const EdgeInsets.all(12.0),
-      borderRadius: BorderRadius.circular(16.0),
+      borderRadius: BorderRadius.circular(12.0),
       maxHeight: MediaQuery.of(context).size.height * 0.7,
-      minHeight: 96.0,
+      minHeight: 88.0,
       onPanelSlide: (value) => setState(() {
         panelPos = value;
       }),
@@ -53,7 +52,14 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _buildStatsRow(state, context),
-          const Pill(),
+          Transform.rotate(
+            angle: panelPos * 3.1415,
+            child: Icon(
+              Icons.keyboard_arrow_down,
+              size: 16.0,
+              color: AppColors.light.withOpacity(0.5),
+            ),
+          ),
         ],
       ),
       panelBuilder: (_) => Transform.scale(
@@ -75,7 +81,7 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
 
   Widget _buildStatsRow(LoadedGlobalStatsState state, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.end,

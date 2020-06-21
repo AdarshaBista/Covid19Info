@@ -26,7 +26,7 @@ class CountryDetailsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 8.0,
-        backgroundColor: AppColors.dark,
+        backgroundColor: AppColors.background,
         centerTitle: true,
         title: Hero(
           tag: country.name,

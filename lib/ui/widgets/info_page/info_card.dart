@@ -44,7 +44,7 @@ class InfoCard extends StatelessWidget {
       child: Text(
         title.trim(),
         textAlign: TextAlign.left,
-        style: AppTextStyles.largeLightSerif,
+        style: AppTextStyles.mediumLightSerif,
       ),
     );
   }
@@ -55,7 +55,7 @@ class InfoCard extends StatelessWidget {
       child: Text(
         subTitle.trim(),
         textAlign: TextAlign.justify,
-        style: AppTextStyles.mediumLightSerif,
+        style: AppTextStyles.smallLightSerif,
       ),
     );
   }

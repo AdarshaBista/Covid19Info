@@ -46,7 +46,10 @@ class StatCard extends StatelessWidget {
             Flexible(
               child: AutoSizeText(
                 count,
-                style: AppTextStyles.extraLargeLight.copyWith(color: color),
+                style: AppTextStyles.largeLight.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

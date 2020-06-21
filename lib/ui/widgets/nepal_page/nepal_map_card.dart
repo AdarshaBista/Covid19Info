@@ -67,7 +67,8 @@ class NepalMapCard extends StatelessWidget {
     return MarkerLayerOptions(
       markers: state.allDistricts.map(
         (d) {
-          double diameter = (math.sqrt(d.cases.length.toDouble()) * 2.0).clamp(8.0, 64.0);
+          double diameter =
+              (math.sqrt(d.cases.length.toDouble()) * 2.0).clamp(12.0, 72.0);
           return Marker(
             height: diameter,
             width: diameter,

@@ -23,10 +23,10 @@ class NepalStatsList extends StatelessWidget {
       children: [
         const SizedBox(height: 4.0),
         const Pill(),
-        const SizedBox(height: 8.0),
+        const SizedBox(height: 4.0),
         Text(
           'NEPAL STATS',
-          style: AppTextStyles.largeLight,
+          style: AppTextStyles.mediumLight,
         ),
         const SizedBox(height: 8.0),
         Expanded(

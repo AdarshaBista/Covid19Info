@@ -67,9 +67,14 @@ class _GlobalPageState extends State<GlobalPage> {
         offset: Offset(panelPos * MediaQuery.of(context).size.width, 0.0),
         child: CircleAvatar(
           child: PopupMenuButton<CountryFilterType>(
-              icon: Icon(Icons.filter_list),
+              icon: Icon(
+                Icons.filter_list,
+                color: AppColors.primary,
+              ),
               onSelected: (filterType) {
-                context.bloc<CountryBloc>().add(FilterCountryEvent(filterType: filterType));
+                context
+                    .bloc<CountryBloc>()
+                    .add(FilterCountryEvent(filterType: filterType));
               },
               itemBuilder: (context) {
                 return [

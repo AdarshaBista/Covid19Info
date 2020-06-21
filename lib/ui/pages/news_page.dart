@@ -32,9 +32,7 @@ class _NewsPageState extends State<NewsPage> {
         title: Text(
           'NEWS',
           maxLines: 3,
-          style: AppTextStyles.extraLargeLight.copyWith(
-            fontSize: 32.0,
-          ),
+          style: AppTextStyles.extraLargeLight,
         ),
       ),
       body: Padding(

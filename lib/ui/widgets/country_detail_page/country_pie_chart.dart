@@ -25,7 +25,6 @@ class CountryPieChart extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.mediumLight,
         ),
-        const SizedBox(height: 24.0),
         CountryStatChart(
           opacity: 0.4,
           active: country.activeCases,

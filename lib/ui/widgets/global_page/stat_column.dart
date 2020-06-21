@@ -21,21 +21,24 @@ class StatColumn extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Flexible(
             child: AutoSizeText(
               label,
               textAlign: TextAlign.center,
-              style: AppTextStyles.smallLight,
+              style: AppTextStyles.extraSmallLight,
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 6.0),
           Flexible(
             child: AutoSizeText(
               count.toString(),
-              style: AppTextStyles.largeLight.copyWith(color: color),
+              style: AppTextStyles.mediumLight.copyWith(
+                color: color,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

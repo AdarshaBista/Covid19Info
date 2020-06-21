@@ -37,7 +37,7 @@ class NepalPage extends StatelessWidget {
                 topRight: Radius.circular(16.0),
               ),
               maxHeight: MediaQuery.of(context).size.height * 0.7,
-              minHeight: 64.0,
+              minHeight: 50.0,
               panelBuilder: _buildNepalStatsPanel,
             ),
           ],
