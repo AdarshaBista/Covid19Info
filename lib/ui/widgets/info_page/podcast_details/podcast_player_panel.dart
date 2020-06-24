@@ -19,6 +19,13 @@ class PodcastPlayerPanel extends StatefulWidget {
 
 class _PodcastPlayerPanelState extends State<PodcastPlayerPanel> {
   double panelPos = 0.0;
+  PanelController panelController;
+
+  @override
+  void initState() {
+    super.initState();
+    panelController = PanelController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +47,7 @@ class _PodcastPlayerPanelState extends State<PodcastPlayerPanel> {
 
   Widget _buildPanel(PodcastPlayerData playerState) {
     return SlidingUpPanel(
+      controller: panelController,
       color: AppColors.primary,
       isDraggable: true,
       backdropEnabled: true,
@@ -54,8 +62,9 @@ class _PodcastPlayerPanelState extends State<PodcastPlayerPanel> {
       panelBuilder: (sc) => Transform.scale(
         scale: panelPos,
         child: PodcastPlayer(
-          playerState: playerState,
           controller: sc,
+          playerState: playerState,
+          onStop: () async => await panelController.close(),
         ),
       ),
     );

@@ -9,14 +9,17 @@ import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_slider.dart';
 
 class PodcastPlayer extends StatelessWidget {
-  final PodcastPlayerData playerState;
+  final VoidCallback onStop;
   final ScrollController controller;
+  final PodcastPlayerData playerState;
 
   const PodcastPlayer({
-    @required this.playerState,
+    @required this.onStop,
     @required this.controller,
-  })  : assert(playerState != null),
-        assert(controller != null);
+    @required this.playerState,
+  })  : assert(onStop != null),
+        assert(controller != null),
+        assert(playerState != null);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class PodcastPlayer extends StatelessWidget {
               const SizedBox(width: 4.0),
               _PlayPauseIcon(playerState: playerState),
               const SizedBox(width: 8.0),
-              const _StopIcon(),
+              _StopIcon(onStop: onStop),
             ],
           ),
         ],
@@ -84,12 +87,19 @@ class PodcastPlayer extends StatelessWidget {
 }
 
 class _StopIcon extends StatelessWidget {
-  const _StopIcon();
+  final VoidCallback onStop;
+
+  const _StopIcon({
+    @required this.onStop,
+  }) : assert(onStop != null);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.bloc<PodcastPlayerBloc>()..add(StopPodcastEvent()),
+      onTap: () {
+        onStop();
+        context.bloc<PodcastPlayerBloc>()..add(StopPodcastEvent());
+      },
       child: Container(
         padding: const EdgeInsets.all(4.0),
         decoration: BoxDecoration(
