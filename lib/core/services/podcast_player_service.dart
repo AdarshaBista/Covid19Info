@@ -29,8 +29,15 @@ class PodcastPlayerService {
         ),
         playSpeed: 1.0,
         autoStart: true,
-        showNotification: false,
+        showNotification: true,
         respectSilentMode: false,
+        playInBackground: PlayInBackground.enabled,
+        notificationSettings: NotificationSettings(
+          nextEnabled: false,
+          prevEnabled: false,
+          seekBarEnabled: true,
+          stopEnabled: true,
+        ),
       );
     } catch (e) {
       print(e.toString());
@@ -39,10 +46,10 @@ class PodcastPlayerService {
 
     _state = PodcastPlayerData(
       speed: 1.0,
-      duration: _player.current.value.audio.duration,
       currentPodcast: podcast,
       isPlaying: _player.isPlaying,
       currentPosition: _player.currentPosition,
+      duration: _player.current.value.audio.duration,
     );
   }
 
