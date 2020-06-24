@@ -13,6 +13,7 @@ class CacheService {
     final box = await cacheBox;
     String value = box.get(key);
 
+    if (value == null) return null;
     if (await _shouldInvalidate()) {
       _delete(key);
       return null;
@@ -24,8 +25,11 @@ class CacheService {
     final box = await cacheBox;
 
     final bool isConnected = await DataConnectionChecker().hasConnection;
-    final DateTime lastUpdated =
-        DateTime.tryParse(box.get(kUpdatedAtKey, defaultValue: '')) ?? DateTime.now();
+    final DateTime lastUpdated = DateTime.tryParse(box.get(
+          kUpdatedAtKey,
+          defaultValue: '',
+        )) ??
+        DateTime.now();
 
     return isConnected &&
         DateTime.now().difference(lastUpdated) > const Duration(minutes: kCacheDuration);
