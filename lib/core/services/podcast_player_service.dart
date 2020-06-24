@@ -16,6 +16,11 @@ class PodcastPlayerService {
 
   Future<void> init(Podcast podcast) async {
     _player = AssetsAudioPlayer.withId(PLAYER_ID);
+    _player.onErrorDo = (handler) {
+      print(handler.error.message);
+      stop();
+      throw AppError(message: 'Couldn\'t play ${podcast.title}.');
+    };
 
     try {
       await _player.open(
@@ -35,8 +40,6 @@ class PodcastPlayerService {
         notificationSettings: NotificationSettings(
           nextEnabled: false,
           prevEnabled: false,
-          seekBarEnabled: true,
-          stopEnabled: true,
         ),
       );
     } catch (e) {
@@ -63,7 +66,7 @@ class PodcastPlayerService {
 
   Future<void> stop() async {
     await _player.stop();
-    _player.dispose();
+    await _player.dispose();
   }
 
   Future<void> seekTo(Duration duration) async {

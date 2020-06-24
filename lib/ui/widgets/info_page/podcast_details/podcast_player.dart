@@ -34,11 +34,11 @@ class PodcastPlayer extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildSpeedIcon(context),
+              _SpeedIcon(playerState: playerState),
               const SizedBox(width: 4.0),
-              _buildPlayPauseIcon(context),
+              _PlayPauseIcon(playerState: playerState),
               const SizedBox(width: 8.0),
-              _buildStopIcon(context),
+              const _StopIcon(),
             ],
           ),
         ],
@@ -81,8 +81,40 @@ class PodcastPlayer extends StatelessWidget {
       style: AppTextStyles.mediumLightSerif,
     );
   }
+}
 
-  Widget _buildPlayPauseIcon(BuildContext context) {
+class _StopIcon extends StatelessWidget {
+  const _StopIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () => context.bloc<PodcastPlayerBloc>()..add(StopPodcastEvent()),
+      child: Container(
+        padding: const EdgeInsets.all(4.0),
+        decoration: BoxDecoration(
+          color: AppColors.light,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          Icons.stop,
+          size: 24.0,
+          color: AppColors.primary,
+        ),
+      ),
+    );
+  }
+}
+
+class _PlayPauseIcon extends StatelessWidget {
+  final PodcastPlayerData playerState;
+
+  const _PlayPauseIcon({
+    @required this.playerState,
+  }) : assert(playerState != null);
+
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder<bool>(
       stream: playerState.isPlaying,
       initialData: true,
@@ -107,26 +139,17 @@ class PodcastPlayer extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _buildStopIcon(BuildContext context) {
-    return InkWell(
-      onTap: () => context.bloc<PodcastPlayerBloc>()..add(StopPodcastEvent()),
-      child: Container(
-        padding: const EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
-          color: AppColors.light,
-          shape: BoxShape.circle,
-        ),
-        child: Icon(
-          Icons.stop,
-          size: 24.0,
-          color: AppColors.primary,
-        ),
-      ),
-    );
-  }
+class _SpeedIcon extends StatelessWidget {
+  final PodcastPlayerData playerState;
 
-  Widget _buildSpeedIcon(BuildContext context) {
+  const _SpeedIcon({
+    @required this.playerState,
+  }) : assert(playerState != null);
+
+  @override
+  Widget build(BuildContext context) {
     return InkWell(
       onTap: () => showModalBottomSheet(
         context: context,

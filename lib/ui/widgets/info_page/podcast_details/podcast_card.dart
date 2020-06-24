@@ -8,7 +8,7 @@ import 'package:covid19_info/core/models/podcast.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:covid19_info/ui/widgets/common/tag.dart';
-import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
+import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
 
 class PodcastCard extends StatelessWidget {
   final Podcast podcast;
@@ -28,7 +28,7 @@ class PodcastCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScaleAnimator(
+    return FadeAnimator(
       child: Card(
         color: AppColors.dark,
         clipBehavior: Clip.antiAlias,

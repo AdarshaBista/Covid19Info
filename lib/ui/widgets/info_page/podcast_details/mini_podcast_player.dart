@@ -8,36 +8,35 @@ import 'package:covid19_info/core/models/podcast_player_data.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
-class MinPodcastPlayer extends StatelessWidget {
+class MiniPodcastPlayer extends StatelessWidget {
   final PodcastPlayerData playerState;
 
-  const MinPodcastPlayer({
+  const MiniPodcastPlayer({
     @required this.playerState,
   }) : assert(playerState != null);
 
   @override
   Widget build(BuildContext context) {
     return ScaleAnimator(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          children: [
-            _buildImage(playerState.currentPodcast.imageUrl),
-            const SizedBox(width: 8.0),
-            _buildTitle(playerState.currentPodcast.title.trim()),
-            const SizedBox(width: 8.0),
-            _buildPlayPauseIcon(context),
-            const SizedBox(width: 8.0),
-            _buildCloseIcon(context),
-          ],
-        ),
+      child: Row(
+        children: [
+          _buildImage(playerState.currentPodcast.imageUrl),
+          const SizedBox(width: 16.0),
+          _buildTitle(playerState.currentPodcast.title.trim()),
+          const SizedBox(width: 8.0),
+          _buildPlayPauseIcon(context),
+          const SizedBox(width: 8.0),
+          _buildCloseIcon(context),
+          const SizedBox(width: 16.0),
+        ],
       ),
     );
   }
 
   Widget _buildImage(String imageUrl) {
     return Card(
-      margin: const EdgeInsets.all(8.0),
+      elevation: 8.0,
+      margin: EdgeInsets.zero,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12.0),
@@ -45,8 +44,8 @@ class MinPodcastPlayer extends StatelessWidget {
       child: Image.network(
         imageUrl,
         fit: BoxFit.cover,
-        width: 64.0,
-        height: 64.0,
+        width: 100.0,
+        height: 72.0,
       ),
     );
   }
@@ -58,7 +57,7 @@ class MinPodcastPlayer extends StatelessWidget {
         textAlign: TextAlign.left,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: AppTextStyles.largeLightSerif,
+        style: AppTextStyles.mediumLightSerif,
       ),
     );
   }
