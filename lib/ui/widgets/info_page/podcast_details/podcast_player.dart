@@ -97,7 +97,7 @@ class _StopIcon extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: Icon(
-          Icons.stop,
+          Icons.close,
           size: 24.0,
           color: AppColors.primary,
         ),

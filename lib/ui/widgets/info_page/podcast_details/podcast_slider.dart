@@ -68,8 +68,9 @@ class _PodcastSliderState extends State<PodcastSlider> {
             min: 0.0,
             max: widget.playerState.duration.inSeconds.toDouble(),
             value: isSeeking ? seekValue : currentDuration.inSeconds.toDouble(),
-            label:
-                isSeeking ? format(Duration(seconds: seekValue.toInt())) : format(currentDuration),
+            label: isSeeking
+                ? format(Duration(seconds: seekValue.toInt()))
+                : format(currentDuration),
             onChangeStart: (_) => isSeeking = true,
             onChangeEnd: (value) {
               isSeeking = false;
