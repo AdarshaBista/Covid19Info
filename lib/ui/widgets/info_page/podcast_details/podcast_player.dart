@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
@@ -9,7 +10,7 @@ import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_slider.dart';
 
 class PodcastPlayer extends StatelessWidget {
-  final VoidCallback onStop;
+  final AsyncCallback onStop;
   final ScrollController controller;
   final PodcastPlayerData playerState;
 
@@ -87,7 +88,7 @@ class PodcastPlayer extends StatelessWidget {
 }
 
 class _StopIcon extends StatelessWidget {
-  final VoidCallback onStop;
+  final AsyncCallback onStop;
 
   const _StopIcon({
     @required this.onStop,
@@ -96,8 +97,8 @@ class _StopIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        onStop();
+      onTap: () async {
+        await onStop();
         context.bloc<PodcastPlayerBloc>()..add(StopPodcastEvent());
       },
       child: Container(
