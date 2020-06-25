@@ -17,13 +17,32 @@ class PodcastPlayerService {
   Future<void> init(Podcast podcast) async {
     _player = AssetsAudioPlayer.withId(PLAYER_ID);
     _player.onErrorDo = (handler) {
+      pause();
       print(handler.error.message);
-      stop();
       throw AppError(message: 'Couldn\'t play ${podcast.title}.');
     };
 
     try {
-      await _open(podcast);
+      await _player.open(
+        Audio.network(
+          podcast.audioUrl,
+          metas: Metas(
+            title: podcast.title,
+            artist: podcast.source,
+            image: MetasImage.network(podcast.imageUrl),
+          ),
+        ),
+        playSpeed: 1.0,
+        autoStart: true,
+        showNotification: true,
+        respectSilentMode: false,
+        playInBackground: PlayInBackground.enabled,
+        notificationSettings: NotificationSettings(
+          nextEnabled: false,
+          prevEnabled: false,
+          stopEnabled: false,
+        ),
+      );
     } catch (e) {
       print(e.toString());
       throw AppError(message: 'Couldn\'t play ${podcast.title}.');
@@ -35,29 +54,6 @@ class PodcastPlayerService {
       isPlaying: _player.isPlaying,
       currentPosition: _player.currentPosition,
       duration: _player.current.value.audio.duration,
-    );
-  }
-
-  Future<void> _open(Podcast podcast) async {
-    await _player.open(
-      Audio.network(
-        podcast.audioUrl,
-        metas: Metas(
-          title: podcast.title,
-          artist: podcast.source,
-          image: MetasImage.network(podcast.imageUrl),
-        ),
-      ),
-      playSpeed: 1.0,
-      autoStart: true,
-      showNotification: true,
-      respectSilentMode: false,
-      playInBackground: PlayInBackground.enabled,
-      notificationSettings: NotificationSettings(
-        nextEnabled: false,
-        prevEnabled: false,
-        stopEnabled: false,
-      ),
     );
   }
 
