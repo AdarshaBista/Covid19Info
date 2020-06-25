@@ -19,7 +19,6 @@ class PodcastPlayerService {
     _player.onErrorDo = (handler) {
       pause();
       print(handler.error.message);
-      throw AppError(message: 'Couldn\'t play ${podcast.title}.');
     };
 
     try {
