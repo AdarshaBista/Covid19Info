@@ -18,6 +18,7 @@ class InfoTabBar extends StatelessWidget {
           indicatorColor: AppColors.primary,
           indicatorSize: TabBarIndicatorSize.label,
           tabs: const <Widget>[
+            Tab(text: 'NEWS'),
             Tab(text: 'PODCASTS'),
             Tab(text: 'MYTHS'),
             Tab(text: 'FAQ'),

@@ -4,6 +4,7 @@ import 'package:covid19_info/ui/widgets/common/collapsible_appbar.dart';
 import 'package:covid19_info/ui/widgets/info_page/info_tab_bar.dart';
 import 'package:covid19_info/ui/widgets/info_page/faq_list.dart';
 import 'package:covid19_info/ui/widgets/info_page/myth_list.dart';
+import 'package:covid19_info/ui/widgets/info_page/news_list.dart';
 import 'package:covid19_info/ui/widgets/info_page/podcast_list.dart';
 import 'package:covid19_info/ui/widgets/info_page/hospital_list.dart';
 
@@ -13,7 +14,7 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 5,
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) => [
@@ -26,6 +27,7 @@ class InfoPage extends StatelessWidget {
           ],
           body: const TabBarView(
             children: <Widget>[
+              NewsList(),
               PodcastList(),
               MythList(),
               FaqList(),

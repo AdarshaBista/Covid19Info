@@ -22,7 +22,6 @@ import 'package:line_awesome_icons/line_awesome_icons.dart';
 
 import 'package:covid19_info/ui/pages/global_page.dart';
 import 'package:covid19_info/ui/pages/nepal_page.dart';
-import 'package:covid19_info/ui/pages/news_page.dart';
 import 'package:covid19_info/ui/pages/info_page.dart';
 
 class NavPage extends StatefulWidget {
@@ -45,12 +44,6 @@ class _NavPageState extends State<NavPage> {
           text: 'Nepal',
           iconColor: Colors.red,
           backgroundColor: Colors.red,
-        ),
-        GButton(
-          icon: LineAwesomeIcons.newspaper_o,
-          text: 'News',
-          iconColor: Colors.green,
-          backgroundColor: Colors.green,
         ),
         GButton(
           icon: LineAwesomeIcons.info_circle,
@@ -94,7 +87,6 @@ class _NavPageState extends State<NavPage> {
         children: <Widget>[
           _buildWorldPage(),
           _buildNepalPage(),
-          _buildNewsPage(),
           _buildInfopage(),
         ],
       ),
@@ -138,15 +130,13 @@ class _NavPageState extends State<NavPage> {
         child: const NepalPage(),
       );
 
-  Widget _buildNewsPage() => BlocProvider(
-        create: (context) => NewsBloc(
-          apiService: context.repository<ApiService>(),
-        )..add(GetNewsEvent()),
-        child: NewsPage(),
-      );
-
   Widget _buildInfopage() => MultiBlocProvider(
         providers: [
+          BlocProvider(
+            create: (context) => NewsBloc(
+              apiService: context.repository<ApiService>(),
+            )..add(GetNewsEvent()),
+          ),
           BlocProvider(
             create: (context) => FaqBloc(
               apiService: context.repository<ApiService>(),
