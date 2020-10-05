@@ -10,7 +10,6 @@ import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
-import 'package:covid19_info/ui/widgets/country_detail_page/daily_stats_row.dart';
 import 'package:covid19_info/ui/widgets/country_detail_page/country_pie_chart.dart';
 import 'package:covid19_info/ui/widgets/country_detail_page/country_stats_grid.dart';
 
@@ -65,9 +64,6 @@ class CountryDetailsPage extends StatelessWidget {
         CountryPieChart(country: c),
         const Divider(height: 32.0),
         CountryStatsGrid(country: c),
-        const SizedBox(height: 24.0),
-        DailyStatsRow(country: c),
-        const SizedBox(height: 24.0),
         TimelineGraph(
           title: c.name,
           timeline: c.timeline,

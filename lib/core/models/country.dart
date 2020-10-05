@@ -11,8 +11,6 @@ class Country {
   final int totalDeaths;
   final int totalRecovered;
   final int totalCritical;
-  final int dailyConfirmed;
-  final int dailyDeaths;
   final int confirmedPerMillion;
   final List<TimelineData> timeline;
   int get activeCases => totalConfirmed - totalDeaths - totalRecovered;
@@ -26,8 +24,6 @@ class Country {
     @required this.totalDeaths,
     @required this.totalRecovered,
     @required this.totalCritical,
-    @required this.dailyConfirmed,
-    @required this.dailyDeaths,
     @required this.confirmedPerMillion,
     @required this.timeline,
   })  : assert(code != null),
@@ -38,8 +34,6 @@ class Country {
         assert(totalDeaths != null),
         assert(totalRecovered != null),
         assert(totalCritical != null),
-        assert(dailyConfirmed != null),
-        assert(dailyDeaths != null),
         assert(confirmedPerMillion != null),
         assert(timeline != null);
 
@@ -73,8 +67,6 @@ class Country {
       totalDeaths: totalDeaths ?? this.totalDeaths,
       totalRecovered: totalRecovered ?? this.totalRecovered,
       totalCritical: totalCritical ?? this.totalCritical,
-      dailyConfirmed: dailyConfirmed ?? this.dailyConfirmed,
-      dailyDeaths: dailyDeaths ?? this.dailyDeaths,
       confirmedPerMillion: confirmedPerMillion ?? this.confirmedPerMillion,
       timeline: timeline ?? this.timeline,
     );
@@ -92,8 +84,6 @@ class Country {
       totalDeaths: map['totalDeaths'] as int,
       totalRecovered: map['totalRecovered'] as int,
       totalCritical: map['totalCritical'] as int,
-      dailyConfirmed: map['dailyConfirmed'] as int,
-      dailyDeaths: map['dailyDeaths'] as int,
       confirmedPerMillion: map['totalConfirmedPerMillionPopulation'] as int ?? 0,
       timeline: map.containsKey('timeline')
           ? List<TimelineData>.from((map['timeline'] as List)
@@ -104,7 +94,7 @@ class Country {
 
   @override
   String toString() {
-    return 'Country(code: $code, name: $name, lat: $lat, lng: $lng, totalConfirmed: $totalConfirmed, totalDeaths: $totalDeaths, totalRecovered: $totalRecovered, totalCritical: $totalCritical, activeCases: $activeCases, dailyConfirmed: $dailyConfirmed, dailyDeaths: $dailyDeaths, confirmedPerMillion: $confirmedPerMillion, timeline: $timeline)';
+    return 'Country(code: $code, name: $name, lat: $lat, lng: $lng, totalConfirmed: $totalConfirmed, totalDeaths: $totalDeaths, totalRecovered: $totalRecovered, totalCritical: $totalCritical, activeCases: $activeCases, confirmedPerMillion: $confirmedPerMillion, timeline: $timeline)';
   }
 
   @override
@@ -121,8 +111,6 @@ class Country {
         o.totalRecovered == totalRecovered &&
         o.totalCritical == totalCritical &&
         o.activeCases == activeCases &&
-        o.dailyConfirmed == dailyConfirmed &&
-        o.dailyDeaths == dailyDeaths &&
         o.confirmedPerMillion == confirmedPerMillion &&
         listEquals(o.timeline, timeline);
   }
@@ -138,8 +126,6 @@ class Country {
         totalRecovered.hashCode ^
         totalCritical.hashCode ^
         activeCases.hashCode ^
-        dailyConfirmed.hashCode ^
-        dailyDeaths.hashCode ^
         confirmedPerMillion.hashCode ^
         timeline.hashCode;
   }
