@@ -18,18 +18,20 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
-      builder: (context, state) {
-        if (state is InitialGlobalStatsState) {
-          return const Offstage();
-        } else if (state is LoadedGlobalStatsState) {
-          return _buildPanel(state);
-        } else if (state is ErrorGlobalStatsState) {
-          return const Offstage();
-        } else {
-          return const Offstage();
-        }
-      },
+    return SafeArea(
+      child: BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
+        builder: (context, state) {
+          if (state is InitialGlobalStatsState) {
+            return const Offstage();
+          } else if (state is LoadedGlobalStatsState) {
+            return _buildPanel(state);
+          } else if (state is ErrorGlobalStatsState) {
+            return const Offstage();
+          } else {
+            return const Offstage();
+          }
+        },
+      ),
     );
   }
 

@@ -4,7 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
-class CountryStatChart extends StatelessWidget {
+class DistributionPieChart extends StatelessWidget {
   final int active;
   final int recovered;
   final int deaths;
@@ -13,7 +13,7 @@ class CountryStatChart extends StatelessWidget {
   final bool showPercent;
   final double opacity;
 
-  const CountryStatChart({
+  const DistributionPieChart({
     @required this.active,
     @required this.recovered,
     @required this.deaths,

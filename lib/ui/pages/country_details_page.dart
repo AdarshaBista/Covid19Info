@@ -7,10 +7,10 @@ import 'package:covid19_info/core/models/country.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
+import 'package:covid19_info/ui/widgets/common/distribution_container.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
-import 'package:covid19_info/ui/widgets/country_detail_page/country_pie_chart.dart';
 import 'package:covid19_info/ui/widgets/country_detail_page/country_stats_grid.dart';
 
 class CountryDetailsPage extends StatelessWidget {
@@ -61,7 +61,11 @@ class CountryDetailsPage extends StatelessWidget {
       shrinkWrap: true,
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
-        CountryPieChart(country: c),
+        DistributionContainer(
+          active: c.activeCases,
+          deaths: c.totalDeaths,
+          recovered: c.totalRecovered,
+        ),
         const Divider(height: 32.0),
         CountryStatsGrid(country: c),
         TimelineGraph(

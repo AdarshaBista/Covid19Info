@@ -22,6 +22,7 @@ class _GlobalPageState extends State<GlobalPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
       child: Scaffold(
         extendBody: true,
         extendBodyBehindAppBar: true,

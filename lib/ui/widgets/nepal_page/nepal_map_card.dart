@@ -116,8 +116,7 @@ class NepalMapCard extends StatelessWidget {
   }
 
   Widget _buildDistrictSearchBox(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return SafeArea(
       child: SearchBox(
         hintText: 'Search Districts',
         onChanged: (String value) {

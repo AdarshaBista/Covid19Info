@@ -30,7 +30,7 @@ class NavPage extends StatefulWidget {
 }
 
 class _NavPageState extends State<NavPage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   List<GButton> get tabs => [
         GButton(

@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
-import 'package:covid19_info/core/models/country.dart';
-
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
-import 'package:covid19_info/ui/widgets/common/country_stat_chart.dart';
+import 'package:covid19_info/ui/widgets/common/distribution_pie_chart.dart';
 
-class CountryPieChart extends StatelessWidget {
-  final Country country;
+class DistributionContainer extends StatelessWidget {
+  final int active;
+  final int deaths;
+  final int recovered;
 
-  const CountryPieChart({
-    @required this.country,
-  }) : assert(country != null);
+  const DistributionContainer({
+    @required this.active,
+    @required this.deaths,
+    @required this.recovered,
+  })  : assert(active != null),
+        assert(deaths != null),
+        assert(recovered != null);
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +28,11 @@ class CountryPieChart extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.mediumLight,
         ),
-        CountryStatChart(
+        DistributionPieChart(
           opacity: 0.4,
-          active: country.activeCases,
-          recovered: country.totalRecovered,
-          deaths: country.totalDeaths,
+          active: active,
+          deaths: deaths,
+          recovered: recovered,
           centerSpaceRadius: 50.0,
           radius: 40.0,
           showPercent: true,
@@ -37,11 +41,11 @@ class CountryPieChart extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Label(text: 'Active (${country.activeCases})', color: Colors.yellow),
+            Label(text: 'Deaths ($deaths)', color: Colors.red),
             const SizedBox(height: 8.0),
-            Label(text: 'Recovered (${country.totalRecovered})', color: Colors.green),
+            Label(text: 'Active ($active)', color: Colors.yellow),
             const SizedBox(height: 8.0),
-            Label(text: 'Deaths (${country.totalDeaths})', color: Colors.red),
+            Label(text: 'Recovered ($recovered)', color: Colors.green),
           ],
         ),
       ],
