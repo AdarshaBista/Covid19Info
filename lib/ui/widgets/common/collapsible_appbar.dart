@@ -23,7 +23,6 @@ class CollapsibleAppBar extends StatelessWidget {
       elevation: elevation,
       expandedHeight: 140.0,
       flexibleSpace: FlexibleSpaceBar(
-        collapseMode: CollapseMode.parallax,
         titlePadding: const EdgeInsets.all(16.0),
         centerTitle: true,
         title: Text(

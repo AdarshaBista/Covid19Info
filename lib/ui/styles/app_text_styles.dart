@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/ui/styles/app_colors.dart';
 
 class AppTextStyles {
+  const AppTextStyles._();
+
   static const TextStyle _baseSansSerif = TextStyle(
     color: AppColors.background,
     fontFamily: 'Sen',

@@ -49,10 +49,7 @@ class _PodcastPlayerPanelState extends State<PodcastPlayerPanel> {
     return SlidingUpPanel(
       controller: panelController,
       color: AppColors.primary,
-      isDraggable: true,
       backdropEnabled: true,
-      backdropTapClosesPanel: true,
-      slideDirection: SlideDirection.UP,
       margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 72.0),
       borderRadius: BorderRadius.circular(12.0),
       minHeight: 72.0,
@@ -64,7 +61,7 @@ class _PodcastPlayerPanelState extends State<PodcastPlayerPanel> {
         child: PodcastPlayer(
           controller: sc,
           playerState: playerState,
-          onStop: () async => await panelController.close(),
+          onStop: () => panelController.close(),
         ),
       ),
     );

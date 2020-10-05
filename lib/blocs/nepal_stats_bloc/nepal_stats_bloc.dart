@@ -17,10 +17,8 @@ class NepalStatsBloc extends Bloc<NepalStatsEvent, NepalStatsState> {
 
   NepalStatsBloc({
     @required this.apiService,
-  }) : assert(apiService != null);
-
-  @override
-  NepalStatsState get initialState => InitialNepalStatsState();
+  })  : assert(apiService != null),
+        super(InitialNepalStatsState());
 
   @override
   Stream<NepalStatsState> mapEventToState(
@@ -29,8 +27,8 @@ class NepalStatsBloc extends Bloc<NepalStatsEvent, NepalStatsState> {
     if (event is GetNepalStatsEvent) {
       yield LoadingNepalStatsState();
       try {
-        NepalStats nepalStats = await apiService.fetchNepalStats();
-        List<TimelineData> nepalTimeline = await apiService.fetchNepalTimeline();
+        final NepalStats nepalStats = await apiService.fetchNepalStats();
+        final List<TimelineData> nepalTimeline = await apiService.fetchNepalTimeline();
         yield LoadedNepalStatsState(
             nepalStats: nepalStats.copyWith(timeline: nepalTimeline));
       } on AppError catch (e) {

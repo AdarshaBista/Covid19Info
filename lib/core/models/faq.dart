@@ -27,14 +27,14 @@ class Faq {
     );
   }
 
-  static Faq fromMap(Map<String, dynamic> map) {
+  factory Faq.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return Faq(
-      id: map['_id'],
-      category: map['category'],
-      question: map['question'],
-      answer: map['answer'],
+      id: map['_id'] as String,
+      category: map['category'] as String,
+      question: map['question'] as String,
+      answer: map['answer'] as String,
     );
   }
 

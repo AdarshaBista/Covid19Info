@@ -17,33 +17,33 @@ class TimelineData {
         assert(date != null);
 
   TimelineData copyWith({
-    int cases,
+    int confirmed,
     int deaths,
     int recovered,
     String date,
   }) {
     return TimelineData(
-      confirmed: cases ?? this.confirmed,
+      confirmed: confirmed ?? this.confirmed,
       deaths: deaths ?? this.deaths,
       recovered: recovered ?? this.recovered,
       date: date ?? this.date,
     );
   }
 
-  static TimelineData fromMap(Map<String, dynamic> map) {
+  factory TimelineData.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return TimelineData(
-      confirmed: map['confirmed'],
-      deaths: map['deaths'],
-      recovered: map['recovered'],
-      date: map['date'],
+      confirmed: map['confirmed'] as int,
+      deaths: map['deaths'] as int,
+      recovered: map['recovered'] as int,
+      date: map['date'] as String,
     );
   }
 
   @override
   String toString() {
-    return 'CountData(cases: $confirmed, deaths: $deaths, recovered: $recovered, date: $date)';
+    return 'CountData(confirmed: $confirmed, deaths: $deaths, recovered: $recovered, date: $date)';
   }
 
   @override

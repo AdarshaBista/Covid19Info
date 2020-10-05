@@ -46,20 +46,26 @@ class PodcastList extends StatelessWidget {
   ListView _buildList(List<Podcast> podcasts) {
     return ListView.builder(
       itemCount: podcasts.length,
-      padding: EdgeInsets.only(top: 16.0, bottom: 72.0),
+      padding: const EdgeInsets.only(top: 16.0, bottom: 72.0),
       itemBuilder: (_, index) {
         final podcast = podcasts[index];
         return BlocBuilder<PodcastPlayerBloc, PodcastPlayerState>(
           builder: (context, state) {
+            bool isLoading = false;
+            if (state is LoadingPodcastPlayerState) {
+              isLoading = state.currentPodcast == podcast;
+            }
+
+            bool isPlaying = false;
+            if (state is LoadedPodcastPlayerState) {
+              isPlaying = state.playerState.currentPodcast == podcast;
+            }
+
             return PodcastCard(
               podcast: podcast,
               color: AppColors.accentColors[index % AppColors.accentColors.length],
-              isLoading: (state is LoadingPodcastPlayerState)
-                  ? state.currentPodcast == podcast
-                  : false,
-              isPlaying: (state is LoadedPodcastPlayerState)
-                  ? state.playerState.currentPodcast == podcast
-                  : false,
+              isLoading: isLoading,
+              isPlaying: isPlaying,
             );
           },
         );

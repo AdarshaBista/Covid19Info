@@ -46,11 +46,12 @@ class GlobalMapCard extends StatelessWidget {
       maxZoom: 6.0,
       markerLayerBuilder: () => _buildMarkers(state),
       searchLocation: () {
-        if (!state.shouldShowAllCountries && !state.isSearchEmpty)
+        if (!state.shouldShowAllCountries && !state.isSearchEmpty) {
           return LatLng(
             state.searchedCountries.first.lat,
             state.searchedCountries.first.lng,
           );
+        }
         return null;
       },
     );
@@ -84,7 +85,8 @@ class GlobalMapCard extends StatelessWidget {
             default:
           }
 
-          double diameter = (math.sqrt(metric.toDouble()) / 8.0).clamp(8.0, 120.0);
+          final double diameter =
+              (math.sqrt(metric.toDouble()) / 8.0).clamp(8.0, 120.0).toDouble();
           return Marker(
             height: diameter,
             width: diameter,

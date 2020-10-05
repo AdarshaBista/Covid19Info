@@ -37,9 +37,7 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
     return SlidingUpPanel(
       color: AppColors.dark,
       parallaxOffset: 0.2,
-      isDraggable: true,
       parallaxEnabled: true,
-      backdropEnabled: false,
       slideDirection: SlideDirection.DOWN,
       margin: const EdgeInsets.all(12.0),
       borderRadius: BorderRadius.circular(12.0),

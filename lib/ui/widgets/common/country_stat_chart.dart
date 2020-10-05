@@ -45,8 +45,8 @@ class CountryStatChart extends StatelessWidget {
   }
 
   PieChartSectionData _makeSection(double value, Color color) {
-    double total = (active + recovered + deaths).toDouble();
-    double percent = value / total * 100.0;
+    final double total = (active + recovered + deaths).toDouble();
+    final double percent = value / total * 100.0;
     return PieChartSectionData(
       color: color.withOpacity(opacity),
       value: value,

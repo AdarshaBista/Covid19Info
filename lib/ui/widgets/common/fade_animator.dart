@@ -11,7 +11,7 @@ class FadeAnimator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Animator(
+    return Animator<double>(
       child: child,
       curve: Curves.easeIn,
       duration: const Duration(milliseconds: 200),

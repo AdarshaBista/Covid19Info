@@ -43,16 +43,16 @@ class Capacity {
       doctors.isEmpty &&
       nurses.isEmpty;
 
-  static Capacity fromMap(Map<String, dynamic> map) {
+  factory Capacity.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return Capacity(
-      beds: map['beds'],
-      ventilators: map['ventilators'],
-      isolationBeds: map['isolation_beds'],
-      occupiedBeds: map['occupied_beds'],
-      doctors: map['doctors'],
-      nurses: map['nurses'],
+      beds: map['beds'] as String,
+      ventilators: map['ventilators'] as String,
+      isolationBeds: map['isolation_beds'] as String,
+      occupiedBeds: map['occupied_beds'] as String,
+      doctors: map['doctors'] as String,
+      nurses: map['nurses'] as String,
     );
   }
 

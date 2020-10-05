@@ -32,11 +32,8 @@ class PodcastPlayerService {
           ),
         ),
         playSpeed: 1.0,
-        autoStart: true,
         showNotification: true,
-        respectSilentMode: false,
-        playInBackground: PlayInBackground.enabled,
-        notificationSettings: NotificationSettings(
+        notificationSettings: const NotificationSettings(
           nextEnabled: false,
           prevEnabled: false,
           stopEnabled: false,
@@ -44,7 +41,7 @@ class PodcastPlayerService {
       );
     } catch (e) {
       print(e.toString());
-      throw AppError(message: 'Couldn\'t play ${podcast.title}.');
+      throw AppError(message: "Couldn't play ${podcast.title}.");
     }
 
     _state = PodcastPlayerData(

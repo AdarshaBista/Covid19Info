@@ -31,15 +31,15 @@ class Myth {
     );
   }
 
-  static Myth fromMap(Map<String, dynamic> map) {
+  factory Myth.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return Myth(
-      id: map['_id'],
-      myth: map['myth'],
-      reality: map['reality'],
-      sourceName: map['source_name'],
-      sourceUrl: map['source_url'],
+      id: map['_id'] as String,
+      myth: map['myth'] as String,
+      reality: map['reality'] as String,
+      sourceName: map['source_name'] as String,
+      sourceUrl: map['source_url'] as String,
     );
   }
 

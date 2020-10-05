@@ -40,7 +40,7 @@ class PodcastCard extends StatelessWidget {
           initiallyExpanded: isPlaying,
           backgroundColor: color.withOpacity(0.2),
           tilePadding: EdgeInsets.zero,
-          trailing: Offstage(),
+          trailing: const Offstage(),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -51,7 +51,9 @@ class PodcastCard extends StatelessWidget {
               const SizedBox(width: 8.0),
               isLoading
                   ? _buildLoadingIndicator()
-                  : isPlaying ? _buildPlayingIndicator() : _buildPlayIcon(context),
+                  : isPlaying
+                      ? _buildPlayingIndicator()
+                      : _buildPlayIcon(context),
             ],
           ),
           children: <Widget>[

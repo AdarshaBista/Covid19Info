@@ -24,12 +24,12 @@ class InfoPage extends StatelessWidget {
             ),
             const InfoTabBar(),
           ],
-          body: TabBarView(
+          body: const TabBarView(
             children: <Widget>[
-              const PodcastList(),
-              const MythList(),
-              const FaqList(),
-              const HospitalList(),
+              PodcastList(),
+              MythList(),
+              FaqList(),
+              HospitalList(),
             ],
           ),
         ),

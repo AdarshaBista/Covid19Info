@@ -53,11 +53,12 @@ class NepalMapCard extends StatelessWidget {
       swPanBoundary: LatLng(26.5, 80.0),
       markerLayerBuilder: () => _buildMarkers(state),
       searchLocation: () {
-        if (!state.shouldShowAllDistricts && !state.isSearchEmpty)
+        if (!state.shouldShowAllDistricts && !state.isSearchEmpty) {
           return LatLng(
             state.searchedDistricts.first.lat,
             state.searchedDistricts.first.lng,
           );
+        }
         return null;
       },
     );
@@ -67,8 +68,8 @@ class NepalMapCard extends StatelessWidget {
     return MarkerLayerOptions(
       markers: state.allDistricts.map(
         (d) {
-          double diameter =
-              (math.sqrt(d.cases.length.toDouble()) * 2.0).clamp(12.0, 72.0);
+          final double diameter =
+              (math.sqrt(d.cases.length.toDouble()) * 2.0).clamp(12.0, 72.0).toDouble();
           return Marker(
             height: diameter,
             width: diameter,
@@ -97,14 +98,14 @@ class NepalMapCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       elevation: 12.0,
       backgroundColor: AppColors.dark,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.0),
           topRight: Radius.circular(16.0),
         ),
       ),
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height * 0.7,
           child: DistrictDetails(
             district: d,
@@ -120,10 +121,9 @@ class NepalMapCard extends StatelessWidget {
       child: SearchBox(
         hintText: 'Search Districts',
         onChanged: (String value) {
-          context.bloc<NepalDistrictBloc>()
-            ..add(SearchDistrictEvent(
-              searchTerm: value,
-            ));
+          context.bloc<NepalDistrictBloc>().add(SearchDistrictEvent(
+                searchTerm: value,
+              ));
         },
       ),
     );

@@ -28,7 +28,7 @@ class CountryCard extends StatelessWidget {
           height: 128.0,
           margin: const EdgeInsets.all(10.0),
           padding: const EdgeInsets.only(top: 12.0, right: 12.0, bottom: 12.0),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: AppColors.dark,
             borderRadius: BorderRadius.all(Radius.circular(12.0)),
           ),
@@ -102,7 +102,6 @@ class CountryCard extends StatelessWidget {
 
   Widget _buildGraph() {
     return Flexible(
-      flex: 1,
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -115,7 +114,7 @@ class CountryCard extends StatelessWidget {
             height: 48.0,
             width: 48.0,
             clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(shape: BoxShape.circle),
+            decoration: const BoxDecoration(shape: BoxShape.circle),
             child: Image.network(
               'https://www.countryflags.io/${country.code}/flat/48.png',
             ),
@@ -127,7 +126,7 @@ class CountryCard extends StatelessWidget {
 
   void _navigateToDetailsPage(BuildContext context) {
     FocusScope.of(context).unfocus();
-    context.bloc<CountryDetailBloc>()..add(GetCountryDetailEvent(country: country));
+    context.bloc<CountryDetailBloc>().add(GetCountryDetailEvent(country: country));
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => BlocProvider.value(

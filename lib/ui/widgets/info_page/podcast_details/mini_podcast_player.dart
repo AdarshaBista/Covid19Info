@@ -50,7 +50,7 @@ class MiniPodcastPlayer extends StatelessWidget {
     );
   }
 
-  Widget _buildTitle(title) {
+  Widget _buildTitle(String title) {
     return Expanded(
       child: Text(
         title,
@@ -67,14 +67,15 @@ class MiniPodcastPlayer extends StatelessWidget {
       stream: playerState.isPlaying,
       initialData: true,
       builder: (context, snapshot) {
-        bool isPlaying = snapshot.data;
+        final bool isPlaying = snapshot.data;
         return InkWell(
           borderRadius: BorderRadius.circular(32.0),
           onTap: () {
-            if (isPlaying)
-              context.bloc<PodcastPlayerBloc>()..add(PausePodcastEvent());
-            else
-              context.bloc<PodcastPlayerBloc>()..add(PlayPodcastEvent());
+            if (isPlaying) {
+              context.bloc<PodcastPlayerBloc>().add(PausePodcastEvent());
+            } else {
+              context.bloc<PodcastPlayerBloc>().add(PlayPodcastEvent());
+            }
           },
           child: Icon(
             isPlaying ? Icons.pause_circle_filled : Icons.play_circle_filled,
@@ -90,7 +91,7 @@ class MiniPodcastPlayer extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(32.0),
       onTap: () => context.bloc<PodcastPlayerBloc>()..add(StopPodcastEvent()),
-      child: Icon(
+      child: const Icon(
         Icons.close,
         size: 28.0,
         color: AppColors.light,

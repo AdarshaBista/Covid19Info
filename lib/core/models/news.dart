@@ -43,18 +43,18 @@ class News {
     );
   }
 
-  static News fromMap(Map<String, dynamic> map) {
+  factory News.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return News(
-      id: map['_id'],
-      lang: map['lang'],
-      url: map['url'],
-      title: map['title'],
-      source: map['source'],
-      summary: map['summary'],
-      imageUrl: map['image_url'],
-      createdAt: DateTime.parse(map['created_at']),
+      id: map['_id'] as String,
+      lang: map['lang'] as String,
+      url: map['url'] as String,
+      title: map['title'] as String,
+      source: map['source'] as String,
+      summary: map['summary'] as String,
+      imageUrl: map['image_url'] as String,
+      createdAt: DateTime.parse(map['created_at'] as String),
     );
   }
 

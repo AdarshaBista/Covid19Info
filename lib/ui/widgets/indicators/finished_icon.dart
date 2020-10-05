@@ -7,7 +7,7 @@ class FinishedIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconIndicator(
+    return const IconIndicator(
       label: "That's it for now.",
       imageUrl: 'assets/images/finished.png',
     );

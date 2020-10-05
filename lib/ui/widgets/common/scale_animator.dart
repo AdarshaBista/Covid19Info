@@ -13,7 +13,7 @@ class ScaleAnimator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Animator(
+    return Animator<double>(
       child: child,
       curve: Curves.linearToEaseOut,
       duration: Duration(milliseconds: duration),

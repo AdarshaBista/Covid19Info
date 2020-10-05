@@ -29,12 +29,11 @@ class SearchBox extends StatelessWidget {
         ),
         child: TextFormField(
           onChanged: onChanged,
-          maxLines: 1,
           style: AppTextStyles.smallLight,
           decoration: InputDecoration(
             border: InputBorder.none,
             hintText: hintText,
-            prefixIcon: Icon(
+            prefixIcon: const Icon(
               Icons.search,
               size: 20.0,
             ),

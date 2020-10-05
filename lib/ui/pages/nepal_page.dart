@@ -26,13 +26,10 @@ class NepalPage extends StatelessWidget {
             SlidingUpPanel(
               color: AppColors.background,
               parallaxOffset: 0.3,
-              isDraggable: true,
               backdropEnabled: true,
               parallaxEnabled: true,
-              backdropTapClosesPanel: true,
-              slideDirection: SlideDirection.UP,
               margin: EdgeInsets.zero,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16.0),
                 topRight: Radius.circular(16.0),
               ),

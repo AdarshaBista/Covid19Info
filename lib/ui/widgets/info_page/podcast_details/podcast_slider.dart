@@ -32,12 +32,12 @@ class _PodcastSliderState extends State<PodcastSlider> {
 
           if (currentDuration.inSeconds >= widget.playerState.duration.inSeconds - 1 &&
               !isSeeking) {
-            context.bloc<PodcastPlayerBloc>()..add(CompletedPodcastEvent());
+            context.bloc<PodcastPlayerBloc>().add(CompletedPodcastEvent());
           }
 
           return _buildSlider(currentDuration, context);
         }
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(
             backgroundColor: AppColors.light,
           ),
@@ -57,7 +57,7 @@ class _PodcastSliderState extends State<PodcastSlider> {
         ),
         SliderTheme(
           data: SliderTheme.of(context).copyWith(
-            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0),
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8.0),
             valueIndicatorColor: AppColors.light.withOpacity(0.5),
             valueIndicatorTextStyle: AppTextStyles.smallDark,
           ),
@@ -65,7 +65,6 @@ class _PodcastSliderState extends State<PodcastSlider> {
             activeColor: AppColors.light,
             inactiveColor: AppColors.light.withOpacity(0.2),
             divisions: widget.playerState.duration.inSeconds,
-            min: 0.0,
             max: widget.playerState.duration.inSeconds.toDouble(),
             value: isSeeking ? seekValue : currentDuration.inSeconds.toDouble(),
             label: isSeeking
@@ -74,10 +73,9 @@ class _PodcastSliderState extends State<PodcastSlider> {
             onChangeStart: (_) => isSeeking = true,
             onChangeEnd: (value) {
               isSeeking = false;
-              context.bloc<PodcastPlayerBloc>()
-                ..add(SeekPodcastEvent(
-                  seconds: value,
-                ));
+              context.bloc<PodcastPlayerBloc>().add(SeekPodcastEvent(
+                    seconds: value,
+                  ));
             },
             onChanged: (value) {
               setState(() {
@@ -95,7 +93,7 @@ class _PodcastSliderState extends State<PodcastSlider> {
   }
 
   String format(Duration d) {
-    List<String> durationList = d.toString().split(':');
+    final List<String> durationList = d.toString().split(':');
     durationList.last = durationList.last.split('.').first;
 
     if (durationList.first == '0') {

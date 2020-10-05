@@ -6,7 +6,7 @@ import 'package:covid19_info/ui/widgets/common/ui_helper.dart';
 
 class LauncherService {
   Future<void> launchPhone(BuildContext context, String phone) async {
-    String phoneNumber = phone.split(',').first;
+    final String phoneNumber = phone.split(',').first;
     if (await canLaunch('tel:$phoneNumber')) {
       await launch('tel:$phoneNumber');
     } else {
@@ -15,7 +15,7 @@ class LauncherService {
   }
 
   Future<void> launchEmail(BuildContext context, String email) async {
-    String emailAddress = 'mailto:$email';
+    final String emailAddress = 'mailto:$email';
     if (await canLaunch(emailAddress)) {
       await launch(emailAddress);
     } else {

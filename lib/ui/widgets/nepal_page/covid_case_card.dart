@@ -13,7 +13,7 @@ class CovidCaseCard extends StatelessWidget {
   final CovidCase covidCase;
   final Color color;
 
-  CovidCaseCard({
+  const CovidCaseCard({
     @required this.covidCase,
     @required this.color,
   })  : assert(covidCase != null),
@@ -35,7 +35,9 @@ class CovidCaseCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Icon(
-                covidCase.gender == 'male' ? LineAwesomeIcons.male : LineAwesomeIcons.female,
+                covidCase.gender == 'male'
+                    ? LineAwesomeIcons.male
+                    : LineAwesomeIcons.female,
                 color: color,
                 size: 32.0,
               ),
@@ -59,7 +61,7 @@ class CovidCaseCard extends StatelessWidget {
     );
   }
 
-  void navigateToDetailPage(context) {
+  void navigateToDetailPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => CovidCaseDetailPage(

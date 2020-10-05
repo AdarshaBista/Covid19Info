@@ -16,7 +16,6 @@ class CapacityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -28,7 +27,7 @@ class CapacityCard extends StatelessWidget {
         GridView.count(
           crossAxisCount: 3,
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
             if (capacity.beds.isNotEmpty)
               StatCard(

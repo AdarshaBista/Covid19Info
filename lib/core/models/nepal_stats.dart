@@ -43,7 +43,7 @@ class NepalStats {
     int quarantine,
     int recovered,
     int deaths,
-    int pendingResult,
+    int testedRdt,
     List<TimelineData> timeline,
   }) {
     return NepalStats(
@@ -54,25 +54,26 @@ class NepalStats {
       quarantine: quarantine ?? this.quarantine,
       recovered: recovered ?? this.recovered,
       deaths: deaths ?? this.deaths,
-      testedRdt: pendingResult ?? this.testedRdt,
+      testedRdt: testedRdt ?? this.testedRdt,
       timeline: timeline ?? this.timeline,
     );
   }
 
-  static NepalStats fromMap(Map<String, dynamic> map) {
+  factory NepalStats.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return NepalStats(
-      total: map['tested_total'],
-      positive: map['tested_positive'],
-      negative: map['tested_negative'],
-      isolation: map['in_isolation'],
-      quarantine: map['quarantined'],
-      recovered: map['recovered'],
-      deaths: map['deaths'],
-      testedRdt: map['tested_rdt'],
+      total: map['tested_total'] as int,
+      positive: map['tested_positive'] as int,
+      negative: map['tested_negative'] as int,
+      isolation: map['in_isolation'] as int,
+      quarantine: map['quarantined'] as int,
+      recovered: map['recovered'] as int,
+      deaths: map['deaths'] as int,
+      testedRdt: map['tested_rdt'] as int,
       timeline: map.containsKey('timeline')
-          ? List<TimelineData>.from(map['timeline']?.map((x) => TimelineData.fromMap(x)))
+          ? List<TimelineData>.from((map['timeline'] as List)
+              ?.map((x) => TimelineData.fromMap(x as Map<String, dynamic>)))
           : [],
     );
   }

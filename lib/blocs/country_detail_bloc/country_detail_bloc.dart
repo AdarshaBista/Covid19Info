@@ -18,10 +18,8 @@ class CountryDetailBloc extends Bloc<CountryDetailEvent, CountryDetailState> {
 
   CountryDetailBloc({
     @required this.apiService,
-  }) : assert(apiService != null);
-
-  @override
-  CountryDetailState get initialState => InitialCountryDetailState();
+  })  : assert(apiService != null),
+        super(InitialCountryDetailState());
 
   @override
   Stream<CountryDetailState> mapEventToState(

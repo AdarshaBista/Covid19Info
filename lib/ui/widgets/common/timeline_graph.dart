@@ -34,15 +34,15 @@ class _TimelineGraphState extends State<TimelineGraph> {
   }
 
   String _getXTitle(double value) {
-    int index = value.toInt();
-    List<String> dateElements = widget.timeline[index].date.split('-');
+    final int index = value.toInt();
+    final List<String> dateElements = widget.timeline[index].date.split('-');
 
     // Pad month and day with leading zero
     dateElements[1] = dateElements[1].padLeft(2, '0');
     dateElements[2] = dateElements[2].padLeft(2, '0');
 
-    DateTime date = DateTime.parse(dateElements.join());
-    DateFormat formatter = DateFormat('MMMd');
+    final DateTime date = DateTime.parse(dateElements.join());
+    final DateFormat formatter = DateFormat('MMMd');
     return formatter.format(date);
   }
 
@@ -51,7 +51,6 @@ class _TimelineGraphState extends State<TimelineGraph> {
     return FadeAnimator(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           const Divider(height: 24.0),
           Flexible(
@@ -82,7 +81,6 @@ class _TimelineGraphState extends State<TimelineGraph> {
                 valueIndicatorTextStyle: AppTextStyles.smallLight,
               ),
               child: RangeSlider(
-                min: 0.0,
                 max: widget.timeline.length.toDouble() - 1.0,
                 divisions: widget.timeline.length,
                 activeColor: AppColors.primary,
@@ -93,10 +91,11 @@ class _TimelineGraphState extends State<TimelineGraph> {
                 ),
                 values: sliderValues,
                 onChanged: (values) {
-                  if (values.end - values.start > 10.0)
+                  if (values.end - values.start > 10.0) {
                     setState(() {
                       sliderValues = values;
                     });
+                  }
                 },
               ),
             ),
@@ -111,20 +110,22 @@ class _TimelineGraphState extends State<TimelineGraph> {
   Widget _buildLabelRow() {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
+      children: const <Widget>[
         Label(text: 'Confirmed', color: Colors.blue),
-        const SizedBox(width: 16.0),
+        SizedBox(width: 16.0),
         Label(text: 'Recovered', color: Colors.green),
-        const SizedBox(width: 16.0),
+        SizedBox(width: 16.0),
         Label(text: 'Deaths', color: Colors.red),
       ],
     );
   }
 
   LineChart _buildGraph() {
-    final double labelSize = 40.0;
-    final double maxY = widget.timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
-    final double verticalInterval = ((sliderValues.end - sliderValues.start) ~/ 4).toDouble();
+    const double labelSize = 40.0;
+    final double maxY =
+        widget.timeline.map((e) => e.confirmed).reduce(math.max).toDouble();
+    final double verticalInterval =
+        ((sliderValues.end - sliderValues.start) ~/ 4).toDouble();
     final double horizontalInterval = (maxY ~/ 5).toDouble();
     final List<double> xValues =
         widget.timeline.map((data) => widget.timeline.indexOf(data).toDouble()).toList();
@@ -138,7 +139,7 @@ class _TimelineGraphState extends State<TimelineGraph> {
             fitInsideHorizontally: true,
           ),
         ),
-        clipToBorder: true,
+        clipData: FlClipData.all(),
         minX: sliderValues.start,
         maxX: sliderValues.end,
         minY: 0.0,

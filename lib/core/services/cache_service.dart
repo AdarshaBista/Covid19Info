@@ -11,7 +11,7 @@ class CacheService {
 
   Future<String> get(String key) async {
     final box = await cacheBox;
-    String value = box.get(key);
+    final String value = box.get(key);
 
     if (value == null) return null;
     if (await _shouldInvalidate()) {

@@ -73,7 +73,8 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
 
   TileLayerOptions _buildTiles() {
     return TileLayerOptions(
-      tileProvider: Platform.isWindows ? NetworkTileProvider() : const CachedNetworkTileProvider(),
+      tileProvider:
+          Platform.isWindows ? NetworkTileProvider() : const CachedNetworkTileProvider(),
       keepBuffer: 8,
       tileSize: 512,
       zoomOffset: -1,
@@ -104,11 +105,11 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
       end: destZoom,
     );
 
-    AnimationController animController = AnimationController(
+    final AnimationController animController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
     );
-    Animation<double> animation = CurvedAnimation(
+    final Animation<double> animation = CurvedAnimation(
       parent: animController,
       curve: Curves.fastOutSlowIn,
     );

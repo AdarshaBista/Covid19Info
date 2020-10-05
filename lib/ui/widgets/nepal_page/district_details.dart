@@ -52,7 +52,7 @@ class DistrictDetails extends StatelessWidget {
               'Province',
               style: AppTextStyles.smallLight,
             ),
-            leading: Icon(Icons.map),
+            leading: const Icon(Icons.map),
             trailing: Text(
               district.province.toString(),
               style: AppTextStyles.mediumLight.copyWith(fontWeight: FontWeight.bold),
@@ -63,7 +63,7 @@ class DistrictDetails extends StatelessWidget {
               'Confirmed',
               style: AppTextStyles.smallLight,
             ),
-            leading: Icon(Icons.local_hospital, color: Colors.red),
+            leading: const Icon(Icons.local_hospital, color: Colors.red),
             trailing: Text(
               district.cases.length.toString(),
               style: AppTextStyles.mediumLight.copyWith(fontWeight: FontWeight.bold),
@@ -76,17 +76,15 @@ class DistrictDetails extends StatelessWidget {
 
   Widget _buildGrid() {
     return Center(
-      child: Container(
+      child: SizedBox(
         height: 320.0,
         child: GridView.builder(
           shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 1,
           ),
           padding: const EdgeInsets.all(16.0),
           scrollDirection: Axis.horizontal,
-          addAutomaticKeepAlives: true,
           itemCount: district.cases.length,
           itemBuilder: (context, index) {
             return CovidCaseCard(

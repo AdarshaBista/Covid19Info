@@ -34,7 +34,6 @@ class ContactCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Text(
               'CONTACT',
@@ -57,7 +56,9 @@ class ContactCard extends StatelessWidget {
                   color: color,
                   iconData: LineAwesomeIcons.phone,
                   onPressed: () async {
-                    await context.repository<LauncherService>().launchPhone(context, number);
+                    await context
+                        .repository<LauncherService>()
+                        .launchPhone(context, number);
                   },
                 ),
                 const SizedBox(width: 10.0),

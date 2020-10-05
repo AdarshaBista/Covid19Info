@@ -24,10 +24,9 @@ class HospitalList extends StatelessWidget {
         SearchBox(
           hintText: 'Search Hospitals',
           onChanged: (String value) {
-            context.bloc<HospitalBloc>()
-              ..add(SearchHospitalEvent(
-                searchTerm: value,
-              ));
+            context.bloc<HospitalBloc>().add(SearchHospitalEvent(
+                  searchTerm: value,
+                ));
           },
         ),
         const SizedBox(height: 8.0),
@@ -52,7 +51,7 @@ class HospitalList extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: hospitals.length,
       itemBuilder: (_, index) => HospitalCard(
         hospital: hospitals[index],

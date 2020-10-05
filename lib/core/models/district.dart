@@ -42,16 +42,17 @@ class District {
     );
   }
 
-  static District fromMap(Map<String, dynamic> map) {
+  factory District.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return District(
-      id: map['id'],
-      title: map['title'],
-      province: map['province'],
+      id: map['id'] as int,
+      title: map['title'] as String,
+      province: map['province'] as int,
       lat: (map['centroid']['coordinates'][1] as num).toDouble(),
       lng: (map['centroid']['coordinates'][0] as num).toDouble(),
-      cases: List<CovidCase>.from(map['covid_cases']?.map((x) => CovidCase.fromMap(x))),
+      cases: List<CovidCase>.from((map['covid_cases'] as List)
+          ?.map((x) => CovidCase.fromMap(x as Map<String, dynamic>))),
     );
   }
 

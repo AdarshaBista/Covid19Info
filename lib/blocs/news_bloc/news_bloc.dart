@@ -16,10 +16,8 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
 
   NewsBloc({
     @required this.apiService,
-  }) : assert(apiService != null);
-
-  @override
-  NewsState get initialState => InitialNewsState();
+  })  : assert(apiService != null),
+        super(InitialNewsState());
 
   @override
   Stream<NewsState> mapEventToState(

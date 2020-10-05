@@ -16,10 +16,8 @@ class GlobalStatsBloc extends Bloc<GlobalStatsEvent, GlobalStatsState> {
 
   GlobalStatsBloc({
     @required this.apiService,
-  }) : assert(apiService != null);
-
-  @override
-  GlobalStatsState get initialState => InitialGlobalStatsState();
+  })  : assert(apiService != null),
+        super(InitialGlobalStatsState());
 
   @override
   Stream<GlobalStatsState> mapEventToState(
@@ -28,7 +26,7 @@ class GlobalStatsBloc extends Bloc<GlobalStatsEvent, GlobalStatsState> {
     if (event is GetGlobalStatsEvent) {
       yield LoadingGlobalStatsState();
       try {
-        List<TimelineData> globalTimeline = await apiService.fetchGlobalTimeline();
+        final List<TimelineData> globalTimeline = await apiService.fetchGlobalTimeline();
         yield LoadedGlobalStatsState(globalTimeline: globalTimeline);
       } on AppError catch (e) {
         print(e.error);

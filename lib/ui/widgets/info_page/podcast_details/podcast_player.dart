@@ -36,7 +36,6 @@ class PodcastPlayer extends StatelessWidget {
           PodcastSlider(playerState: playerState),
           Row(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _SpeedIcon(playerState: playerState),
               const SizedBox(width: 4.0),
@@ -99,15 +98,15 @@ class _StopIcon extends StatelessWidget {
     return InkWell(
       onTap: () async {
         await onStop();
-        context.bloc<PodcastPlayerBloc>()..add(StopPodcastEvent());
+        context.bloc<PodcastPlayerBloc>().add(StopPodcastEvent());
       },
       child: Container(
         padding: const EdgeInsets.all(4.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.light,
           shape: BoxShape.circle,
         ),
-        child: Icon(
+        child: const Icon(
           Icons.close,
           size: 24.0,
           color: AppColors.primary,
@@ -130,13 +129,14 @@ class _PlayPauseIcon extends StatelessWidget {
       stream: playerState.isPlaying,
       initialData: true,
       builder: (context, snapshot) {
-        bool isPlaying = snapshot.data;
+        final bool isPlaying = snapshot.data;
         return InkWell(
           onTap: () {
-            if (isPlaying)
-              context.bloc<PodcastPlayerBloc>()..add(PausePodcastEvent());
-            else
-              context.bloc<PodcastPlayerBloc>()..add(PlayPodcastEvent());
+            if (isPlaying) {
+              context.bloc<PodcastPlayerBloc>().add(PausePodcastEvent());
+            } else {
+              context.bloc<PodcastPlayerBloc>().add(PlayPodcastEvent());
+            }
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -172,7 +172,7 @@ class _SpeedIcon extends StatelessWidget {
       ),
       child: Container(
         padding: const EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.light,
           shape: BoxShape.circle,
         ),
@@ -194,10 +194,9 @@ class _SpeedIcon extends StatelessWidget {
             (speed) => InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-                context.bloc<PodcastPlayerBloc>()
-                  ..add(SetSpeedPodcastEvent(
-                    speed: speed,
-                  ));
+                context.bloc<PodcastPlayerBloc>().add(SetSpeedPodcastEvent(
+                      speed: speed,
+                    ));
               },
               child: Container(
                 width: double.infinity,

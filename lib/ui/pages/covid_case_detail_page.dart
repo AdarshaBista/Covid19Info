@@ -46,7 +46,9 @@ class CovidCaseDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(
-              covidCase.gender == 'male' ? LineAwesomeIcons.male : LineAwesomeIcons.female,
+              covidCase.gender == 'male'
+                  ? LineAwesomeIcons.male
+                  : LineAwesomeIcons.female,
               size: 40.0,
               color: color,
             ),
@@ -115,11 +117,10 @@ class CovidCaseDetailPage extends StatelessWidget {
             AppColors.background.withOpacity(0.2),
             Colors.transparent,
           ],
-          stops: [0.0, 0.3, 0.5, 0.6, 0.7, 1.0],
+          stops: const [0.0, 0.3, 0.5, 0.6, 0.7, 1.0],
         ),
       ),
       child: MapCard(
-        interactive: true,
         zoom: 15.0,
         minZoom: 12.0,
         maxZoom: 16.0,

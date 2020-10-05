@@ -15,11 +15,12 @@ part 'nepal_district_state.dart';
 
 class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
   final ApiService apiService;
-  List<District> _districts = [];
+  final List<District> _districts = [];
 
   NepalDistrictBloc({
     @required this.apiService,
-  }) : assert(apiService != null);
+  })  : assert(apiService != null),
+        super(InitialDistrictState());
 
   @override
   Stream<Transition<NepalDistrictEvent, NepalDistrictState>> transformEvents(
@@ -27,15 +28,10 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
     TransitionFunction<NepalDistrictEvent, NepalDistrictState> transitionFn,
   ) {
     return super.transformEvents(
-      events.debounceTime(
-        Duration(milliseconds: 500),
-      ),
+      events.debounceTime(const Duration(milliseconds: 500)),
       transitionFn,
     );
   }
-
-  @override
-  NepalDistrictState get initialState => InitialDistrictState();
 
   @override
   Stream<NepalDistrictState> mapEventToState(NepalDistrictEvent event) async* {
@@ -47,7 +43,7 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
     yield LoadingDistrictState();
     try {
       final List<int> districtsIds = await apiService.fetchDistrictsIds();
-      for (int id in districtsIds) {
+      for (final int id in districtsIds) {
         final district = await apiService.fetchDistrict(id);
         if (district != null) {
           _districts.add(district);
@@ -59,7 +55,6 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
         }
       }
       yield LoadedDistrictState(
-        shouldShowSearch: true,
         allDistricts: _districts,
         searchedDistricts: null,
       );
@@ -86,7 +81,7 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
     if (searchedDistricts.isEmpty) {
       yield LoadedDistrictState(
         allDistricts: _districts,
-        searchedDistricts: [],
+        searchedDistricts: const [],
       );
     }
     yield LoadedDistrictState(

@@ -19,7 +19,7 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
-    context.bloc<NewsBloc>()..add(GetNewsEvent());
+    context.bloc<NewsBloc>().add(GetNewsEvent());
   }
 
   @override
@@ -57,7 +57,6 @@ class _NewsPageState extends State<NewsPage> {
   Widget _buildNewsList(LoadedNewsState state) {
     return CoverFlow(
       dismissibleItems: false,
-      viewportFraction: 0.85,
       itemCount: state.news.length,
       itemBuilder: (context, index) => NewsCard(
         news: state.news[index],

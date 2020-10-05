@@ -7,7 +7,7 @@ class EmptyIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconIndicator(
+    return const IconIndicator(
       label: 'Nothing here...',
       imageUrl: 'assets/images/empty.png',
     );

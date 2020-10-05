@@ -44,7 +44,11 @@ class Country {
         assert(timeline != null);
 
   bool get isValid =>
-      code != 'Error' && lat != -1.0 && lng != -1.0 && totalConfirmed > 0 && activeCases >= 0;
+      code != 'Error' &&
+      lat != -1.0 &&
+      lng != -1.0 &&
+      totalConfirmed > 0 &&
+      activeCases >= 0;
 
   Country copyWith({
     String code,
@@ -76,23 +80,24 @@ class Country {
     );
   }
 
-  static Country fromMap(Map<String, dynamic> map) {
+  factory Country.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return Country(
-      code: map['countryCode'] ?? 'Error',
-      name: map['country'],
+      code: map['countryCode'] as String ?? 'Error',
+      name: map['country'] as String,
       lat: map['lat'] == null ? -1.0 : (map['lat'] as num).toDouble(),
       lng: map['lng'] == null ? -1.0 : (map['lng'] as num).toDouble(),
-      totalConfirmed: map['totalConfirmed'],
-      totalDeaths: map['totalDeaths'],
-      totalRecovered: map['totalRecovered'],
-      totalCritical: map['totalCritical'],
-      dailyConfirmed: map['dailyConfirmed'],
-      dailyDeaths: map['dailyDeaths'],
-      confirmedPerMillion: map['totalConfirmedPerMillionPopulation'] ?? 0,
+      totalConfirmed: map['totalConfirmed'] as int,
+      totalDeaths: map['totalDeaths'] as int,
+      totalRecovered: map['totalRecovered'] as int,
+      totalCritical: map['totalCritical'] as int,
+      dailyConfirmed: map['dailyConfirmed'] as int,
+      dailyDeaths: map['dailyDeaths'] as int,
+      confirmedPerMillion: map['totalConfirmedPerMillionPopulation'] as int ?? 0,
       timeline: map.containsKey('timeline')
-          ? List<TimelineData>.from(map['timeline']?.map((x) => TimelineData.fromMap(x)))
+          ? List<TimelineData>.from((map['timeline'] as List)
+              ?.map((x) => TimelineData.fromMap(x as Map<String, dynamic>)))
           : [],
     );
   }

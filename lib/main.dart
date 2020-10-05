@@ -20,7 +20,7 @@ import 'package:device_preview/device_preview.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
+    const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarBrightness: Brightness.light,
     ),
@@ -30,18 +30,18 @@ Future<void> main() async {
   runApp(
     DevicePreview(
       enabled: Platform.isWindows,
-      isToolBarVisible: true,
       style: DevicePreviewStyle(
-        background: BoxDecoration(color: Color(0xFF24292E)),
+        hasFrameShadow: true,
+        background: const BoxDecoration(color: Color(0xFF24292E)),
         toolBar: DevicePreviewToolBarStyle.dark().copyWith(
           position: DevicePreviewToolBarPosition.left,
         ),
       ),
-      data: DevicePreviewData(
+      data: const DevicePreviewData(
         deviceIndex: 3,
         isFrameVisible: true,
       ),
-      builder: (_) => (App()),
+      builder: (_) => App(),
     ),
   );
 }
@@ -74,9 +74,10 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Covid19 Info',
         theme: ThemeData(
+          visualDensity: VisualDensity.standard,
           scaffoldBackgroundColor: AppColors.background,
-          iconTheme: IconThemeData(color: AppColors.primary),
-          appBarTheme: AppBarTheme(
+          iconTheme: const IconThemeData(color: AppColors.primary),
+          appBarTheme: const AppBarTheme(
             brightness: Brightness.dark,
             color: AppColors.primary,
             iconTheme: IconThemeData(color: AppColors.primary),

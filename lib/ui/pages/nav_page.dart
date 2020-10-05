@@ -79,10 +79,10 @@ class _NavPageState extends State<NavPage> {
           tabs: tabs,
           iconSize: 20,
           activeColor: Colors.white,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           selectedIndex: _selectedIndex,
-          onTabChange: (index) {
+          onTabChange: (int index) {
             setState(() {
               _selectedIndex = index;
             });
@@ -135,7 +135,7 @@ class _NavPageState extends State<NavPage> {
             )..add(GetDistrictEvent()),
           ),
         ],
-        child: NepalPage(),
+        child: const NepalPage(),
       );
 
   Widget _buildNewsPage() => BlocProvider(
@@ -173,6 +173,6 @@ class _NavPageState extends State<NavPage> {
             )..add(GetHospitalEvent()),
           ),
         ],
-        child: InfoPage(),
+        child: const InfoPage(),
       );
 }

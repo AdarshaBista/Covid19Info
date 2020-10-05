@@ -35,15 +35,15 @@ class Podcast {
     );
   }
 
-  static Podcast fromMap(Map<String, dynamic> map) {
+  factory Podcast.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return Podcast(
-      title: map['title'],
-      source: map['source'],
-      summary: map['summary'],
-      imageUrl: map['image_url'],
-      audioUrl: map['audio_url'],
+      title: map['title'] as String,
+      source: map['source'] as String,
+      summary: map['summary'] as String,
+      imageUrl: map['image_url'] as String,
+      audioUrl: map['audio_url'] as String,
     );
   }
 

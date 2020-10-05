@@ -19,7 +19,8 @@ class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
 
   HospitalBloc({
     @required this.apiService,
-  }) : assert(apiService != null);
+  })  : assert(apiService != null),
+        super(InitialHospitalState());
 
   @override
   Stream<Transition<HospitalEvent, HospitalState>> transformEvents(
@@ -27,15 +28,10 @@ class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
     TransitionFunction<HospitalEvent, HospitalState> transitionFn,
   ) {
     return super.transformEvents(
-      events.debounceTime(
-        Duration(milliseconds: 500),
-      ),
+      events.debounceTime(const Duration(milliseconds: 500)),
       transitionFn,
     );
   }
-
-  @override
-  HospitalState get initialState => InitialHospitalState();
 
   @override
   Stream<HospitalState> mapEventToState(

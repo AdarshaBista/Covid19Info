@@ -15,7 +15,7 @@ class StatsGrid extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
       crossAxisCount: 3,
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
         StatCard(
           label: 'Tested',

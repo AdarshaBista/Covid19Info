@@ -94,14 +94,14 @@ class HospitalCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       elevation: 12.0,
       backgroundColor: AppColors.dark,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16.0),
           topRight: Radius.circular(16.0),
         ),
       ),
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height * 0.7,
           child: HospitalDetails(
             hospital: hospital,

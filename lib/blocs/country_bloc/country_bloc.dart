@@ -22,7 +22,8 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
 
   CountryBloc({
     @required this.apiService,
-  }) : assert(apiService != null);
+  })  : assert(apiService != null),
+        super(InitialCountryState());
 
   @override
   Stream<Transition<CountryEvent, CountryState>> transformEvents(
@@ -30,15 +31,10 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
     TransitionFunction<CountryEvent, CountryState> transitionFn,
   ) {
     return super.transformEvents(
-      events.debounceTime(
-        Duration(milliseconds: 500),
-      ),
+      events.debounceTime(const Duration(milliseconds: 500)),
       transitionFn,
     );
   }
-
-  @override
-  CountryState get initialState => InitialCountryState();
 
   @override
   Stream<CountryState> mapEventToState(
@@ -83,7 +79,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
       yield LoadedCountryState(
         filterType: _filterType,
         allCountries: _countries,
-        searchedCountries: [],
+        searchedCountries: const [],
       );
     }
     yield LoadedCountryState(

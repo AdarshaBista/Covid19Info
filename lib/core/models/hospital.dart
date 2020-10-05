@@ -31,7 +31,7 @@ class Hospital {
     bool isGovApproved,
     String name,
     String contactPerson,
-    String contactPersonName,
+    String contactPersonNumber,
     String address,
     String phone,
     String website,
@@ -42,7 +42,7 @@ class Hospital {
       id: id ?? this.id,
       name: name ?? this.name,
       contactPerson: contactPerson ?? this.contactPerson,
-      contactPersonNumber: contactPersonName ?? this.contactPersonNumber,
+      contactPersonNumber: contactPersonNumber ?? this.contactPersonNumber,
       address: address ?? this.address,
       phone: phone ?? this.phone,
       website: website ?? this.website,
@@ -54,19 +54,19 @@ class Hospital {
   bool get isValid =>
       !capacity.isEmpty && name.isNotEmpty && phone.isNotEmpty && address.isNotEmpty;
 
-  static Hospital fromMap(Map<String, dynamic> map) {
+  factory Hospital.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
     return Hospital(
-      id: map['id'],
-      name: map['name'],
-      contactPerson: map['contact_person'],
-      contactPersonNumber: map['contact_person_number'],
-      address: map['address'],
-      phone: map['phone'],
-      website: map['website'],
-      email: map['email'],
-      capacity: Capacity.fromMap(map['capacity']),
+      id: map['id'] as String,
+      name: map['name'] as String,
+      contactPerson: map['contact_person'] as String,
+      contactPersonNumber: map['contact_person_number'] as String,
+      address: map['address'] as String,
+      phone: map['phone'] as String,
+      website: map['website'] as String,
+      email: map['email'] as String,
+      capacity: Capacity.fromMap(map['capacity'] as Map<String, dynamic>),
     );
   }
 

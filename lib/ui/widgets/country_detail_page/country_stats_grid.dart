@@ -15,7 +15,6 @@ class CountryStatsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
           'STATS',
@@ -27,7 +26,7 @@ class CountryStatsGrid extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
           crossAxisCount: 3,
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
             StatCard(
               label: 'Confirmed',

@@ -25,7 +25,7 @@ class ApiService {
   }) : assert(cacheService != null);
 
   List<Map<String, dynamic>> _flattenTimelineMap(Map<String, dynamic> map) {
-    List<Map<String, dynamic>> list = [];
+    final List<Map<String, dynamic>> list = [];
     map.forEach((k, v) {
       list.add({
         'date': k,
@@ -41,16 +41,16 @@ class ApiService {
   static const String NEPAL_CORONA_DATA_BASE = 'https://data.nepalcorona.info/api/v1/';
 
   Future<NepalStats> fetchNepalStats() async {
-    const String url = NEPAL_CORONA_BASE + 'data/nepal';
+    const String url = '${NEPAL_CORONA_BASE}data/nepal';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
-      return NepalStats.fromMap(jsonDecode(cachedRes));
+      return NepalStats.fromMap(jsonDecode(cachedRes) as Map<String, dynamic>);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
-      return NepalStats.fromMap(jsonDecode(res.body));
+      return NepalStats.fromMap(jsonDecode(res.body) as Map<String, dynamic>);
     } catch (e) {
       throw AppError(
         message: "Couldn't load nepal infection data!",
@@ -60,14 +60,14 @@ class ApiService {
   }
 
   Future<List<TimelineData>> fetchNepalTimeline() async {
-    const String url = COVID_API_BASE + 'country/NPL';
+    const String url = '${COVID_API_BASE}country/NPL';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeNepalTimeline(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeNepalTimeline(res.body);
     } catch (e) {
@@ -79,20 +79,20 @@ class ApiService {
   }
 
   List<TimelineData> _decodeNepalTimeline(String data) {
-    final Map<String, dynamic> resMap = jsonDecode(data)['result'];
-    final List<Map<String, dynamic>> timelineList = _flattenTimelineMap(resMap);
+    final resMap = jsonDecode(data)['result'] as Map<String, dynamic>;
+    final timelineList = _flattenTimelineMap(resMap);
     return timelineList.map((m) => TimelineData.fromMap(m)).toList();
   }
 
   Future<List<int>> fetchDistrictsIds() async {
-    const String url = NEPAL_CORONA_DATA_BASE + 'districts';
+    const String url = '${NEPAL_CORONA_DATA_BASE}districts';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeDistrictIds(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeDistrictIds(res.body);
     } catch (e) {
@@ -104,19 +104,19 @@ class ApiService {
   }
 
   List<int> _decodeDistrictIds(String data) {
-    final List<dynamic> resList = jsonDecode(data);
+    final List<dynamic> resList = jsonDecode(data) as List<dynamic>;
     return resList.map((m) => m['id'] as int).toList();
   }
 
   Future<District> fetchDistrict(int id) async {
-    final String url = NEPAL_CORONA_DATA_BASE + 'districts/$id';
+    final String url = '$NEPAL_CORONA_DATA_BASE${'districts/$id'}';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeDistrict(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeDistrict(res.body);
     } catch (e) {
@@ -126,20 +126,20 @@ class ApiService {
   }
 
   District _decodeDistrict(String data) {
-    final Map<String, dynamic> resMap = jsonDecode(data);
+    final resMap = jsonDecode(data) as Map<String, dynamic>;
     if ((resMap['covid_cases'] as List).isEmpty) return null;
     return District.fromMap(resMap);
   }
 
   Future<List<News>> fetchNews(int start) async {
-    final String url = NEPAL_CORONA_BASE + 'news?start=$start';
+    final String url = '$NEPAL_CORONA_BASE${'news?start=$start'}';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeNews(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeNews(res.body);
     } catch (e) {
@@ -151,19 +151,21 @@ class ApiService {
   }
 
   List<News> _decodeNews(String data) {
-    final Map<String, dynamic> resMap = jsonDecode(data);
-    return (resMap['data'] as List).map((m) => News.fromMap(m)).toList();
+    final resMap = jsonDecode(data) as Map<String, dynamic>;
+    return (resMap['data'] as List)
+        .map((m) => News.fromMap(m as Map<String, dynamic>))
+        .toList();
   }
 
   Future<List<Myth>> fetchMyths(int start) async {
-    final String url = NEPAL_CORONA_BASE + 'myths?start=$start';
+    final String url = '$NEPAL_CORONA_BASE${'myths?start=$start'}';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeMyths(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeMyths(res.body);
     } catch (e) {
@@ -175,19 +177,21 @@ class ApiService {
   }
 
   List<Myth> _decodeMyths(String data) {
-    final Map<String, dynamic> resMap = jsonDecode(data);
-    return (resMap['data'] as List).map((m) => Myth.fromMap(m)).toList();
+    final resMap = jsonDecode(data) as Map<String, dynamic>;
+    return (resMap['data'] as List)
+        .map((m) => Myth.fromMap(m as Map<String, dynamic>))
+        .toList();
   }
 
   Future<List<Faq>> fetchFaqs(int start) async {
-    final String url = NEPAL_CORONA_BASE + 'faqs?start=$start';
+    final String url = '$NEPAL_CORONA_BASE${'faqs?start=$start'}';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeFaqs(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeFaqs(res.body);
     } catch (e) {
@@ -199,19 +203,21 @@ class ApiService {
   }
 
   List<Faq> _decodeFaqs(String data) {
-    Map<String, dynamic> resMap = jsonDecode(data) as Map<String, dynamic>;
-    return (resMap['data'] as List).map((m) => Faq.fromMap(m)).toList();
+    final Map<String, dynamic> resMap = jsonDecode(data) as Map<String, dynamic>;
+    return (resMap['data'] as List)
+        .map((m) => Faq.fromMap(m as Map<String, dynamic>))
+        .toList();
   }
 
   Future<List<Podcast>> fetchPodcasts(int start) async {
-    final String url = NEPAL_CORONA_BASE + 'podcasts?start=$start';
+    final String url = '$NEPAL_CORONA_BASE${'podcasts?start=$start'}';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodePodcasts(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodePodcasts(res.body);
     } catch (e) {
@@ -223,19 +229,21 @@ class ApiService {
   }
 
   List<Podcast> _decodePodcasts(String data) {
-    Map<String, dynamic> resMap = jsonDecode(data) as Map<String, dynamic>;
-    return (resMap['data'] as List).map((m) => Podcast.fromMap(m)).toList();
+    final Map<String, dynamic> resMap = jsonDecode(data) as Map<String, dynamic>;
+    return (resMap['data'] as List)
+        .map((m) => Podcast.fromMap(m as Map<String, dynamic>))
+        .toList();
   }
 
   Future<List<Hospital>> fetchHospitals(int start) async {
-    final String url = NEPAL_CORONA_BASE + 'hospitals?start=$start';
+    final String url = '$NEPAL_CORONA_BASE${'hospitals?start=$start'}';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeHospitals(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeHospitals(res.body);
     } catch (e) {
@@ -247,19 +255,21 @@ class ApiService {
   }
 
   List<Hospital> _decodeHospitals(String data) {
-    final Map<String, dynamic> resMap = jsonDecode(data);
-    return (resMap['data'] as List).map((m) => Hospital.fromMap(m)).toList();
+    final resMap = jsonDecode(data) as Map<String, dynamic>;
+    return (resMap['data'] as List)
+        .map((m) => Hospital.fromMap(m as Map<String, dynamic>))
+        .toList();
   }
 
   Future<List<TimelineData>> fetchGlobalTimeline() async {
-    final String url = COVID_API_BASE + 'global/count';
+    const String url = '${COVID_API_BASE}global/count';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeGlobalTimeline(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeGlobalTimeline(res.body);
     } catch (e) {
@@ -271,20 +281,20 @@ class ApiService {
   }
 
   List<TimelineData> _decodeGlobalTimeline(String data) {
-    final Map<String, dynamic> resMap = jsonDecode(data)['result'];
+    final resMap = jsonDecode(data)['result'] as Map<String, dynamic>;
     final List<Map<String, dynamic>> timelineList = _flattenTimelineMap(resMap);
     return timelineList.map((m) => TimelineData.fromMap(m)).toList();
   }
 
   Future<List<Country>> fetchCountries() async {
-    final String url = CORONA_TRACKER_BASE + 'v3/stats/worldometer/country';
+    const String url = '${CORONA_TRACKER_BASE}v3/stats/worldometer/country';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeCountries(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeCountries(res.body);
     } catch (e) {
@@ -303,14 +313,14 @@ class ApiService {
   }
 
   Future<List<TimelineData>> fetchCountryTimeline(String code) async {
-    final String url = COVID_API_BASE + 'country/$code';
+    final String url = '$COVID_API_BASE${'country/$code'}';
     final String cachedRes = await cacheService.get(url);
     if (cachedRes != null) {
       return _decodeCountryTimeline(cachedRes);
     }
 
     try {
-      http.Response res = await http.get(url);
+      final http.Response res = await http.get(url);
       await cacheService.insert(url, res.body);
       return _decodeCountryTimeline(res.body);
     } catch (e) {
@@ -322,7 +332,7 @@ class ApiService {
   }
 
   List<TimelineData> _decodeCountryTimeline(String data) {
-    final Map<String, dynamic> resMap = jsonDecode(data)['result'];
+    final resMap = jsonDecode(data)['result'] as Map<String, dynamic>;
     final List<Map<String, dynamic>> timelineList = _flattenTimelineMap(resMap);
     return timelineList.map((m) => TimelineData.fromMap(m)).toList();
   }
