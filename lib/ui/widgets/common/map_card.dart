@@ -17,8 +17,8 @@ class MapCard extends StatefulWidget {
   final double maxZoom;
   final LatLng nePanBoundary;
   final LatLng swPanBoundary;
+  final MarkerLayerWidget markerLayer;
   final LatLng Function() searchLocation;
-  final MarkerLayerOptions Function() markerLayerBuilder;
 
   const MapCard({
     this.interactive = true,
@@ -29,12 +29,12 @@ class MapCard extends StatefulWidget {
     this.nePanBoundary,
     this.swPanBoundary,
     @required this.searchLocation,
-    @required this.markerLayerBuilder,
+    @required this.markerLayer,
   })  : assert(zoom != null),
         assert(minZoom != null),
         assert(maxZoom != null),
         assert(searchLocation != null),
-        assert(markerLayerBuilder != null);
+        assert(markerLayer != null);
 
   @override
   _MapCardState createState() => _MapCardState();
@@ -64,27 +64,30 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
         nePanBoundary: widget.nePanBoundary,
         swPanBoundary: widget.swPanBoundary,
       ),
-      layers: [
-        _buildTiles(),
-        widget.markerLayerBuilder(),
+      children: [
+        RepaintBoundary(child: _buildTiles()),
+        RepaintBoundary(child: widget.markerLayer),
       ],
     );
   }
 
-  TileLayerOptions _buildTiles() {
-    return TileLayerOptions(
-      tileProvider:
-          Platform.isWindows ? NetworkTileProvider() : const CachedNetworkTileProvider(),
-      keepBuffer: 8,
-      tileSize: 512,
-      zoomOffset: -1,
-      backgroundColor: AppColors.background.withOpacity(0.5),
-      urlTemplate:
-          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}",
-      additionalOptions: {
-        'accessToken': MAPBOX_ACCESS_TOKEN,
-        'id': 'mapbox/dark-v10',
-      },
+  TileLayerWidget _buildTiles() {
+    return TileLayerWidget(
+      options: TileLayerOptions(
+        tileProvider: Platform.isWindows
+            ? NetworkTileProvider()
+            : const CachedNetworkTileProvider(),
+        keepBuffer: 8,
+        tileSize: 512,
+        zoomOffset: -1,
+        backgroundColor: AppColors.background.withOpacity(0.5),
+        urlTemplate:
+            "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}@2x?access_token={accessToken}",
+        additionalOptions: {
+          'accessToken': MAPBOX_ACCESS_TOKEN,
+          'id': 'mapbox/dark-v10',
+        },
+      ),
     );
   }
 

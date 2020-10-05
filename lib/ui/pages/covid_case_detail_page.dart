@@ -128,8 +128,8 @@ class CovidCaseDetailPage extends StatelessWidget {
         swPanBoundary: LatLng(covidCase.lat - 0.03, covidCase.lng - 0.03),
         center: LatLng(covidCase.lat + 0.0025, covidCase.lng - 0.0012),
         searchLocation: () => null,
-        markerLayerBuilder: () {
-          return MarkerLayerOptions(
+        markerLayer: MarkerLayerWidget(
+          options: MarkerLayerOptions(
             markers: [
               Marker(
                 height: 100.0,
@@ -144,8 +144,8 @@ class CovidCaseDetailPage extends StatelessWidget {
                 ),
               ),
             ],
-          );
-        },
+          ),
+        ),
       ),
     );
   }

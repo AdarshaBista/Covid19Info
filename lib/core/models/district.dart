@@ -8,6 +8,10 @@ class District {
   final int province;
   final double lat;
   final double lng;
+  final int confirmed;
+  final int active;
+  final int deaths;
+  final int recovered;
   final List<CovidCase> cases;
 
   const District({
@@ -16,12 +20,20 @@ class District {
     @required this.province,
     @required this.lat,
     @required this.lng,
+    @required this.confirmed,
+    @required this.active,
+    @required this.deaths,
+    @required this.recovered,
     @required this.cases,
   })  : assert(id != null),
         assert(title != null),
         assert(province != null),
         assert(lat != null),
         assert(lng != null),
+        assert(confirmed != null),
+        assert(active != null),
+        assert(deaths != null),
+        assert(recovered != null),
         assert(cases != null);
 
   District copyWith({
@@ -30,6 +42,10 @@ class District {
     int province,
     double lat,
     double lng,
+    int confirmed,
+    int active,
+    int deaths,
+    int recovered,
     List<CovidCase> cases,
   }) {
     return District(
@@ -38,6 +54,10 @@ class District {
       province: province ?? this.province,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
+      confirmed: confirmed ?? this.confirmed,
+      active: active ?? this.active,
+      deaths: deaths ?? this.deaths,
+      recovered: recovered ?? this.recovered,
       cases: cases ?? this.cases,
     );
   }
@@ -51,6 +71,10 @@ class District {
       province: map['province'] as int,
       lat: (map['centroid']['coordinates'][1] as num).toDouble(),
       lng: (map['centroid']['coordinates'][0] as num).toDouble(),
+      confirmed: map['covid_summary']['cases'] as int,
+      active: map['covid_summary']['active'] as int,
+      deaths: map['covid_summary']['death'] as int,
+      recovered: map['covid_summary']['recovered'] as int,
       cases: List<CovidCase>.from((map['covid_cases'] as List)
           ?.map((x) => CovidCase.fromMap(x as Map<String, dynamic>))),
     );
@@ -58,7 +82,7 @@ class District {
 
   @override
   String toString() {
-    return 'District(id: $id, title: $title, province: $province, lat: $lat, lng: $lng, cases: $cases)';
+    return 'District(id: $id, title: $title, province: $province, lat: $lat, lng: $lng, confirmed: $confirmed, active: $active, deaths: $deaths, recovered: $recovered, cases: $cases)';
   }
 
   @override
@@ -71,6 +95,10 @@ class District {
         o.province == province &&
         o.lat == lat &&
         o.lng == lng &&
+        o.confirmed == confirmed &&
+        o.active == active &&
+        o.deaths == deaths &&
+        o.recovered == recovered &&
         listEquals(o.cases, cases);
   }
 
@@ -81,6 +109,10 @@ class District {
         province.hashCode ^
         lat.hashCode ^
         lng.hashCode ^
+        confirmed.hashCode ^
+        active.hashCode ^
+        deaths.hashCode ^
+        recovered.hashCode ^
         cases.hashCode;
   }
 }

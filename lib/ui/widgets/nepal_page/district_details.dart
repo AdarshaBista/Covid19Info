@@ -4,6 +4,7 @@ import 'package:covid19_info/core/models/district.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/covid_case_card.dart';
+import 'package:covid19_info/ui/widgets/common/distribution_container.dart';
 
 class DistrictDetails extends StatelessWidget {
   final District district;
@@ -24,11 +25,15 @@ class DistrictDetails extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-        const SizedBox(height: 8.0),
-        const Divider(height: 16.0, indent: 32.0, endIndent: 32.0),
+        const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
         _buildStat(),
-        const Divider(height: 16.0, indent: 32.0, endIndent: 32.0),
-        const SizedBox(height: 8.0),
+        const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
+        DistributionContainer(
+          active: district.active,
+          deaths: district.deaths,
+          recovered: district.recovered,
+        ),
+        const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
         Text(
           'Individual Cases',
           style: AppTextStyles.mediumLight,

@@ -47,11 +47,11 @@ class NepalMapCard extends StatelessWidget {
     return MapCard(
       center: LatLng(27.728201, 85.347351),
       zoom: 7.0,
-      minZoom: 7.0,
+      minZoom: 6.0,
       maxZoom: 10.0,
       nePanBoundary: LatLng(29.5, 88.8),
       swPanBoundary: LatLng(26.5, 80.0),
-      markerLayerBuilder: () => _buildMarkers(state),
+      markerLayer: _buildMarkers(state),
       searchLocation: () {
         if (!state.shouldShowAllDistricts && !state.isSearchEmpty) {
           return LatLng(
@@ -64,27 +64,29 @@ class NepalMapCard extends StatelessWidget {
     );
   }
 
-  MarkerLayerOptions _buildMarkers(LoadedDistrictState state) {
-    return MarkerLayerOptions(
-      markers: state.allDistricts.map(
-        (d) {
-          final double diameter =
-              (math.sqrt(d.cases.length.toDouble()) * 2.0).clamp(12.0, 72.0).toDouble();
-          return Marker(
-            height: diameter,
-            width: diameter,
-            point: LatLng(d.lat, d.lng),
-            builder: (context) => GestureDetector(
-              onTap: () => _openDetails(context, d),
-              child: CircleAvatar(
-                backgroundColor: state.isDistrictInSearch(d)
-                    ? Colors.blue.withOpacity(0.6)
-                    : Colors.red.withOpacity(0.6),
+  MarkerLayerWidget _buildMarkers(LoadedDistrictState state) {
+    return MarkerLayerWidget(
+      options: MarkerLayerOptions(
+        markers: state.allDistricts.map(
+          (d) {
+            final double diameter =
+                (math.sqrt(d.cases.length.toDouble())).clamp(12.0, 120.0).toDouble();
+            return Marker(
+              height: diameter,
+              width: diameter,
+              point: LatLng(d.lat, d.lng),
+              builder: (context) => GestureDetector(
+                onTap: () => _openDetails(context, d),
+                child: CircleAvatar(
+                  backgroundColor: state.isDistrictInSearch(d)
+                      ? Colors.blue.withOpacity(0.6)
+                      : Colors.red.withOpacity(0.6),
+                ),
               ),
-            ),
-          );
-        },
-      ).toList(),
+            );
+          },
+        ).toList(),
+      ),
     );
   }
 

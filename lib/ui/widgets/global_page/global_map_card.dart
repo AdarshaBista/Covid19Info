@@ -44,7 +44,7 @@ class GlobalMapCard extends StatelessWidget {
       zoom: 3.0,
       minZoom: 2.0,
       maxZoom: 6.0,
-      markerLayerBuilder: () => _buildMarkers(state),
+      markerLayer: _buildMarkers(state),
       searchLocation: () {
         if (!state.shouldShowAllCountries && !state.isSearchEmpty) {
           return LatLng(
@@ -57,51 +57,54 @@ class GlobalMapCard extends StatelessWidget {
     );
   }
 
-  MarkerLayerOptions _buildMarkers(LoadedCountryState state) {
-    return MarkerLayerOptions(
-      markers: state.allCountries.map(
-        (c) {
-          int metric;
-          Color color;
+  MarkerLayerWidget _buildMarkers(LoadedCountryState state) {
+    return MarkerLayerWidget(
+      options: MarkerLayerOptions(
+        markers: state.allCountries.map(
+          (c) {
+            int metric;
+            Color color;
 
-          switch (state.filterType) {
-            case CountryFilterType.Confirmed:
-              metric = c.totalConfirmed;
-              color = Colors.blue;
-              break;
-            case CountryFilterType.Active:
-              metric = c.activeCases;
-              color = Colors.yellow;
-              break;
-            case CountryFilterType.Recovered:
-              metric = c.totalRecovered;
-              color = Colors.green;
-              break;
-            case CountryFilterType.Deaths:
-              metric = c.totalDeaths;
-              color = Colors.red;
-              break;
+            switch (state.filterType) {
+              case CountryFilterType.Confirmed:
+                metric = c.totalConfirmed;
+                color = Colors.blue;
+                break;
+              case CountryFilterType.Active:
+                metric = c.activeCases;
+                color = Colors.yellow;
+                break;
+              case CountryFilterType.Recovered:
+                metric = c.totalRecovered;
+                color = Colors.green;
+                break;
+              case CountryFilterType.Deaths:
+                metric = c.totalDeaths;
+                color = Colors.red;
+                break;
 
-            default:
-          }
+              default:
+            }
 
-          final double diameter =
-              (math.sqrt(metric.toDouble()) / 8.0).clamp(8.0, 120.0).toDouble();
-          return Marker(
-            height: diameter,
-            width: diameter,
-            point: LatLng(c.lat, c.lng),
-            builder: (context) => GestureDetector(
-              onTap: () => _navigateToDetailsPage(context, c),
-              child: CircleAvatar(
-                backgroundColor: state.isCountryInSearch(c)
-                    ? Colors.deepPurple.withOpacity(0.4)
-                    : color.withOpacity(0.4),
+            final double diameter = (math.sqrt(metric.toDouble()) / 16.0)
+                .clamp(12.0, double.maxFinite)
+                .toDouble();
+            return Marker(
+              height: diameter,
+              width: diameter,
+              point: LatLng(c.lat, c.lng),
+              builder: (context) => GestureDetector(
+                onTap: () => _navigateToDetailsPage(context, c),
+                child: CircleAvatar(
+                  backgroundColor: state.isCountryInSearch(c)
+                      ? Colors.deepPurple.withOpacity(0.4)
+                      : color.withOpacity(0.4),
+                ),
               ),
-            ),
-          );
-        },
-      ).toList(),
+            );
+          },
+        ).toList(),
+      ),
     );
   }
 

@@ -28,14 +28,17 @@ class DistributionContainer extends StatelessWidget {
           textAlign: TextAlign.center,
           style: AppTextStyles.mediumLight,
         ),
-        DistributionPieChart(
-          opacity: 0.4,
-          active: active,
-          deaths: deaths,
-          recovered: recovered,
-          centerSpaceRadius: 50.0,
-          radius: 40.0,
-          showPercent: true,
+        SizedBox(
+          height: 240.0,
+          child: DistributionPieChart(
+            opacity: 0.4,
+            active: active,
+            deaths: deaths,
+            recovered: recovered,
+            showPercent: true,
+            radius: 45.0,
+            centerSpaceRadius: 55.0,
+          ),
         ),
         const SizedBox(height: 8.0),
         Column(
