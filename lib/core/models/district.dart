@@ -14,6 +14,14 @@ class District {
   final int recovered;
   final List<CovidCase> cases;
 
+  int get femaleCount => cases.where((c) => c.gender == 'male').length;
+  int get maleCount => cases.where((c) => c.gender == 'female').length;
+  int get childrenCount => cases.where((c) => c.age <= 12).length;
+  int get teensCount => cases.where((c) => c.age > 12 && c.age <= 19).length;
+  int get youngAdultCount => cases.where((c) => c.age > 20 && c.age <= 30).length;
+  int get adultCount => cases.where((c) => c.age > 30 && c.age <= 60).length;
+  int get elderlyCount => cases.where((c) => c.age > 60).length;
+
   const District({
     @required this.id,
     @required this.title,

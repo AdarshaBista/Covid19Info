@@ -33,6 +33,7 @@ class NepalStatsList extends StatelessWidget {
           child: ListView(
             shrinkWrap: true,
             controller: controller,
+            padding: EdgeInsets.zero,
             children: [
               StatsGrid(nepalStats: nepalStats),
               TimelineGraph(

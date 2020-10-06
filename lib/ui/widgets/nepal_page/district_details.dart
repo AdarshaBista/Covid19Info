@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/core/models/district.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/covid_case_card.dart';
 import 'package:covid19_info/ui/widgets/common/distribution_container.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/district_stats_grid.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/individual_cases_list.dart';
 
 class DistrictDetails extends StatelessWidget {
   final District district;
@@ -28,20 +29,15 @@ class DistrictDetails extends StatelessWidget {
         const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
         _buildStat(),
         const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
+        DistrictStatsGrid(district: district),
+        const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
         DistributionContainer(
           active: district.active,
           deaths: district.deaths,
           recovered: district.recovered,
         ),
         const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
-        Text(
-          'Individual Cases',
-          style: AppTextStyles.mediumLight,
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        _buildGrid(),
+        IndividualCasesList(district: district),
       ],
     );
   }
@@ -53,6 +49,7 @@ class DistrictDetails extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
+            dense: true,
             title: Text(
               'Province',
               style: AppTextStyles.smallLight,
@@ -64,6 +61,7 @@ class DistrictDetails extends StatelessWidget {
             ),
           ),
           ListTile(
+            dense: true,
             title: Text(
               'Confirmed',
               style: AppTextStyles.smallLight,
@@ -75,29 +73,6 @@ class DistrictDetails extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildGrid() {
-    return Center(
-      child: SizedBox(
-        height: 320.0,
-        child: GridView.builder(
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          padding: const EdgeInsets.all(16.0),
-          scrollDirection: Axis.horizontal,
-          itemCount: district.cases.length,
-          itemBuilder: (context, index) {
-            return CovidCaseCard(
-              covidCase: district.cases[index],
-              color: AppColors.accentColors[index % AppColors.accentColors.length],
-            );
-          },
-        ),
       ),
     );
   }

@@ -54,6 +54,7 @@ class CountryList extends StatelessWidget {
           child: ListView.builder(
             shrinkWrap: true,
             controller: controller,
+            padding: EdgeInsets.zero,
             itemCount: countries.length,
             itemBuilder: (context, index) => CountryCard(
               country: countries[index],

@@ -108,7 +108,7 @@ class NepalMapCard extends StatelessWidget {
       ),
       builder: (context) {
         return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.7,
+          height: MediaQuery.of(context).size.height * 0.8,
           child: DistrictDetails(
             district: d,
           ),

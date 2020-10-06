@@ -10,19 +10,8 @@ import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 
-class NewsList extends StatefulWidget {
+class NewsList extends StatelessWidget {
   const NewsList();
-
-  @override
-  _NewsListState createState() => _NewsListState();
-}
-
-class _NewsListState extends State<NewsList> {
-  @override
-  void initState() {
-    super.initState();
-    context.bloc<NewsBloc>().add(GetNewsEvent());
-  }
 
   @override
   Widget build(BuildContext context) {

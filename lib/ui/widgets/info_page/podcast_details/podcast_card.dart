@@ -56,14 +56,12 @@ class PodcastCard extends StatelessWidget {
                       : _buildPlayIcon(context),
             ],
           ),
+          expandedAlignment: Alignment.centerLeft,
+          expandedCrossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                _buildSubTitle(),
-                _buildTag(),
-              ],
-            ),
+            _buildSubTitle(),
+            const SizedBox(height: 10.0),
+            _buildTag(),
           ],
         ),
       ),
@@ -112,7 +110,6 @@ class PodcastCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Text(
         podcast.summary.trim(),
-        textAlign: TextAlign.justify,
         style: AppTextStyles.smallLightSerif,
       ),
     );
@@ -120,7 +117,7 @@ class PodcastCard extends StatelessWidget {
 
   Widget _buildTag() {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.only(left: 16.0, bottom: 16.0),
       child: Tag(
         label: podcast.source,
         color: color,

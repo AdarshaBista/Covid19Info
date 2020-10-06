@@ -33,7 +33,7 @@ class HospitalCard extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               color: AppColors.dark,
-              borderRadius: BorderRadius.circular(16.0),
+              borderRadius: BorderRadius.circular(10.0),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
