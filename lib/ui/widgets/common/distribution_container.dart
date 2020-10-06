@@ -26,7 +26,7 @@ class DistributionContainer extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: AppTextStyles.mediumLight,
+          style: AppTextStyles.smallLight,
         ),
         SizedBox(
           height: 240.0,

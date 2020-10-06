@@ -54,7 +54,7 @@ class CovidCase {
       age: map['age'] as int,
       lat: (map['point']['coordinates'][1] as num).toDouble(),
       lng: (map['point']['coordinates'][0] as num).toDouble(),
-      gender: (map['gender'] as String).toLowerCase(),
+      gender: (map['gender'] as String)?.toLowerCase() ?? '',
       reportedOn: map['reportedOn'] as String,
       recoveredOn: map['recoveredOn'] as String,
       deathOn: map['deathOn'] as String,

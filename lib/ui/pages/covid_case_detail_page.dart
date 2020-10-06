@@ -48,7 +48,9 @@ class CovidCaseDetailPage extends StatelessWidget {
             Icon(
               covidCase.gender == 'male'
                   ? LineAwesomeIcons.male
-                  : LineAwesomeIcons.female,
+                  : covidCase.gender == 'female'
+                      ? LineAwesomeIcons.female
+                      : LineAwesomeIcons.dot_circle_o,
               size: 40.0,
               color: color,
             ),

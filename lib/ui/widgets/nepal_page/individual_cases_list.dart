@@ -18,10 +18,10 @@ class IndividualCasesList extends StatelessWidget {
       children: [
         Text(
           'INDIVIDUAL CASES',
-          style: AppTextStyles.mediumLight,
-          textAlign: TextAlign.center,
           maxLines: 2,
+          textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.smallLight,
         ),
         _buildGrid(),
       ],
@@ -36,7 +36,7 @@ class IndividualCasesList extends StatelessWidget {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         scrollDirection: Axis.horizontal,
         itemCount: district.cases.length,
         itemBuilder: (context, index) {

@@ -30,6 +30,7 @@ class DistributionPieChart extends StatelessWidget {
     return ScaleAnimator(
       child: PieChart(
         PieChartData(
+          pieTouchData: PieTouchData(enabled: false),
           sectionsSpace: 3.0,
           centerSpaceRadius: centerSpaceRadius,
           startDegreeOffset: -90.0,

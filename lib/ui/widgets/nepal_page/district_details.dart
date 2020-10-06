@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/core/models/district.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/gender_bar_graph.dart';
 import 'package:covid19_info/ui/widgets/common/distribution_container.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/district_stats_grid.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/individual_cases_list.dart';
@@ -26,18 +27,30 @@ class DistrictDetails extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),
-        const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
+        _buildDivider(),
         _buildStat(),
-        const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
+        _buildDivider(),
         DistrictStatsGrid(district: district),
-        const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
+        const SizedBox(height: 16.0),
         DistributionContainer(
           active: district.active,
           deaths: district.deaths,
           recovered: district.recovered,
         ),
-        const Divider(height: 24.0, indent: 32.0, endIndent: 32.0),
+        _buildDivider(),
+        GenderBarGraph(district: district),
+        _buildDivider(),
         IndividualCasesList(district: district),
+      ],
+    );
+  }
+
+  Widget _buildDivider() {
+    return Column(
+      children: const [
+        SizedBox(height: 8.0),
+        Divider(height: 16.0, indent: 32.0, endIndent: 32.0),
+        SizedBox(height: 8.0),
       ],
     );
   }

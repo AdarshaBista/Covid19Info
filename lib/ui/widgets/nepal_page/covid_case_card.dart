@@ -37,19 +37,20 @@ class CovidCaseCard extends StatelessWidget {
               Icon(
                 covidCase.gender == 'male'
                     ? LineAwesomeIcons.male
-                    : LineAwesomeIcons.female,
+                    : covidCase.gender == 'female'
+                        ? LineAwesomeIcons.female
+                        : LineAwesomeIcons.dot_circle_o,
                 color: color,
                 size: 32.0,
               ),
               const SizedBox(height: 8.0),
-              if (covidCase.age != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: Text(
-                    '${covidCase.age.toString()} years',
-                    style: AppTextStyles.smallLight,
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  '${covidCase.age != null ? covidCase.age.toString() : 'N/A'} years',
+                  style: AppTextStyles.smallLight,
                 ),
+              ),
               Tag(
                 label: 'MORE',
                 color: color,
