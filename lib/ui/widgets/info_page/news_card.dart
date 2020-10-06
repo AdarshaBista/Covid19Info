@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,34 +23,54 @@ class NewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AspectRatio(
       aspectRatio: 11 / 16,
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: AppColors.dark,
-          borderRadius: BorderRadius.circular(16.0),
-          image: DecorationImage(
-            image: NetworkImage(news.imageUrl),
+      child: Stack(
+        children: [
+          _buildImage(),
+          _buildContent(context),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildImage() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+      decoration: BoxDecoration(
+        color: AppColors.dark,
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16.0),
+        child: ImageFiltered(
+          imageFilter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: Image.network(
+            news.imageUrl,
             fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              AppColors.background.withOpacity(0.85),
-              BlendMode.srcATop,
-            ),
+            width: double.infinity,
+            height: double.infinity,
+            colorBlendMode: BlendMode.srcATop,
+            color: AppColors.background.withOpacity(0.6),
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            _buildTitle(),
-            Divider(height: 16.0, color: color.withOpacity(0.4)),
-            _buildSummary(),
-            Divider(height: 16.0, color: color.withOpacity(0.4)),
-            _buildSource(),
-            const SizedBox(height: 16.0),
-            _buildReadMore(context),
-          ],
-        ),
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          _buildTitle(),
+          Divider(height: 16.0, color: color.withOpacity(0.4)),
+          _buildSummary(),
+          Divider(height: 16.0, color: color.withOpacity(0.4)),
+          _buildSource(),
+          const SizedBox(height: 16.0),
+          _buildReadMore(context),
+        ],
       ),
     );
   }
