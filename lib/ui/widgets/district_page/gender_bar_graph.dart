@@ -20,10 +20,10 @@ class GenderBarGraph extends StatelessWidget {
       children: [
         Text(
           'GENDER DISTRIBUTION',
-          style: AppTextStyles.smallLight,
-          textAlign: TextAlign.center,
           maxLines: 2,
+          textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.mediumLight,
         ),
         const SizedBox(height: 24.0),
         _buildChart(),
@@ -48,6 +48,7 @@ class GenderBarGraph extends StatelessWidget {
               interval: maxY / 6.0,
               textStyle: AppTextStyles.extraSmallLight,
               reservedSize: 50.0,
+              getTitles: (value) => value.toInt().toString(),
             ),
             bottomTitles: SideTitles(
               showTitles: true,

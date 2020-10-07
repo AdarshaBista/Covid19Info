@@ -19,7 +19,7 @@ class DistrictStatsGrid extends StatelessWidget {
         Text(
           'STATS',
           textAlign: TextAlign.center,
-          style: AppTextStyles.smallLight,
+          style: AppTextStyles.mediumLight,
         ),
         GridView.count(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),

@@ -61,13 +61,13 @@ class CountryPage extends StatelessWidget {
       shrinkWrap: true,
       padding: const EdgeInsets.all(16.0),
       children: <Widget>[
+        CountryStatsGrid(country: c),
+        const Divider(height: 32.0),
         CasesDistribution(
           active: c.activeCases,
           deaths: c.totalDeaths,
           recovered: c.totalRecovered,
         ),
-        const Divider(height: 32.0),
-        CountryStatsGrid(country: c),
         TimelineGraph(
           title: c.name,
           timeline: c.timeline,

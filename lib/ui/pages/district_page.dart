@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:covid19_info/core/models/district.dart';
-import 'package:covid19_info/core/services/api_service.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/municipality_bloc/municipality_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/district_page/district_map.dart';
-import 'package:covid19_info/ui/widgets/district_page/district_panel.dart';
+import 'package:covid19_info/ui/widgets/common/cases_distribution.dart';
+import 'package:covid19_info/ui/widgets/district_page/district_header.dart';
+import 'package:covid19_info/ui/widgets/district_page/gender_bar_graph.dart';
+import 'package:covid19_info/ui/widgets/district_page/district_stats_grid.dart';
 
 class DistrictPage extends StatelessWidget {
   final District district;
@@ -20,49 +17,46 @@ class DistrictPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<MunicipalityBloc>(
-      create: (context) => MunicipalityBloc(
-        apiService: context.repository<ApiService>(),
-      )..add(GetMunicipalityEvent(ids: district.municipalityIds)),
-      child: Scaffold(
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-        body: Stack(
-          children: <Widget>[
-            DistrictMap(district: district),
-            _buildBackButton(context),
-            SlidingUpPanel(
-              color: AppColors.background,
-              parallaxOffset: 0.3,
-              backdropEnabled: true,
-              parallaxEnabled: true,
-              margin: EdgeInsets.zero,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                topRight: Radius.circular(16.0),
-              ),
-              minHeight: 170.0,
-              maxHeight: MediaQuery.of(context).size.height * 0.7,
-              panelBuilder: (sc) => DistrictPanel(district: district, controller: sc),
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 8.0,
+        backgroundColor: AppColors.background,
+        centerTitle: true,
+        title: Text(
+          district.title.toUpperCase(),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.largeLightSerif,
         ),
+      ),
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DistrictHeader(
+            district: district,
+          ),
+          _buildDivider(),
+          DistrictStatsGrid(district: district),
+          _buildDivider(),
+          CasesDistribution(
+            active: district.active,
+            deaths: district.deaths,
+            recovered: district.recovered,
+          ),
+          _buildDivider(),
+          GenderBarGraph(district: district),
+        ],
       ),
     );
   }
 
-  Widget _buildBackButton(BuildContext context) {
-    return Positioned(
-      right: 12.0,
-      child: SafeArea(
-        child: GestureDetector(
-          onTap: Navigator.of(context).pop,
-          child: const CircleAvatar(
-            radius: 18.0,
-            child: Icon(Icons.close, size: 20.0),
-          ),
-        ),
-      ),
+  Widget _buildDivider() {
+    return Column(
+      children: const [
+        SizedBox(height: 8.0),
+        Divider(height: 16.0, indent: 32.0, endIndent: 32.0),
+        SizedBox(height: 8.0),
+      ],
     );
   }
 }

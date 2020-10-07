@@ -26,10 +26,10 @@ class CasesDistribution extends StatelessWidget {
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: AppTextStyles.smallLight,
+          style: AppTextStyles.mediumLight,
         ),
         SizedBox(
-          height: 240.0,
+          height: 250.0,
           child: CasesDistributionPieChart(
             opacity: 0.4,
             active: active,
