@@ -13,6 +13,7 @@ import 'package:covid19_info/core/models/district.dart';
 import 'package:covid19_info/core/models/hospital.dart';
 import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/nepal_stats.dart';
+import 'package:covid19_info/core/models/municipality.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
 import 'package:covid19_info/core/services/cache_service.dart';
@@ -129,6 +130,29 @@ class ApiService {
     final resMap = jsonDecode(data) as Map<String, dynamic>;
     if ((resMap['covid_cases'] as List).isEmpty) return null;
     return District.fromMap(resMap);
+  }
+
+  Future<Municipality> fetchMunicipality(int id) async {
+    final String url = '$NEPAL_CORONA_DATA_BASE${'municipals/$id'}';
+    final String cachedRes = await cacheService.get(url);
+    if (cachedRes != null) {
+      return _decodeMunicipality(cachedRes);
+    }
+
+    try {
+      final http.Response res = await http.get(url);
+      await cacheService.insert(url, res.body);
+      return _decodeMunicipality(res.body);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  Municipality _decodeMunicipality(String data) {
+    final resMap = jsonDecode(data) as Map<String, dynamic>;
+    if ((resMap['covid_cases'] as List).isEmpty) return null;
+    return Municipality.fromMap(resMap);
   }
 
   Future<List<News>> fetchNews(int start) async {

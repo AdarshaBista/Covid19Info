@@ -13,6 +13,7 @@ class District {
   final int naCount;
   final int maleCount;
   final int femaleCount;
+  final List<int> municipalityIds;
 
   District({
     @required this.id,
@@ -27,6 +28,7 @@ class District {
     @required this.naCount,
     @required this.maleCount,
     @required this.femaleCount,
+    @required this.municipalityIds,
   })  : assert(id != null),
         assert(title != null),
         assert(province != null),
@@ -38,7 +40,8 @@ class District {
         assert(recovered != null),
         assert(naCount != null),
         assert(maleCount != null),
-        assert(femaleCount != null);
+        assert(femaleCount != null),
+        assert(municipalityIds != null);
 
   factory District.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
@@ -57,12 +60,14 @@ class District {
       naCount: cases.where((c) => c['gender'] == null).length,
       maleCount: cases.where((c) => c['gender'] == 'male').length,
       femaleCount: cases.where((c) => c['gender'] == 'female').length,
+      municipalityIds:
+          (map['municipalities'] as List).map((m) => m['id'] as int).toList(),
     );
   }
 
   @override
   String toString() {
-    return 'District(id: $id, title: $title, province: $province, lat: $lat, lng: $lng, confirmed: $confirmed, active: $active, deaths: $deaths, recovered: $recovered, naCount: $naCount, maleCount: $maleCount, femaleCount: $femaleCount)';
+    return 'District(id: $id, title: $title, province: $province, lat: $lat, lng: $lng, confirmed: $confirmed, active: $active, deaths: $deaths, recovered: $recovered, naCount: $naCount, maleCount: $maleCount, femaleCount: $femaleCount, municipalityIds: $municipalityIds)';
   }
 
   @override
@@ -81,7 +86,8 @@ class District {
         o.recovered == recovered &&
         o.naCount == naCount &&
         o.maleCount == maleCount &&
-        o.femaleCount == femaleCount;
+        o.femaleCount == femaleCount &&
+        o.municipalityIds == municipalityIds;
   }
 
   @override
@@ -97,6 +103,7 @@ class District {
         recovered.hashCode ^
         naCount.hashCode ^
         maleCount.hashCode ^
-        femaleCount.hashCode;
+        femaleCount.hashCode ^
+        municipalityIds.hashCode;
   }
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:covid19_info/core/models/district.dart';
+import 'package:covid19_info/core/services/api_service.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/blocs/municipality_bloc/municipality_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -16,28 +20,33 @@ class DistrictPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        children: <Widget>[
-          DistrictMap(district: district),
-          _buildBackButton(context),
-          SlidingUpPanel(
-            color: AppColors.background,
-            parallaxOffset: 0.3,
-            backdropEnabled: true,
-            parallaxEnabled: true,
-            margin: EdgeInsets.zero,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16.0),
-              topRight: Radius.circular(16.0),
+    return BlocProvider<MunicipalityBloc>(
+      create: (context) => MunicipalityBloc(
+        apiService: context.repository<ApiService>(),
+      )..add(GetMunicipalityEvent(ids: district.municipalityIds)),
+      child: Scaffold(
+        extendBody: true,
+        extendBodyBehindAppBar: true,
+        body: Stack(
+          children: <Widget>[
+            DistrictMap(district: district),
+            _buildBackButton(context),
+            SlidingUpPanel(
+              color: AppColors.background,
+              parallaxOffset: 0.3,
+              backdropEnabled: true,
+              parallaxEnabled: true,
+              margin: EdgeInsets.zero,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16.0),
+                topRight: Radius.circular(16.0),
+              ),
+              minHeight: 170.0,
+              maxHeight: MediaQuery.of(context).size.height * 0.7,
+              panelBuilder: (sc) => DistrictPanel(district: district, controller: sc),
             ),
-            minHeight: 170.0,
-            maxHeight: MediaQuery.of(context).size.height * 0.7,
-            panelBuilder: (sc) => DistrictPanel(district: district, controller: sc),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

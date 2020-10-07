@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'package:latlong/latlong.dart';
 import 'package:covid19_info/core/models/district.dart';
-import 'package:covid19_info/core/models/covid_case.dart';
+import 'package:covid19_info/core/models/municipality.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:covid19_info/blocs/municipality_bloc/municipality_bloc.dart';
+
+import 'package:flutter_map/flutter_map.dart';
+import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/map_card.dart';
-
-import 'package:covid19_info/ui/pages/covid_case_page.dart';
+import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
+import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
 class DistrictMap extends StatelessWidget {
   final District district;
@@ -17,6 +23,22 @@ class DistrictMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<MunicipalityBloc, MunicipalityState>(
+      builder: (context, state) {
+        if (state is InitialMunicipalityState) {
+          return const EmptyIcon();
+        } else if (state is LoadedMunicipalityState) {
+          return _buildMap(state);
+        } else if (state is ErrorMunicipalityState) {
+          return ErrorIcon(message: state.message);
+        } else {
+          return const BusyIndicator();
+        }
+      },
+    );
+  }
+
+  Widget _buildMap(LoadedMunicipalityState state) {
     return MapCard(
       center: LatLng(district.lat, district.lng),
       zoom: 12.0,
@@ -24,46 +46,50 @@ class DistrictMap extends StatelessWidget {
       maxZoom: 15.0,
       nePanBoundary: LatLng(district.lat + 0.5, district.lng + 0.5),
       swPanBoundary: LatLng(district.lat - 0.5, district.lng - 0.5),
-      // markerLayer: _buildMarkers(context),
+      markerLayer: _buildMarkers(state),
       searchLocation: () => null,
     );
   }
 
-  // MarkerLayerWidget _buildMarkers(BuildContext context) {
-  //   return MarkerLayerWidget(
-  //     options: MarkerLayerOptions(
-  //       markers: district.cases.take(50).map(
-  //         (c) {
-  //           return Marker(
-  //             height: 32.0,
-  //             width: 32.0,
-  //             point: LatLng(c.lat, c.lng),
-  //             builder: (context) => GestureDetector(
-  //               onTap: () => _navigateToDetailPage(context, c),
-  //               child: Icon(
-  //                 Icons.location_pin,
-  //                 size: 20.0,
-  //                 color: _getColor(c),
-  //               ),
-  //             ),
-  //           );
-  //         },
-  //       ).toList(),
-  //     ),
-  //   );
-  // }
-
-  Color _getColor(CovidCase covidCase) {
-    if (covidCase.deathOn != null) return Colors.red;
-    if (covidCase.recoveredOn != null) return Colors.green;
-    return Colors.lightBlue;
+  MarkerLayerWidget _buildMarkers(LoadedMunicipalityState state) {
+    return MarkerLayerWidget(
+      options: MarkerLayerOptions(
+        markers: state.municipalities.map(
+          (m) {
+            return Marker(
+              height: 64.0,
+              width: 1000.0,
+              point: LatLng(m.lat, m.lng),
+              builder: (context) => _buildMarker(m),
+            );
+          },
+        ).toList(),
+      ),
+    );
   }
 
-  void _navigateToDetailPage(BuildContext context, CovidCase covidCase) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => CovidCasePage(covidCase: covidCase),
-      ),
+  Widget _buildMarker(Municipality m) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 3.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          child: Text(
+            '${m.title} (${m.confirmed})',
+            style: AppTextStyles.extraSmallDark,
+          ),
+        ),
+        const SizedBox(height: 2.0),
+        const Icon(
+          Icons.location_pin,
+          size: 32.0,
+          color: Colors.red,
+        ),
+      ],
     );
   }
 }
