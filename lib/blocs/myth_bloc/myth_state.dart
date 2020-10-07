@@ -1,16 +1,22 @@
 part of 'myth_bloc.dart';
 
 @immutable
-abstract class MythState {}
+abstract class MythState {
+  const MythState();
+}
 
-class InitialMythState extends MythState {}
+class InitialMythState extends MythState {
+  const InitialMythState();
+}
 
-class LoadingMythState extends MythState {}
+class LoadingMythState extends MythState {
+  const LoadingMythState();
+}
 
 class LoadedMythState extends MythState {
   final List<Myth> myths;
 
-  LoadedMythState({
+  const LoadedMythState({
     @required this.myths,
   }) : assert(myths != null);
 }
@@ -18,7 +24,7 @@ class LoadedMythState extends MythState {
 class ErrorMythState extends MythState {
   final String message;
 
-  ErrorMythState({
+  const ErrorMythState({
     @required this.message,
   }) : assert(message != null);
 }

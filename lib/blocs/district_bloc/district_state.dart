@@ -1,13 +1,19 @@
-part of 'nepal_district_bloc.dart';
+part of 'district_bloc.dart';
 
 @immutable
-abstract class NepalDistrictState {}
+abstract class DistrictState {
+  const DistrictState();
+}
 
-class InitialDistrictState extends NepalDistrictState {}
+class InitialDistrictState extends DistrictState {
+  const InitialDistrictState();
+}
 
-class LoadingDistrictState extends NepalDistrictState {}
+class LoadingDistrictState extends DistrictState {
+  const LoadingDistrictState();
+}
 
-class LoadedDistrictState extends NepalDistrictState {
+class LoadedDistrictState extends DistrictState {
   final bool shouldShowSearch;
   final List<District> allDistricts;
   final List<District> searchedDistricts;
@@ -19,7 +25,7 @@ class LoadedDistrictState extends NepalDistrictState {
     return searchedDistricts.contains(d);
   }
 
-  LoadedDistrictState({
+  const LoadedDistrictState({
     this.shouldShowSearch = true,
     @required this.allDistricts,
     @required this.searchedDistricts,
@@ -27,10 +33,10 @@ class LoadedDistrictState extends NepalDistrictState {
         assert(shouldShowSearch != null);
 }
 
-class ErrorDistrictState extends NepalDistrictState {
+class ErrorDistrictState extends DistrictState {
   final String message;
 
-  ErrorDistrictState({
+  const ErrorDistrictState({
     @required this.message,
   }) : assert(message != null);
 }

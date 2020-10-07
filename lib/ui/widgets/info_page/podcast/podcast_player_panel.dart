@@ -7,8 +7,8 @@ import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart'
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_player.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_details/mini_podcast_player.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast/podcast_player.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast/mini_podcast_player.dart';
 
 class PodcastPlayerPanel extends StatefulWidget {
   const PodcastPlayerPanel();

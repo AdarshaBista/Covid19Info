@@ -1,9 +1,9 @@
 class AppError {
-  final String message;
   final String error;
+  final String message;
 
   AppError({
-    this.message = 'An error has occured!',
     this.error = 'Unknown Error!',
+    this.message = 'An error has occured!',
   });
 }

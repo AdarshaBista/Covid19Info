@@ -1,11 +1,17 @@
 part of 'country_bloc.dart';
 
 @immutable
-abstract class CountryState {}
+abstract class CountryState {
+  const CountryState();
+}
 
-class InitialCountryState extends CountryState {}
+class InitialCountryState extends CountryState {
+  const InitialCountryState();
+}
 
-class LoadingCountryState extends CountryState {}
+class LoadingCountryState extends CountryState {
+  const LoadingCountryState();
+}
 
 class LoadedCountryState extends CountryState {
   final List<Country> allCountries;
@@ -21,7 +27,7 @@ class LoadedCountryState extends CountryState {
     return searchedCountries.contains(c);
   }
 
-  LoadedCountryState({
+  const LoadedCountryState({
     @required this.filterType,
     @required this.allCountries,
     @required this.searchedCountries,
@@ -32,7 +38,7 @@ class LoadedCountryState extends CountryState {
 class ErrorCountryState extends CountryState {
   final String message;
 
-  ErrorCountryState({
+  const ErrorCountryState({
     @required this.message,
   }) : assert(message != null);
 }

@@ -1,16 +1,22 @@
 part of 'country_detail_bloc.dart';
 
 @immutable
-abstract class CountryDetailState {}
+abstract class CountryDetailState {
+  const CountryDetailState();
+}
 
-class InitialCountryDetailState extends CountryDetailState {}
+class InitialCountryDetailState extends CountryDetailState {
+  const InitialCountryDetailState();
+}
 
-class LoadingCountryDetailState extends CountryDetailState {}
+class LoadingCountryDetailState extends CountryDetailState {
+  const LoadingCountryDetailState();
+}
 
 class LoadedCountryDetailState extends CountryDetailState {
   final Country country;
 
-  LoadedCountryDetailState({
+  const LoadedCountryDetailState({
     @required this.country,
   }) : assert(country != null);
 }
@@ -18,7 +24,7 @@ class LoadedCountryDetailState extends CountryDetailState {
 class ErrorCountryDetailState extends CountryDetailState {
   final String message;
 
-  ErrorCountryDetailState({
+  const ErrorCountryDetailState({
     @required this.message,
   }) : assert(message != null);
 }

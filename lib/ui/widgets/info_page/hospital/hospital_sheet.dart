@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/core/models/hospital.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/info_page/hospital_details/action_row.dart';
-import 'package:covid19_info/ui/widgets/info_page/hospital_details/contact_card.dart';
-import 'package:covid19_info/ui/widgets/info_page/hospital_details/capacity_card.dart';
-import 'package:covid19_info/ui/widgets/info_page/hospital_details/hospital_info.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital/action_row.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital/contact_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital/capacity_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital/hospital_info.dart';
 
-class HospitalDetails extends StatelessWidget {
+class HospitalSheet extends StatelessWidget {
   final Hospital hospital;
   final Color color;
 
-  const HospitalDetails({
+  const HospitalSheet({
     @required this.hospital,
     @required this.color,
   })  : assert(hospital != null),

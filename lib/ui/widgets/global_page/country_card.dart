@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'package:covid19_info/core/models/country.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/country_detail_bloc/country_detail_bloc.dart';
-
-import 'package:covid19_info/core/models/country.dart';
 
 import 'package:covid19_info/ui/pages/country_details_page.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
 import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
-import 'package:covid19_info/ui/widgets/common/distribution_pie_chart.dart';
+import 'package:covid19_info/ui/widgets/common/cases_distribution_pie_chart.dart';
 
 class CountryCard extends StatelessWidget {
   final Country country;
@@ -105,7 +105,7 @@ class CountryCard extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          DistributionPieChart(
+          CasesDistributionPieChart(
             active: country.activeCases,
             recovered: country.totalRecovered,
             deaths: country.totalDeaths,

@@ -1,16 +1,22 @@
 part of 'faq_bloc.dart';
 
 @immutable
-abstract class FaqState {}
+abstract class FaqState {
+  const FaqState();
+}
 
-class InitialFaqState extends FaqState {}
+class InitialFaqState extends FaqState {
+  const InitialFaqState();
+}
 
-class LoadingFaqState extends FaqState {}
+class LoadingFaqState extends FaqState {
+  const LoadingFaqState();
+}
 
 class LoadedFaqState extends FaqState {
   final List<Faq> faqs;
 
-  LoadedFaqState({
+  const LoadedFaqState({
     @required this.faqs,
   }) : assert(faqs != null);
 }
@@ -18,7 +24,7 @@ class LoadedFaqState extends FaqState {
 class ErrorFaqState extends FaqState {
   final String message;
 
-  ErrorFaqState({
+  const ErrorFaqState({
     @required this.message,
   }) : assert(message != null);
 }

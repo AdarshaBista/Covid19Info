@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:bloc/bloc.dart';
 
-import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/country.dart';
+import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/timeline_data.dart';
 
 import 'package:covid19_info/core/services/api_service.dart';
@@ -19,7 +19,7 @@ class CountryDetailBloc extends Bloc<CountryDetailEvent, CountryDetailState> {
   CountryDetailBloc({
     @required this.apiService,
   })  : assert(apiService != null),
-        super(InitialCountryDetailState());
+        super(const InitialCountryDetailState());
 
   @override
   Stream<CountryDetailState> mapEventToState(
@@ -31,7 +31,7 @@ class CountryDetailBloc extends Bloc<CountryDetailEvent, CountryDetailState> {
         return;
       }
 
-      yield LoadingCountryDetailState();
+      yield const LoadingCountryDetailState();
       try {
         final List<TimelineData> timeline =
             await apiService.fetchCountryTimeline(countryISOMapping[event.country.code]);

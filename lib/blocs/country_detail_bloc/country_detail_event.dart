@@ -1,12 +1,14 @@
 part of 'country_detail_bloc.dart';
 
 @immutable
-abstract class CountryDetailEvent {}
+abstract class CountryDetailEvent {
+  const CountryDetailEvent();
+}
 
 class GetCountryDetailEvent extends CountryDetailEvent {
   final Country country;
 
-  GetCountryDetailEvent({
+  const GetCountryDetailEvent({
     @required this.country,
   }) : assert(country != null);
 }

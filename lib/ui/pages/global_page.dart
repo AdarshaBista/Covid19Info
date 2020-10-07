@@ -6,8 +6,8 @@ import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:covid19_info/ui/widgets/common/pill.dart';
+import 'package:covid19_info/ui/widgets/global_page/global_map.dart';
 import 'package:covid19_info/ui/widgets/global_page/country_list.dart';
-import 'package:covid19_info/ui/widgets/global_page/global_map_card.dart';
 import 'package:covid19_info/ui/widgets/global_page/global_stats_tile.dart';
 
 class GlobalPage extends StatefulWidget {
@@ -28,25 +28,9 @@ class _GlobalPageState extends State<GlobalPage> {
         extendBodyBehindAppBar: true,
         body: Stack(
           children: <Widget>[
-            const GlobalMapCard(),
+            const RepaintBoundary(child: GlobalMap()),
+            _buildPanel(),
             _buildFilterButton(),
-            SlidingUpPanel(
-              color: AppColors.background,
-              parallaxOffset: 0.3,
-              backdropEnabled: true,
-              parallaxEnabled: true,
-              margin: EdgeInsets.zero,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                topRight: Radius.circular(16.0),
-              ),
-              maxHeight: MediaQuery.of(context).size.height * 0.8,
-              minHeight: panelHeight,
-              onPanelSlide: (value) => setState(() {
-                panelPos = value;
-              }),
-              panelBuilder: (sc) => _buildPanel(sc),
-            ),
             Transform.translate(
               offset: Offset(-panelPos * MediaQuery.of(context).size.width, 0.0),
               child: GlobalStatsTile(),
@@ -72,7 +56,7 @@ class _GlobalPageState extends State<GlobalPage> {
               onSelected: (filterType) {
                 context
                     .bloc<CountryBloc>()
-                    .add(FilterCountryEvent(filterType: filterType));
+                    .add(FilterCountriesEvent(filterType: filterType));
               },
               itemBuilder: (context) {
                 return [
@@ -111,7 +95,27 @@ class _GlobalPageState extends State<GlobalPage> {
     );
   }
 
-  Widget _buildPanel(ScrollController sc) {
+  Widget _buildPanel() {
+    return SlidingUpPanel(
+      color: AppColors.background,
+      parallaxOffset: 0.3,
+      backdropEnabled: true,
+      parallaxEnabled: true,
+      margin: EdgeInsets.zero,
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(16.0),
+        topRight: Radius.circular(16.0),
+      ),
+      maxHeight: MediaQuery.of(context).size.height * 0.8,
+      minHeight: panelHeight,
+      onPanelSlide: (value) => setState(() {
+        panelPos = value;
+      }),
+      panelBuilder: (sc) => _buildCountriesList(sc),
+    );
+  }
+
+  Widget _buildCountriesList(ScrollController sc) {
     return Column(
       children: <Widget>[
         const SizedBox(height: 4.0),

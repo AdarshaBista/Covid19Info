@@ -5,7 +5,7 @@ import 'package:covid19_info/core/models/nepal_stats.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/pill.dart';
 import 'package:covid19_info/ui/widgets/common/timeline_graph.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/stats_grid.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/nepal_stats_panel.dart';
 
 class NepalStatsList extends StatelessWidget {
   final ScrollController controller;
@@ -35,7 +35,7 @@ class NepalStatsList extends StatelessWidget {
             controller: controller,
             padding: EdgeInsets.zero,
             children: [
-              StatsGrid(nepalStats: nepalStats),
+              NepalStatsPanel(nepalStats: nepalStats),
               TimelineGraph(
                 title: 'Nepal',
                 timeline: nepalStats.timeline,

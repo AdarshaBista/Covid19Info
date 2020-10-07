@@ -7,18 +7,18 @@ import 'package:covid19_info/core/models/podcast_player_data.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 
-class PodcastSlider extends StatefulWidget {
+class PodcastSeekBar extends StatefulWidget {
   final PodcastPlayerData playerState;
 
-  const PodcastSlider({
+  const PodcastSeekBar({
     @required this.playerState,
   }) : assert(playerState != null);
 
   @override
-  _PodcastSliderState createState() => _PodcastSliderState();
+  _PodcastSeekBarState createState() => _PodcastSeekBarState();
 }
 
-class _PodcastSliderState extends State<PodcastSlider> {
+class _PodcastSeekBarState extends State<PodcastSeekBar> {
   bool isSeeking = false;
   double seekValue = 0.0;
 
@@ -32,7 +32,7 @@ class _PodcastSliderState extends State<PodcastSlider> {
 
           if (currentDuration.inSeconds >= widget.playerState.duration.inSeconds - 1 &&
               !isSeeking) {
-            context.bloc<PodcastPlayerBloc>().add(CompletedPodcastEvent());
+            context.bloc<PodcastPlayerBloc>().add(const CompletedPodcastEvent());
           }
 
           return _buildSlider(currentDuration, context);

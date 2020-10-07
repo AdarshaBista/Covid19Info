@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
-import 'package:covid19_info/ui/widgets/common/distribution_pie_chart.dart';
+import 'package:covid19_info/ui/widgets/common/cases_distribution_pie_chart.dart';
 
-class DistributionContainer extends StatelessWidget {
+class CasesDistribution extends StatelessWidget {
   final int active;
   final int deaths;
   final int recovered;
 
-  const DistributionContainer({
+  const CasesDistribution({
     @required this.active,
     @required this.deaths,
     @required this.recovered,
@@ -30,7 +30,7 @@ class DistributionContainer extends StatelessWidget {
         ),
         SizedBox(
           height: 240.0,
-          child: DistributionPieChart(
+          child: CasesDistributionPieChart(
             opacity: 0.4,
             active: active,
             deaths: deaths,

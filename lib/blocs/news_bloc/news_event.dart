@@ -1,6 +1,10 @@
 part of 'news_bloc.dart';
 
 @immutable
-abstract class NewsEvent {}
+abstract class NewsEvent {
+  const NewsEvent();
+}
 
-class GetNewsEvent extends NewsEvent {}
+class GetNewsEvent extends NewsEvent {
+  const GetNewsEvent();
+}

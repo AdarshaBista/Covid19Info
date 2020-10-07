@@ -7,7 +7,7 @@ import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart'
 import 'package:covid19_info/core/models/podcast_player_data.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_slider.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast/podcast_seek_bar.dart';
 
 class PodcastPlayer extends StatelessWidget {
   final AsyncCallback onStop;
@@ -33,7 +33,7 @@ class PodcastPlayer extends StatelessWidget {
           const SizedBox(height: 16.0),
           _buildTitle(),
           const SizedBox(height: 16.0),
-          PodcastSlider(playerState: playerState),
+          PodcastSeekBar(playerState: playerState),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -98,7 +98,7 @@ class _StopIcon extends StatelessWidget {
     return InkWell(
       onTap: () async {
         await onStop();
-        context.bloc<PodcastPlayerBloc>().add(StopPodcastEvent());
+        context.bloc<PodcastPlayerBloc>().add(const StopPodcastEvent());
       },
       child: Container(
         padding: const EdgeInsets.all(4.0),
@@ -133,9 +133,9 @@ class _PlayPauseIcon extends StatelessWidget {
         return InkWell(
           onTap: () {
             if (isPlaying) {
-              context.bloc<PodcastPlayerBloc>().add(PausePodcastEvent());
+              context.bloc<PodcastPlayerBloc>().add(const PausePodcastEvent());
             } else {
-              context.bloc<PodcastPlayerBloc>().add(PlayPodcastEvent());
+              context.bloc<PodcastPlayerBloc>().add(const PlayPodcastEvent());
             }
           },
           child: Padding(

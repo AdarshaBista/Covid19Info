@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:covid19_info/core/models/hospital.dart';
 import 'package:covid19_info/core/services/launcher_service.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:covid19_info/ui/widgets/common/tag.dart';
 import 'package:covid19_info/ui/widgets/common/icon_row.dart';
 import 'package:covid19_info/ui/widgets/common/fade_animator.dart';
-import 'package:covid19_info/ui/widgets/info_page/hospital_details/hospital_details.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital/hospital_sheet.dart';
 
 class HospitalCard extends StatelessWidget {
   final Color color;
@@ -103,7 +103,7 @@ class HospitalCard extends StatelessWidget {
       builder: (context) {
         return SizedBox(
           height: MediaQuery.of(context).size.height * 0.7,
-          child: HospitalDetails(
+          child: HospitalSheet(
             hospital: hospital,
             color: color,
           ),

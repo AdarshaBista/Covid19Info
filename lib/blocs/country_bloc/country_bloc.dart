@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:bloc/bloc.dart';
 
 import 'package:rxdart/rxdart.dart';
 
@@ -23,7 +23,7 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   CountryBloc({
     @required this.apiService,
   })  : assert(apiService != null),
-        super(InitialCountryState());
+        super(const InitialCountryState());
 
   @override
   Stream<Transition<CountryEvent, CountryState>> transformEvents(
@@ -40,13 +40,13 @@ class CountryBloc extends Bloc<CountryEvent, CountryState> {
   Stream<CountryState> mapEventToState(
     CountryEvent event,
   ) async* {
-    if (event is GetCountryEvent) yield* _mapGetCountryToState();
+    if (event is GetCountriesEvent) yield* _mapGetCountryToState();
     if (event is SearchCountryEvent) yield* _mapSearchCountryToState(event);
-    if (event is FilterCountryEvent) yield* _mapFilterCountryToState(event.filterType);
+    if (event is FilterCountriesEvent) yield* _mapFilterCountryToState(event.filterType);
   }
 
   Stream<CountryState> _mapGetCountryToState() async* {
-    yield LoadingCountryState();
+    yield const LoadingCountryState();
     try {
       _countries = await apiService.fetchCountries();
       _countries = _countries.where((c) => c.isValid).toList();

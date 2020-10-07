@@ -8,7 +8,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:covid19_info/core/models/district.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/nepal_district_bloc/nepal_district_bloc.dart';
+import 'package:covid19_info/blocs/district_bloc/district_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/map_card.dart';
@@ -16,14 +16,14 @@ import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/district_details.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/district_sheet.dart';
 
-class NepalMapCard extends StatelessWidget {
-  const NepalMapCard();
+class NepalMap extends StatelessWidget {
+  const NepalMap();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NepalDistrictBloc, NepalDistrictState>(
+    return BlocBuilder<DistrictBloc, DistrictState>(
       builder: (context, state) {
         if (state is InitialDistrictState) {
           return const EmptyIcon();
@@ -109,7 +109,7 @@ class NepalMapCard extends StatelessWidget {
       builder: (context) {
         return SizedBox(
           height: MediaQuery.of(context).size.height * 0.8,
-          child: DistrictDetails(
+          child: DistrictSheet(
             district: d,
           ),
         );
@@ -122,7 +122,7 @@ class NepalMapCard extends StatelessWidget {
       child: SearchBox(
         hintText: 'Search Districts',
         onChanged: (String value) {
-          context.bloc<NepalDistrictBloc>().add(SearchDistrictEvent(
+          context.bloc<DistrictBloc>().add(SearchDistrictEvent(
                 searchTerm: value,
               ));
         },

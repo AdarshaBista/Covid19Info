@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:bloc/bloc.dart';
 
 import 'package:covid19_info/core/models/news.dart';
 import 'package:covid19_info/core/models/app_error.dart';
@@ -17,14 +17,14 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc({
     @required this.apiService,
   })  : assert(apiService != null),
-        super(InitialNewsState());
+        super(const InitialNewsState());
 
   @override
   Stream<NewsState> mapEventToState(
     NewsEvent event,
   ) async* {
     if (event is GetNewsEvent) {
-      yield LoadingNewsState();
+      yield const LoadingNewsState();
       try {
         final List<News> news = await apiService.fetchNews(0);
         yield LoadedNewsState(news: news);

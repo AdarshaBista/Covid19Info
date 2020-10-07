@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:covid19_info/core/models/podcast.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
-
-import 'package:covid19_info/core/models/podcast.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:loading_indicator/loading_indicator.dart';

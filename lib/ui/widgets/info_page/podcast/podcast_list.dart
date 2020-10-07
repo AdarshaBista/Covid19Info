@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'package:covid19_info/core/models/podcast.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_bloc/podcast_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
-
-import 'package:covid19_info/core/models/podcast.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_card.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_details/podcast_player_panel.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast/podcast_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast/podcast_player_panel.dart';
 
 class PodcastList extends StatelessWidget {
   const PodcastList();

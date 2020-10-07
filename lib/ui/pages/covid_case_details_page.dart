@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
 import 'package:latlong/latlong.dart';
-import 'package:flutter_map/flutter_map.dart';
 
 import 'package:covid19_info/core/models/covid_case.dart';
 
+import 'package:flutter_map/flutter_map.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:covid19_info/ui/widgets/common/map_card.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
-class CovidCaseDetailPage extends StatelessWidget {
-  final CovidCase covidCase;
+class CovidCaseDetailsPage extends StatelessWidget {
   final Color color;
+  final CovidCase covidCase;
 
-  const CovidCaseDetailPage({
-    @required this.covidCase,
+  const CovidCaseDetailsPage({
     @required this.color,
-  })  : assert(covidCase != null),
-        assert(color != null);
+    @required this.covidCase,
+  })  : assert(color != null),
+        assert(covidCase != null);
 
   @override
   Widget build(BuildContext context) {

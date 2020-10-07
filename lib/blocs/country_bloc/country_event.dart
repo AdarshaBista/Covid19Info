@@ -1,22 +1,24 @@
 part of 'country_bloc.dart';
 
 @immutable
-abstract class CountryEvent {}
+abstract class CountryEvent {
+  const CountryEvent();
+}
 
-class GetCountryEvent extends CountryEvent {}
+class GetCountriesEvent extends CountryEvent {}
 
 class SearchCountryEvent extends CountryEvent {
   final String searchTerm;
 
-  SearchCountryEvent({
+  const SearchCountryEvent({
     @required this.searchTerm,
   }) : assert(searchTerm != null);
 }
 
-class FilterCountryEvent extends CountryEvent {
+class FilterCountriesEvent extends CountryEvent {
   final CountryFilterType filterType;
 
-  FilterCountryEvent({
+  const FilterCountriesEvent({
     @required this.filterType,
   }) : assert(filterType != null);
 }

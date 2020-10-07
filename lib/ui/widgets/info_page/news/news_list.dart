@@ -5,7 +5,7 @@ import 'package:covid19_info/blocs/news_bloc/news_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:simple_coverflow/simple_coverflow.dart';
-import 'package:covid19_info/ui/widgets/info_page/news_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/news/news_card.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';

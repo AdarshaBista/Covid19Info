@@ -4,14 +4,14 @@ import 'package:covid19_info/core/models/district.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/gender_bar_graph.dart';
-import 'package:covid19_info/ui/widgets/common/distribution_container.dart';
+import 'package:covid19_info/ui/widgets/common/cases_distribution.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/district_stats_grid.dart';
 import 'package:covid19_info/ui/widgets/nepal_page/individual_cases_list.dart';
 
-class DistrictDetails extends StatelessWidget {
+class DistrictSheet extends StatelessWidget {
   final District district;
 
-  const DistrictDetails({
+  const DistrictSheet({
     @required this.district,
   }) : assert(district != null);
 
@@ -32,7 +32,7 @@ class DistrictDetails extends StatelessWidget {
         _buildDivider(),
         DistrictStatsGrid(district: district),
         const SizedBox(height: 16.0),
-        DistributionContainer(
+        CasesDistribution(
           active: district.active,
           deaths: district.deaths,
           recovered: district.recovered,

@@ -1,6 +1,10 @@
 part of 'podcast_bloc.dart';
 
 @immutable
-abstract class PodcastEvent {}
+abstract class PodcastEvent {
+  const PodcastEvent();
+}
 
-class GetPodcastEvent extends PodcastEvent {}
+class GetPodcastsEvent extends PodcastEvent {
+  const GetPodcastsEvent();
+}

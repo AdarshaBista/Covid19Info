@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'package:covid19_info/core/models/hospital.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/hospital_bloc/hospital_bloc.dart';
-
-import 'package:covid19_info/core/models/hospital.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
-import 'package:covid19_info/ui/widgets/info_page/hospital_details/hospital_card.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital/hospital_card.dart';
 
 class HospitalList extends StatelessWidget {
   const HospitalList();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:covid19_info/core/models/podcast_player_data.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/podcast_player_bloc/podcast_player_bloc.dart';
-
-import 'package:covid19_info/core/models/podcast_player_data.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
@@ -72,9 +72,9 @@ class MiniPodcastPlayer extends StatelessWidget {
           borderRadius: BorderRadius.circular(32.0),
           onTap: () {
             if (isPlaying) {
-              context.bloc<PodcastPlayerBloc>().add(PausePodcastEvent());
+              context.bloc<PodcastPlayerBloc>().add(const PausePodcastEvent());
             } else {
-              context.bloc<PodcastPlayerBloc>().add(PlayPodcastEvent());
+              context.bloc<PodcastPlayerBloc>().add(const PlayPodcastEvent());
             }
           },
           child: Icon(
@@ -90,7 +90,7 @@ class MiniPodcastPlayer extends StatelessWidget {
   Widget _buildCloseIcon(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(32.0),
-      onTap: () => context.bloc<PodcastPlayerBloc>()..add(StopPodcastEvent()),
+      onTap: () => context.bloc<PodcastPlayerBloc>()..add(const StopPodcastEvent()),
       child: const Icon(
         Icons.close,
         size: 28.0,

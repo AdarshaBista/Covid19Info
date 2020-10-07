@@ -19,8 +19,8 @@ import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
 import 'package:covid19_info/ui/pages/country_details_page.dart';
 
-class GlobalMapCard extends StatelessWidget {
-  const GlobalMapCard();
+class GlobalMap extends StatelessWidget {
+  const GlobalMap();
 
   @override
   Widget build(BuildContext context) {

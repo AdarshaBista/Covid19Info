@@ -1,16 +1,22 @@
 part of 'podcast_bloc.dart';
 
 @immutable
-abstract class PodcastState {}
+abstract class PodcastState {
+  const PodcastState();
+}
 
-class InitialPodcastState extends PodcastState {}
+class InitialPodcastState extends PodcastState {
+  const InitialPodcastState();
+}
 
-class LoadingPodcastState extends PodcastState {}
+class LoadingPodcastState extends PodcastState {
+  const LoadingPodcastState();
+}
 
 class LoadedPodcastState extends PodcastState {
   final List<Podcast> podcasts;
 
-  LoadedPodcastState({
+  const LoadedPodcastState({
     @required this.podcasts,
   }) : assert(podcasts != null);
 }
@@ -18,7 +24,7 @@ class LoadedPodcastState extends PodcastState {
 class ErrorPodcastState extends PodcastState {
   final String message;
 
-  ErrorPodcastState({
+  const ErrorPodcastState({
     @required this.message,
   }) : assert(message != null);
 }

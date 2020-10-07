@@ -1,16 +1,22 @@
 part of 'news_bloc.dart';
 
 @immutable
-abstract class NewsState {}
+abstract class NewsState {
+  const NewsState();
+}
 
-class InitialNewsState extends NewsState {}
+class InitialNewsState extends NewsState {
+  const InitialNewsState();
+}
 
-class LoadingNewsState extends NewsState {}
+class LoadingNewsState extends NewsState {
+  const LoadingNewsState();
+}
 
 class LoadedNewsState extends NewsState {
   final List<News> news;
 
-  LoadedNewsState({
+  const LoadedNewsState({
     @required this.news,
   }) : assert(news != null);
 }
@@ -18,7 +24,7 @@ class LoadedNewsState extends NewsState {
 class ErrorNewsState extends NewsState {
   final String message;
 
-  ErrorNewsState({
+  const ErrorNewsState({
     @required this.message,
   }) : assert(message != null);
 }

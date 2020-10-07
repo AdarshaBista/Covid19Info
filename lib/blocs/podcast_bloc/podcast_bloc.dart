@@ -17,14 +17,15 @@ class PodcastBloc extends Bloc<PodcastEvent, PodcastState> {
   PodcastBloc({
     @required this.apiService,
   })  : assert(apiService != null),
+        // ignore: prefer_const_constructors
         super(InitialPodcastState());
 
   @override
   Stream<PodcastState> mapEventToState(
     PodcastEvent event,
   ) async* {
-    if (event is GetPodcastEvent) {
-      yield LoadingPodcastState();
+    if (event is GetPodcastsEvent) {
+      yield const LoadingPodcastState();
       try {
         final List<Podcast> podcasts = await apiService.fetchPodcasts(0);
         yield LoadedPodcastState(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:covid19_info/core/models/country.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/country_bloc/country_bloc.dart';
-
-import 'package:covid19_info/core/models/country.dart';
 
 import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/global_page/country_card.dart';

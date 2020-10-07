@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:bloc/bloc.dart';
 
-import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/podcast.dart';
+import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/podcast_player_data.dart';
 import 'package:covid19_info/core/services/podcast_player_service.dart';
 
@@ -17,7 +17,7 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
   PodcastPlayerBloc({
     @required this.podcastPlayerService,
   })  : assert(podcastPlayerService != null),
-        super(InitialPodcastPlayerState());
+        super(const InitialPodcastPlayerState());
 
   @override
   Stream<PodcastPlayerState> mapEventToState(
@@ -41,7 +41,7 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
       );
     } on AppError catch (e) {
       yield ErrorPodcastPlayerState(message: e.message);
-      yield InitialPodcastPlayerState();
+      yield const InitialPodcastPlayerState();
     }
   }
 
@@ -61,7 +61,7 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
 
   Stream<PodcastPlayerState> _mapStopToState() async* {
     await podcastPlayerService.stop();
-    yield InitialPodcastPlayerState();
+    yield const InitialPodcastPlayerState();
   }
 
   Stream<PodcastPlayerState> _mapSeekToState(double seconds) async* {
@@ -80,6 +80,6 @@ class PodcastPlayerBloc extends Bloc<PodcastPlayerEvent, PodcastPlayerState> {
 
   Stream<PodcastPlayerState> _mapCompletedToState() async* {
     await podcastPlayerService.stop();
-    yield InitialPodcastPlayerState();
+    yield const InitialPodcastPlayerState();
   }
 }

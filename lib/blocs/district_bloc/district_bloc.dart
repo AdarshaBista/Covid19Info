@@ -10,22 +10,22 @@ import 'package:covid19_info/core/models/app_error.dart';
 
 import 'package:covid19_info/core/services/api_service.dart';
 
-part 'nepal_district_event.dart';
-part 'nepal_district_state.dart';
+part 'district_event.dart';
+part 'district_state.dart';
 
-class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
+class DistrictBloc extends Bloc<DistrictEvent, DistrictState> {
   final ApiService apiService;
   final List<District> _districts = [];
 
-  NepalDistrictBloc({
+  DistrictBloc({
     @required this.apiService,
   })  : assert(apiService != null),
-        super(InitialDistrictState());
+        super(const InitialDistrictState());
 
   @override
-  Stream<Transition<NepalDistrictEvent, NepalDistrictState>> transformEvents(
-    Stream<NepalDistrictEvent> events,
-    TransitionFunction<NepalDistrictEvent, NepalDistrictState> transitionFn,
+  Stream<Transition<DistrictEvent, DistrictState>> transformEvents(
+    Stream<DistrictEvent> events,
+    TransitionFunction<DistrictEvent, DistrictState> transitionFn,
   ) {
     return super.transformEvents(
       events.debounceTime(const Duration(milliseconds: 500)),
@@ -34,13 +34,13 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
   }
 
   @override
-  Stream<NepalDistrictState> mapEventToState(NepalDistrictEvent event) async* {
-    if (event is GetDistrictEvent) yield* _mapGetDistrictToState();
+  Stream<DistrictState> mapEventToState(DistrictEvent event) async* {
+    if (event is GetDistrictsEvent) yield* _mapGetDistrictToState();
     if (event is SearchDistrictEvent) yield* _mapSearchDistrictToState(event);
   }
 
-  Stream<NepalDistrictState> _mapGetDistrictToState() async* {
-    yield LoadingDistrictState();
+  Stream<DistrictState> _mapGetDistrictToState() async* {
+    yield const LoadingDistrictState();
     try {
       final List<int> districtsIds = await apiService.fetchDistrictsIds();
       for (final int id in districtsIds) {
@@ -64,7 +64,7 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
     }
   }
 
-  Stream<NepalDistrictState> _mapSearchDistrictToState(SearchDistrictEvent event) async* {
+  Stream<DistrictState> _mapSearchDistrictToState(SearchDistrictEvent event) async* {
     if (event.searchTerm.isEmpty) {
       yield LoadedDistrictState(
         allDistricts: _districts,
@@ -73,7 +73,7 @@ class NepalDistrictBloc extends Bloc<NepalDistrictEvent, NepalDistrictState> {
       return;
     }
 
-    yield LoadingDistrictState();
+    yield const LoadingDistrictState();
     final List<District> searchedDistricts = _districts
         .where((d) => d.title.toLowerCase().contains(event.searchTerm.toLowerCase()))
         .toList();

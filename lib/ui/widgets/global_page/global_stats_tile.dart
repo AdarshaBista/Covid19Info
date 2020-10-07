@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:covid19_info/blocs/global_stats_bloc/global_stats_bloc.dart';
+import 'package:covid19_info/blocs/global_timeline_bloc/global_timeline_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -19,13 +19,13 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocBuilder<GlobalStatsBloc, GlobalStatsState>(
+      child: BlocBuilder<GlobalTimelineBloc, GlobalTimelineState>(
         builder: (context, state) {
-          if (state is InitialGlobalStatsState) {
+          if (state is InitialGlobalTimelineState) {
             return const Offstage();
-          } else if (state is LoadedGlobalStatsState) {
+          } else if (state is LoadedGlobalTimelineState) {
             return _buildPanel(state);
-          } else if (state is ErrorGlobalStatsState) {
+          } else if (state is ErrorGlobalTimelineState) {
             return const Offstage();
           } else {
             return const Offstage();
@@ -35,7 +35,7 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
     );
   }
 
-  Widget _buildPanel(LoadedGlobalStatsState state) {
+  Widget _buildPanel(LoadedGlobalTimelineState state) {
     return SlidingUpPanel(
       color: AppColors.dark,
       parallaxOffset: 0.2,
@@ -79,7 +79,7 @@ class _GlobalStatsTileState extends State<GlobalStatsTile> {
     );
   }
 
-  Widget _buildStatsRow(LoadedGlobalStatsState state, BuildContext context) {
+  Widget _buildStatsRow(LoadedGlobalTimelineState state, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(

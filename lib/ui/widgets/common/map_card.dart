@@ -65,8 +65,8 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
         swPanBoundary: widget.swPanBoundary,
       ),
       children: [
-        RepaintBoundary(child: _buildTiles()),
-        RepaintBoundary(child: widget.markerLayer),
+        _buildTiles(),
+        widget.markerLayer,
       ],
     );
   }

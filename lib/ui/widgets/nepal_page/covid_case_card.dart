@@ -1,23 +1,23 @@
-import 'package:covid19_info/ui/widgets/common/tag.dart';
 import 'package:flutter/material.dart';
 
 import 'package:covid19_info/core/models/covid_case.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
+import 'package:covid19_info/ui/widgets/common/tag.dart';
 import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
-import 'package:covid19_info/ui/pages/covid_case_detail_page.dart';
+import 'package:covid19_info/ui/pages/covid_case_details_page.dart';
 
 class CovidCaseCard extends StatelessWidget {
-  final CovidCase covidCase;
   final Color color;
+  final CovidCase covidCase;
 
   const CovidCaseCard({
-    @required this.covidCase,
     @required this.color,
-  })  : assert(covidCase != null),
-        assert(color != null);
+    @required this.covidCase,
+  })  : assert(color != null),
+        assert(covidCase != null);
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class CovidCaseCard extends StatelessWidget {
   void navigateToDetailPage(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => CovidCaseDetailPage(
+        builder: (_) => CovidCaseDetailsPage(
           covidCase: covidCase,
           color: color,
         ),

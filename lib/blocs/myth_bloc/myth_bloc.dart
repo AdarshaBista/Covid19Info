@@ -17,14 +17,14 @@ class MythBloc extends Bloc<MythEvent, MythState> {
   MythBloc({
     @required this.apiService,
   })  : assert(apiService != null),
-        super(InitialMythState());
+        super(const InitialMythState());
 
   @override
   Stream<MythState> mapEventToState(
     MythEvent event,
   ) async* {
-    if (event is GetMythEvent) {
-      yield LoadingMythState();
+    if (event is GetMythsEvent) {
+      yield const LoadingMythState();
       try {
         final List<Myth> myths = await apiService.fetchMyths(0);
         yield LoadedMythState(

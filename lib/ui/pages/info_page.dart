@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:covid19_info/ui/widgets/common/collapsible_appbar.dart';
 import 'package:covid19_info/ui/widgets/info_page/info_tab_bar.dart';
-import 'package:covid19_info/ui/widgets/info_page/faq_list.dart';
-import 'package:covid19_info/ui/widgets/info_page/myth_list.dart';
-import 'package:covid19_info/ui/widgets/info_page/news_list.dart';
-import 'package:covid19_info/ui/widgets/info_page/podcast_list.dart';
-import 'package:covid19_info/ui/widgets/info_page/hospital_list.dart';
+import 'package:covid19_info/ui/widgets/info_page/faq/faq_list.dart';
+import 'package:covid19_info/ui/widgets/info_page/myth/myth_list.dart';
+import 'package:covid19_info/ui/widgets/info_page/news/news_list.dart';
+import 'package:covid19_info/ui/widgets/info_page/podcast/podcast_list.dart';
+import 'package:covid19_info/ui/widgets/info_page/hospital/hospital_list.dart';
 
 class InfoPage extends StatelessWidget {
   const InfoPage();

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:bloc/bloc.dart';
 
 import 'package:covid19_info/core/models/faq.dart';
 import 'package:covid19_info/core/models/app_error.dart';
@@ -17,14 +17,14 @@ class FaqBloc extends Bloc<FaqEvent, FaqState> {
   FaqBloc({
     @required this.apiService,
   })  : assert(apiService != null),
-        super(InitialFaqState());
+        super(const InitialFaqState());
 
   @override
   Stream<FaqState> mapEventToState(
     FaqEvent event,
   ) async* {
     if (event is GetFaqEvent) {
-      yield LoadingFaqState();
+      yield const LoadingFaqState();
       try {
         final List<Faq> faqs = await apiService.fetchFaqs(0);
         yield LoadedFaqState(

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:bloc/bloc.dart';
 
 import 'package:rxdart/rxdart.dart';
 
@@ -20,7 +20,7 @@ class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
   HospitalBloc({
     @required this.apiService,
   })  : assert(apiService != null),
-        super(InitialHospitalState());
+        super(const InitialHospitalState());
 
   @override
   Stream<Transition<HospitalEvent, HospitalState>> transformEvents(
@@ -37,7 +37,7 @@ class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
   Stream<HospitalState> mapEventToState(
     HospitalEvent event,
   ) async* {
-    if (event is GetHospitalEvent) {
+    if (event is GetHospitalsEvent) {
       yield* _mapGetHospitalToState();
     }
     if (event is SearchHospitalEvent) {
@@ -46,7 +46,7 @@ class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
   }
 
   Stream<HospitalState> _mapGetHospitalToState() async* {
-    yield LoadingHospitalState();
+    yield const LoadingHospitalState();
     try {
       _hospitals = await apiService.fetchHospitals(0);
       _hospitals = _hospitals.where((h) => h.isValid).toList();
@@ -61,14 +61,14 @@ class HospitalBloc extends Bloc<HospitalEvent, HospitalState> {
     if (event.searchTerm.isEmpty) {
       yield LoadedHospitalState(hospitals: _hospitals);
     }
-    yield LoadingHospitalState();
+    yield const LoadingHospitalState();
 
     final List<Hospital> searchedHospitals = _hospitals
         .where((h) => h.name.toLowerCase().contains(event.searchTerm.toLowerCase()))
         .toList();
 
     if (searchedHospitals.isEmpty) {
-      yield InitialHospitalState();
+      yield const InitialHospitalState();
     }
     yield LoadedHospitalState(hospitals: searchedHospitals);
   }

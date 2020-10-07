@@ -5,11 +5,11 @@ import 'package:covid19_info/blocs/nepal_stats_bloc/nepal_stats_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/nepal_stats_list.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/nepal_map_card.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/nepal_map.dart';
+import 'package:covid19_info/ui/widgets/nepal_page/nepal_stats_list.dart';
 
 class NepalPage extends StatelessWidget {
   const NepalPage();
@@ -23,7 +23,7 @@ class NepalPage extends StatelessWidget {
         extendBodyBehindAppBar: true,
         body: Stack(
           children: <Widget>[
-            const NepalMapCard(),
+            const NepalMap(),
             SlidingUpPanel(
               color: AppColors.background,
               parallaxOffset: 0.3,

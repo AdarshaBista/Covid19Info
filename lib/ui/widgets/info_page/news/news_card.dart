@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:covid19_info/core/models/news.dart';
 import 'package:covid19_info/core/services/launcher_service.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/tag.dart';

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:bloc/bloc.dart';
 
 import 'package:covid19_info/core/models/app_error.dart';
 import 'package:covid19_info/core/models/nepal_stats.dart';
@@ -18,14 +18,14 @@ class NepalStatsBloc extends Bloc<NepalStatsEvent, NepalStatsState> {
   NepalStatsBloc({
     @required this.apiService,
   })  : assert(apiService != null),
-        super(InitialNepalStatsState());
+        super(const InitialNepalStatsState());
 
   @override
   Stream<NepalStatsState> mapEventToState(
     NepalStatsEvent event,
   ) async* {
     if (event is GetNepalStatsEvent) {
-      yield LoadingNepalStatsState();
+      yield const LoadingNepalStatsState();
       try {
         final NepalStats nepalStats = await apiService.fetchNepalStats();
         final List<TimelineData> nepalTimeline = await apiService.fetchNepalTimeline();

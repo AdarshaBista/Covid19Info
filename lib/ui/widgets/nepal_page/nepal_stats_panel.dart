@@ -4,10 +4,10 @@ import 'package:covid19_info/core/models/nepal_stats.dart';
 
 import 'package:covid19_info/ui/widgets/common/stat_card.dart';
 
-class StatsGrid extends StatelessWidget {
+class NepalStatsPanel extends StatelessWidget {
   final NepalStats nepalStats;
 
-  const StatsGrid({@required this.nepalStats}) : assert(nepalStats != null);
+  const NepalStatsPanel({@required this.nepalStats}) : assert(nepalStats != null);
 
   @override
   Widget build(BuildContext context) {

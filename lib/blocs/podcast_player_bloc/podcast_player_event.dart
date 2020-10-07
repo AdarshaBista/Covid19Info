@@ -1,26 +1,34 @@
 part of 'podcast_player_bloc.dart';
 
 @immutable
-abstract class PodcastPlayerEvent {}
+abstract class PodcastPlayerEvent {
+  const PodcastPlayerEvent();
+}
 
 class InitPodcastEvent extends PodcastPlayerEvent {
   final Podcast podcast;
 
-  InitPodcastEvent({
+  const InitPodcastEvent({
     @required this.podcast,
   }) : assert(podcast != null);
 }
 
-class PlayPodcastEvent extends PodcastPlayerEvent {}
+class PlayPodcastEvent extends PodcastPlayerEvent {
+  const PlayPodcastEvent();
+}
 
-class PausePodcastEvent extends PodcastPlayerEvent {}
+class PausePodcastEvent extends PodcastPlayerEvent {
+  const PausePodcastEvent();
+}
 
-class StopPodcastEvent extends PodcastPlayerEvent {}
+class StopPodcastEvent extends PodcastPlayerEvent {
+  const StopPodcastEvent();
+}
 
 class SeekPodcastEvent extends PodcastPlayerEvent {
   final double seconds;
 
-  SeekPodcastEvent({
+  const SeekPodcastEvent({
     @required this.seconds,
   }) : assert(seconds != null);
 }
@@ -28,9 +36,11 @@ class SeekPodcastEvent extends PodcastPlayerEvent {
 class SetSpeedPodcastEvent extends PodcastPlayerEvent {
   final double speed;
 
-  SetSpeedPodcastEvent({
+  const SetSpeedPodcastEvent({
     @required this.speed,
   }) : assert(speed != null);
 }
 
-class CompletedPodcastEvent extends PodcastPlayerEvent {}
+class CompletedPodcastEvent extends PodcastPlayerEvent {
+  const CompletedPodcastEvent();
+}

@@ -1,14 +1,18 @@
 part of 'podcast_player_bloc.dart';
 
 @immutable
-abstract class PodcastPlayerState {}
+abstract class PodcastPlayerState {
+  const PodcastPlayerState();
+}
 
-class InitialPodcastPlayerState extends PodcastPlayerState {}
+class InitialPodcastPlayerState extends PodcastPlayerState {
+  const InitialPodcastPlayerState();
+}
 
 class LoadingPodcastPlayerState extends PodcastPlayerState {
   final Podcast currentPodcast;
 
-  LoadingPodcastPlayerState({
+  const LoadingPodcastPlayerState({
     @required this.currentPodcast,
   }) : assert(currentPodcast != null);
 }
@@ -16,7 +20,7 @@ class LoadingPodcastPlayerState extends PodcastPlayerState {
 class LoadedPodcastPlayerState extends PodcastPlayerState {
   final PodcastPlayerData playerState;
 
-  LoadedPodcastPlayerState({
+  const LoadedPodcastPlayerState({
     @required this.playerState,
   }) : assert(playerState != null);
 }
@@ -24,7 +28,7 @@ class LoadedPodcastPlayerState extends PodcastPlayerState {
 class ErrorPodcastPlayerState extends PodcastPlayerState {
   final String message;
 
-  ErrorPodcastPlayerState({
+  const ErrorPodcastPlayerState({
     @required this.message,
   }) : assert(message != null);
 }
