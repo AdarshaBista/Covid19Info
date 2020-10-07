@@ -10,13 +10,13 @@ import 'package:covid19_info/core/models/district.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/district_bloc/district_bloc.dart';
 
-import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/map_card.dart';
 import 'package:covid19_info/ui/widgets/common/search_box.dart';
 import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/district_sheet.dart';
+
+import 'package:covid19_info/ui/pages/district_page.dart';
 
 class NepalMap extends StatelessWidget {
   const NepalMap();
@@ -76,7 +76,7 @@ class NepalMap extends StatelessWidget {
               width: diameter,
               point: LatLng(d.lat, d.lng),
               builder: (context) => GestureDetector(
-                onTap: () => _openDetails(context, d),
+                onTap: () => _navigateToDistrictPage(context, d),
                 child: CircleAvatar(
                   backgroundColor: state.isDistrictInSearch(d)
                       ? Colors.blue.withOpacity(0.6)
@@ -90,42 +90,22 @@ class NepalMap extends StatelessWidget {
     );
   }
 
-  void _openDetails(BuildContext context, District d) {
-    FocusScope.of(context).unfocus();
-    showModalBottomSheet(
-      context: context,
-      enableDrag: true,
-      useRootNavigator: true,
-      isScrollControlled: true,
-      clipBehavior: Clip.antiAlias,
-      elevation: 12.0,
-      backgroundColor: AppColors.dark,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16.0),
-          topRight: Radius.circular(16.0),
-        ),
-      ),
-      builder: (context) {
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.8,
-          child: DistrictSheet(
-            district: d,
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildDistrictSearchBox(BuildContext context) {
     return SafeArea(
       child: SearchBox(
         hintText: 'Search Districts',
         onChanged: (String value) {
-          context.bloc<DistrictBloc>().add(SearchDistrictEvent(
-                searchTerm: value,
-              ));
+          context.bloc<DistrictBloc>().add(SearchDistrictEvent(searchTerm: value));
         },
+      ),
+    );
+  }
+
+  void _navigateToDistrictPage(BuildContext context, District district) {
+    FocusScope.of(context).unfocus();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => DistrictPage(district: district),
       ),
     );
   }

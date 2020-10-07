@@ -17,7 +17,7 @@ import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/error_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 
-import 'package:covid19_info/ui/pages/country_details_page.dart';
+import 'package:covid19_info/ui/pages/country_page.dart';
 
 class GlobalMap extends StatelessWidget {
   const GlobalMap();
@@ -116,7 +116,7 @@ class GlobalMap extends StatelessWidget {
           create: (_) => CountryDetailBloc(
             apiService: context.repository<ApiService>(),
           )..add(GetCountryDetailEvent(country: country)),
-          child: CountryDetailsPage(
+          child: CountryPage(
             country: country,
           ),
         ),

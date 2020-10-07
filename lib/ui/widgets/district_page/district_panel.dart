@@ -3,44 +3,53 @@ import 'package:flutter/material.dart';
 import 'package:covid19_info/core/models/district.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/gender_bar_graph.dart';
+import 'package:covid19_info/ui/widgets/common/pill.dart';
 import 'package:covid19_info/ui/widgets/common/cases_distribution.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/district_stats_grid.dart';
-import 'package:covid19_info/ui/widgets/nepal_page/individual_cases_list.dart';
+import 'package:covid19_info/ui/widgets/district_page/gender_bar_graph.dart';
+import 'package:covid19_info/ui/widgets/district_page/district_stats_grid.dart';
 
-class DistrictSheet extends StatelessWidget {
+class DistrictPanel extends StatelessWidget {
   final District district;
+  final ScrollController controller;
 
-  const DistrictSheet({
+  const DistrictPanel({
     @required this.district,
-  }) : assert(district != null);
+    @required this.controller,
+  })  : assert(district != null),
+        assert(controller != null);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return Column(
       children: [
-        const SizedBox(height: 16.0),
+        const SizedBox(height: 4.0),
+        const Pill(),
+        const SizedBox(height: 4.0),
         Text(
           district.title.toUpperCase(),
-          style: AppTextStyles.mediumLight.copyWith(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+          style: AppTextStyles.mediumLight,
         ),
-        _buildDivider(),
-        _buildStat(),
-        _buildDivider(),
-        DistrictStatsGrid(district: district),
-        const SizedBox(height: 16.0),
-        CasesDistribution(
-          active: district.active,
-          deaths: district.deaths,
-          recovered: district.recovered,
+        const SizedBox(height: 8.0),
+        const Divider(height: 8.0, indent: 32.0, endIndent: 32.0),
+        Expanded(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            controller: controller,
+            children: [
+              _buildStat(),
+              _buildDivider(),
+              DistrictStatsGrid(district: district),
+              _buildDivider(),
+              CasesDistribution(
+                active: district.active,
+                deaths: district.deaths,
+                recovered: district.recovered,
+              ),
+              _buildDivider(),
+              GenderBarGraph(district: district),
+            ],
+          ),
         ),
-        _buildDivider(),
-        GenderBarGraph(district: district),
-        _buildDivider(),
-        IndividualCasesList(district: district),
       ],
     );
   }

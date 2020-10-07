@@ -5,7 +5,7 @@ import 'package:covid19_info/core/models/country.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:covid19_info/blocs/country_detail_bloc/country_detail_bloc.dart';
 
-import 'package:covid19_info/ui/pages/country_details_page.dart';
+import 'package:covid19_info/ui/pages/country_page.dart';
 
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/widgets/common/label.dart';
@@ -23,7 +23,7 @@ class CountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return FadeAnimator(
       child: GestureDetector(
-        onTap: () => _navigateToDetailsPage(context),
+        onTap: () => _navigateToCountryPage(context),
         child: Container(
           height: 128.0,
           margin: const EdgeInsets.all(10.0),
@@ -124,14 +124,14 @@ class CountryCard extends StatelessWidget {
     );
   }
 
-  void _navigateToDetailsPage(BuildContext context) {
+  void _navigateToCountryPage(BuildContext context) {
     FocusScope.of(context).unfocus();
     context.bloc<CountryDetailBloc>().add(GetCountryDetailEvent(country: country));
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => BlocProvider.value(
           value: context.bloc<CountryDetailBloc>(),
-          child: CountryDetailsPage(
+          child: CountryPage(
             country: country,
           ),
         ),

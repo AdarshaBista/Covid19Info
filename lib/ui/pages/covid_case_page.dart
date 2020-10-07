@@ -10,15 +10,12 @@ import 'package:line_awesome_icons/line_awesome_icons.dart';
 import 'package:covid19_info/ui/widgets/common/map_card.dart';
 import 'package:covid19_info/ui/widgets/common/scale_animator.dart';
 
-class CovidCaseDetailsPage extends StatelessWidget {
-  final Color color;
+class CovidCasePage extends StatelessWidget {
   final CovidCase covidCase;
 
-  const CovidCaseDetailsPage({
-    @required this.color,
+  const CovidCasePage({
     @required this.covidCase,
-  })  : assert(color != null),
-        assert(covidCase != null);
+  }) : assert(covidCase != null);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +49,7 @@ class CovidCaseDetailsPage extends StatelessWidget {
                       ? LineAwesomeIcons.female
                       : LineAwesomeIcons.dot_circle_o,
               size: 40.0,
-              color: color,
+              color: _getColor(),
             ),
             const SizedBox(height: 12.0),
             if (covidCase.age != null)
@@ -126,8 +123,8 @@ class CovidCaseDetailsPage extends StatelessWidget {
         zoom: 15.0,
         minZoom: 12.0,
         maxZoom: 16.0,
-        nePanBoundary: LatLng(covidCase.lat + 0.03, covidCase.lng + 0.03),
-        swPanBoundary: LatLng(covidCase.lat - 0.03, covidCase.lng - 0.03),
+        nePanBoundary: LatLng(covidCase.lat + 0.005, covidCase.lng + 0.005),
+        swPanBoundary: LatLng(covidCase.lat - 0.005, covidCase.lng - 0.005),
         center: LatLng(covidCase.lat + 0.0025, covidCase.lng - 0.0012),
         searchLocation: () => null,
         markerLayer: MarkerLayerWidget(
@@ -141,7 +138,7 @@ class CovidCaseDetailsPage extends StatelessWidget {
                   duration: 1200,
                   child: Image.asset(
                     'assets/images/marker.png',
-                    color: color,
+                    color: _getColor(),
                   ),
                 ),
               ),
@@ -150,5 +147,11 @@ class CovidCaseDetailsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _getColor() {
+    if (covidCase.deathOn != null) return Colors.red;
+    if (covidCase.recoveredOn != null) return Colors.green;
+    return Colors.lightBlue;
   }
 }

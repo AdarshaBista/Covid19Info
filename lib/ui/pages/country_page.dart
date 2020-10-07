@@ -13,10 +13,10 @@ import 'package:covid19_info/ui/widgets/indicators/empty_icon.dart';
 import 'package:covid19_info/ui/widgets/indicators/busy_indicator.dart';
 import 'package:covid19_info/ui/widgets/country_details_page/country_stats_grid.dart';
 
-class CountryDetailsPage extends StatelessWidget {
+class CountryPage extends StatelessWidget {
   final Country country;
 
-  const CountryDetailsPage({
+  const CountryPage({
     @required this.country,
   }) : assert(country != null);
 
