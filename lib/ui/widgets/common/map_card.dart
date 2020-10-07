@@ -23,18 +23,17 @@ class MapCard extends StatefulWidget {
   const MapCard({
     this.interactive = true,
     this.center,
+    this.nePanBoundary,
+    this.swPanBoundary,
+    this.markerLayer,
     @required this.zoom,
     @required this.minZoom,
     @required this.maxZoom,
-    this.nePanBoundary,
-    this.swPanBoundary,
     @required this.searchLocation,
-    @required this.markerLayer,
   })  : assert(zoom != null),
         assert(minZoom != null),
         assert(maxZoom != null),
-        assert(searchLocation != null),
-        assert(markerLayer != null);
+        assert(searchLocation != null);
 
   @override
   _MapCardState createState() => _MapCardState();
@@ -66,7 +65,7 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
       ),
       children: [
         _buildTiles(),
-        widget.markerLayer,
+        if (widget.markerLayer != null) widget.markerLayer,
       ],
     );
   }

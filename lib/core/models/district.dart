@@ -1,7 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:covid19_info/core/models/covid_case.dart';
-
 class District {
   final int id;
   final String title;
@@ -12,11 +10,9 @@ class District {
   final int active;
   final int deaths;
   final int recovered;
-  final List<CovidCase> cases;
-
-  int naCount;
-  int maleCount;
-  int femaleCount;
+  final int naCount;
+  final int maleCount;
+  final int femaleCount;
 
   District({
     @required this.id,
@@ -28,7 +24,9 @@ class District {
     @required this.active,
     @required this.deaths,
     @required this.recovered,
-    @required this.cases,
+    @required this.naCount,
+    @required this.maleCount,
+    @required this.femaleCount,
   })  : assert(id != null),
         assert(title != null),
         assert(province != null),
@@ -38,41 +36,14 @@ class District {
         assert(active != null),
         assert(deaths != null),
         assert(recovered != null),
-        assert(cases != null) {
-    naCount = cases.where((c) => c.gender.isEmpty).length;
-    maleCount = cases.where((c) => c.gender == 'male').length;
-    femaleCount = cases.where((c) => c.gender == 'female').length;
-  }
-
-  District copyWith({
-    int id,
-    String title,
-    int province,
-    double lat,
-    double lng,
-    int confirmed,
-    int active,
-    int deaths,
-    int recovered,
-    List<CovidCase> cases,
-  }) {
-    return District(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      province: province ?? this.province,
-      lat: lat ?? this.lat,
-      lng: lng ?? this.lng,
-      confirmed: confirmed ?? this.confirmed,
-      active: active ?? this.active,
-      deaths: deaths ?? this.deaths,
-      recovered: recovered ?? this.recovered,
-      cases: cases ?? this.cases,
-    );
-  }
+        assert(naCount != null),
+        assert(maleCount != null),
+        assert(femaleCount != null);
 
   factory District.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
 
+    final cases = map['covid_cases'] as List;
     return District(
       id: map['id'] as int,
       title: map['title'] as String,
@@ -83,14 +54,15 @@ class District {
       active: map['covid_summary']['active'] as int,
       deaths: map['covid_summary']['death'] as int,
       recovered: map['covid_summary']['recovered'] as int,
-      cases: List<CovidCase>.from((map['covid_cases'] as List)
-          ?.map((x) => CovidCase.fromMap(x as Map<String, dynamic>))),
+      naCount: cases.where((c) => c['gender'] == null).length,
+      maleCount: cases.where((c) => c['gender'] == 'male').length,
+      femaleCount: cases.where((c) => c['gender'] == 'female').length,
     );
   }
 
   @override
   String toString() {
-    return 'District(id: $id, title: $title, province: $province, lat: $lat, lng: $lng, confirmed: $confirmed, active: $active, deaths: $deaths, recovered: $recovered, cases: $cases)';
+    return 'District(id: $id, title: $title, province: $province, lat: $lat, lng: $lng, confirmed: $confirmed, active: $active, deaths: $deaths, recovered: $recovered, naCount: $naCount, maleCount: $maleCount, femaleCount: $femaleCount)';
   }
 
   @override
@@ -107,7 +79,9 @@ class District {
         o.active == active &&
         o.deaths == deaths &&
         o.recovered == recovered &&
-        listEquals(o.cases, cases);
+        o.naCount == naCount &&
+        o.maleCount == maleCount &&
+        o.femaleCount == femaleCount;
   }
 
   @override
@@ -121,6 +95,8 @@ class District {
         active.hashCode ^
         deaths.hashCode ^
         recovered.hashCode ^
-        cases.hashCode;
+        naCount.hashCode ^
+        maleCount.hashCode ^
+        femaleCount.hashCode;
   }
 }

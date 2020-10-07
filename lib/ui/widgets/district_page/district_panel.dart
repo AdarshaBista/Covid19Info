@@ -90,7 +90,7 @@ class DistrictPanel extends StatelessWidget {
             ),
             leading: const Icon(Icons.local_hospital, color: Colors.red),
             trailing: Text(
-              district.cases.length.toString(),
+              district.confirmed.toString(),
               style: AppTextStyles.mediumLight.copyWith(fontWeight: FontWeight.bold),
             ),
           ),

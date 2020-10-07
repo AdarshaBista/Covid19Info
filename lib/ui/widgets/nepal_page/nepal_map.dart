@@ -70,7 +70,7 @@ class NepalMap extends StatelessWidget {
         markers: state.allDistricts.map(
           (d) {
             final double diameter =
-                (math.sqrt(d.cases.length.toDouble())).clamp(12.0, 120.0).toDouble();
+                (math.sqrt(d.confirmed.toDouble())).clamp(12.0, 120.0).toDouble();
             return Marker(
               height: diameter,
               width: diameter,
