@@ -95,7 +95,7 @@ class NepalMap extends StatelessWidget {
       child: SearchBox(
         hintText: 'Search Districts',
         onChanged: (String value) {
-          context.bloc<DistrictBloc>().add(SearchDistrictEvent(searchTerm: value));
+          context.read<DistrictBloc>().add(SearchDistrictEvent(searchTerm: value));
         },
       ),
     );

@@ -68,7 +68,7 @@ class _PodcastPlayerPanelState extends State<PodcastPlayerPanel> {
   }
 
   void _showErrorSnackBar(BuildContext context, String message) {
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: AppColors.primary,
         duration: const Duration(milliseconds: 1500),

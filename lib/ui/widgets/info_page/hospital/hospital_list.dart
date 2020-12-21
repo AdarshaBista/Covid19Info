@@ -24,7 +24,7 @@ class HospitalList extends StatelessWidget {
         SearchBox(
           hintText: 'Search Hospitals',
           onChanged: (String value) {
-            context.bloc<HospitalBloc>().add(SearchHospitalEvent(
+            context.read<HospitalBloc>().add(SearchHospitalEvent(
                   searchTerm: value,
                 ));
           },

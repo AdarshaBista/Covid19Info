@@ -32,7 +32,7 @@ class _PodcastSeekBarState extends State<PodcastSeekBar> {
 
           if (currentDuration.inSeconds >= widget.playerState.duration.inSeconds - 1 &&
               !isSeeking) {
-            context.bloc<PodcastPlayerBloc>().add(const CompletedPodcastEvent());
+            context.read<PodcastPlayerBloc>().add(const CompletedPodcastEvent());
           }
 
           return _buildSlider(currentDuration, context);
@@ -73,7 +73,7 @@ class _PodcastSeekBarState extends State<PodcastSeekBar> {
             onChangeStart: (_) => isSeeking = true,
             onChangeEnd: (value) {
               isSeeking = false;
-              context.bloc<PodcastPlayerBloc>().add(SeekPodcastEvent(
+              context.read<PodcastPlayerBloc>().add(SeekPodcastEvent(
                     seconds: value,
                   ));
             },

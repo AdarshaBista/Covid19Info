@@ -16,6 +16,7 @@ import 'package:covid19_info/core/services/podcast_player_service.dart';
 import 'package:covid19_info/ui/styles/styles.dart';
 import 'package:covid19_info/ui/pages/nav_page.dart';
 
+import 'package:device_preview/plugins.dart';
 import 'package:device_preview/device_preview.dart';
 
 Future<void> main() async {
@@ -30,18 +31,8 @@ Future<void> main() async {
   runApp(
     DevicePreview(
       enabled: Platform.isWindows,
-      style: DevicePreviewStyle(
-        hasFrameShadow: true,
-        background: const BoxDecoration(color: Color(0xFF24292E)),
-        toolBar: DevicePreviewToolBarStyle.dark().copyWith(
-          position: DevicePreviewToolBarPosition.left,
-        ),
-      ),
-      data: const DevicePreviewData(
-        deviceIndex: 3,
-        isFrameVisible: true,
-      ),
-      builder: (_) => App(),
+      builder: (_) => const App(),
+      plugins: const [ScreenshotPlugin()],
     ),
   );
 }
@@ -58,6 +49,8 @@ Future<void> initHive() async {
 }
 
 class App extends StatelessWidget {
+  const App();
+
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -70,7 +63,7 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp(
         builder: DevicePreview.appBuilder,
-        locale: DevicePreview.of(context).locale,
+        locale: DevicePreview.locale(context),
         debugShowCheckedModeBanner: false,
         title: 'Covid19 Info',
         theme: ThemeData(

@@ -69,7 +69,7 @@ class HospitalCard extends StatelessWidget {
                         iconData: LineAwesomeIcons.phone,
                         onPressed: () async {
                           await context
-                              .repository<LauncherService>()
+                              .read<LauncherService>()
                               .launchPhone(context, hospital.phone);
                         },
                       ),

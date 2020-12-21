@@ -22,7 +22,7 @@ class SearchBox extends StatelessWidget {
       child: Container(
         height: 50.0,
         margin: margin,
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 10.0),
         decoration: BoxDecoration(
           color: AppColors.dark,
           borderRadius: borderRadius ?? BorderRadius.circular(8.0),
@@ -36,6 +36,7 @@ class SearchBox extends StatelessWidget {
             prefixIcon: const Icon(
               Icons.search,
               size: 20.0,
+              color: AppColors.light,
             ),
           ),
         ),

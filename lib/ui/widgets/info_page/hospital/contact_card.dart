@@ -57,9 +57,7 @@ class ContactCard extends StatelessWidget {
                   color: color,
                   iconData: LineAwesomeIcons.phone,
                   onPressed: () async {
-                    await context
-                        .repository<LauncherService>()
-                        .launchPhone(context, number);
+                    await context.read<LauncherService>().launchPhone(context, number);
                   },
                 ),
                 const SizedBox(width: 10.0),

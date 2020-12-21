@@ -44,7 +44,7 @@ class CountryList extends StatelessWidget {
         SearchBox(
           hintText: 'Search Countries',
           onChanged: (String value) {
-            context.bloc<CountryBloc>().add(SearchCountryEvent(
+            context.read<CountryBloc>().add(SearchCountryEvent(
                   searchTerm: value,
                 ));
           },

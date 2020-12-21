@@ -97,17 +97,17 @@ class _NavPageState extends State<NavPage> {
         providers: [
           BlocProvider(
             create: (context) => GlobalTimelineBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(const GetGlobalTimelineEvent()),
           ),
           BlocProvider(
             create: (context) => CountryBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(GetCountriesEvent()),
           ),
           BlocProvider(
             create: (_) => CountryDetailBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             ),
           ),
         ],
@@ -118,12 +118,12 @@ class _NavPageState extends State<NavPage> {
         providers: [
           BlocProvider(
             create: (context) => NepalStatsBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(const GetNepalStatsEvent()),
           ),
           BlocProvider(
             create: (context) => DistrictBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(const GetDistrictsEvent()),
           ),
         ],
@@ -134,32 +134,32 @@ class _NavPageState extends State<NavPage> {
         providers: [
           BlocProvider(
             create: (context) => NewsBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(const GetNewsEvent()),
           ),
           BlocProvider(
             create: (context) => FaqBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(const GetFaqEvent()),
           ),
           BlocProvider(
             create: (context) => MythBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(const GetMythsEvent()),
           ),
           BlocProvider(
             create: (context) => PodcastBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(const GetPodcastsEvent()),
           ),
           BlocProvider(
             create: (context) => PodcastPlayerBloc(
-              podcastPlayerService: context.repository<PodcastPlayerService>(),
+              podcastPlayerService: context.read<PodcastPlayerService>(),
             ),
           ),
           BlocProvider(
             create: (context) => HospitalBloc(
-              apiService: context.repository<ApiService>(),
+              apiService: context.read<ApiService>(),
             )..add(const GetHospitalsEvent()),
           ),
         ],

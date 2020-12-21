@@ -46,9 +46,9 @@ class GenderBarGraph extends StatelessWidget {
             leftTitles: SideTitles(
               showTitles: true,
               interval: maxY / 6.0,
-              textStyle: AppTextStyles.extraSmallLight,
               reservedSize: 50.0,
               getTitles: (value) => value.toInt().toString(),
+              textStyle: AppTextStyles.extraSmallLight,
             ),
             bottomTitles: SideTitles(
               showTitles: true,

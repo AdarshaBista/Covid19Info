@@ -114,7 +114,7 @@ class GlobalMap extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) => BlocProvider(
           create: (_) => CountryDetailBloc(
-            apiService: context.repository<ApiService>(),
+            apiService: context.read<ApiService>(),
           )..add(GetCountryDetailEvent(country: country)),
           child: CountryPage(
             country: country,

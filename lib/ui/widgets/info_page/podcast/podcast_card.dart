@@ -150,7 +150,7 @@ class PodcastCard extends StatelessWidget {
   Widget _buildPlayIcon(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(32.0),
-      onTap: () => context.bloc<PodcastPlayerBloc>()
+      onTap: () => context.read<PodcastPlayerBloc>()
         ..add(InitPodcastEvent(
           podcast: podcast,
         )),

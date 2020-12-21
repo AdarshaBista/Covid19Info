@@ -55,7 +55,7 @@ class _GlobalPageState extends State<GlobalPage> {
               ),
               onSelected: (filterType) {
                 context
-                    .bloc<CountryBloc>()
+                    .read<CountryBloc>()
                     .add(FilterCountriesEvent(filterType: filterType));
               },
               itemBuilder: (context) {

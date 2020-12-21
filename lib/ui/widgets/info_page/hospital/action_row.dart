@@ -27,9 +27,7 @@ class ActionRow extends StatelessWidget {
             label: 'Call',
             color: color,
             onPressed: () async {
-              await context
-                  .repository<LauncherService>()
-                  .launchPhone(context, hospital.phone);
+              await context.read<LauncherService>().launchPhone(context, hospital.phone);
             },
           ),
         const SizedBox(width: 10.0),
@@ -39,7 +37,7 @@ class ActionRow extends StatelessWidget {
             color: color,
             onPressed: () async {
               await context
-                  .repository<LauncherService>()
+                  .read<LauncherService>()
                   .launchWebsite(context, hospital.website);
             },
           ),
@@ -49,9 +47,7 @@ class ActionRow extends StatelessWidget {
             label: 'Email',
             color: color,
             onPressed: () async {
-              await context
-                  .repository<LauncherService>()
-                  .launchEmail(context, hospital.email);
+              await context.read<LauncherService>().launchEmail(context, hospital.email);
             },
           ),
       ],

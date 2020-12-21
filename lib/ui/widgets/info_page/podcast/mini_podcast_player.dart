@@ -72,9 +72,9 @@ class MiniPodcastPlayer extends StatelessWidget {
           borderRadius: BorderRadius.circular(32.0),
           onTap: () {
             if (isPlaying) {
-              context.bloc<PodcastPlayerBloc>().add(const PausePodcastEvent());
+              context.read<PodcastPlayerBloc>().add(const PausePodcastEvent());
             } else {
-              context.bloc<PodcastPlayerBloc>().add(const PlayPodcastEvent());
+              context.read<PodcastPlayerBloc>().add(const PlayPodcastEvent());
             }
           },
           child: Icon(
@@ -90,7 +90,7 @@ class MiniPodcastPlayer extends StatelessWidget {
   Widget _buildCloseIcon(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(32.0),
-      onTap: () => context.bloc<PodcastPlayerBloc>()..add(const StopPodcastEvent()),
+      onTap: () => context.read<PodcastPlayerBloc>()..add(const StopPodcastEvent()),
       child: const Icon(
         Icons.close,
         size: 28.0,

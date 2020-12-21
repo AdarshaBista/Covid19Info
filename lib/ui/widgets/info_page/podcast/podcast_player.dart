@@ -60,8 +60,8 @@ class PodcastPlayer extends StatelessWidget {
       child: Image.network(
         playerState.currentPodcast.imageUrl,
         fit: BoxFit.cover,
-        width: 150,
-        height: 150.0,
+        // width: 150.0,
+        // height: 150.0,
         errorBuilder: (_, __, ___) => Padding(
           padding: const EdgeInsets.all(50.0),
           child: Image.asset(
@@ -98,7 +98,7 @@ class _StopIcon extends StatelessWidget {
     return InkWell(
       onTap: () async {
         await onStop();
-        context.bloc<PodcastPlayerBloc>().add(const StopPodcastEvent());
+        context.read<PodcastPlayerBloc>().add(const StopPodcastEvent());
       },
       child: Container(
         padding: const EdgeInsets.all(4.0),
@@ -133,9 +133,9 @@ class _PlayPauseIcon extends StatelessWidget {
         return InkWell(
           onTap: () {
             if (isPlaying) {
-              context.bloc<PodcastPlayerBloc>().add(const PausePodcastEvent());
+              context.read<PodcastPlayerBloc>().add(const PausePodcastEvent());
             } else {
-              context.bloc<PodcastPlayerBloc>().add(const PlayPodcastEvent());
+              context.read<PodcastPlayerBloc>().add(const PlayPodcastEvent());
             }
           },
           child: Padding(
@@ -194,7 +194,7 @@ class _SpeedIcon extends StatelessWidget {
             (speed) => InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-                context.bloc<PodcastPlayerBloc>().add(SetSpeedPodcastEvent(
+                context.read<PodcastPlayerBloc>().add(SetSpeedPodcastEvent(
                       speed: speed,
                     ));
               },

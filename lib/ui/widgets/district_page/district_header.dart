@@ -24,7 +24,10 @@ class DistrictHeader extends StatelessWidget {
               'Province',
               style: AppTextStyles.smallLight,
             ),
-            leading: const Icon(Icons.map),
+            leading: const Icon(
+              Icons.map,
+              color: AppColors.primary,
+            ),
             trailing: Text(
               district.province.toString(),
               style: AppTextStyles.mediumLight.copyWith(fontWeight: FontWeight.bold),

@@ -122,7 +122,7 @@ class NewsCard extends StatelessWidget {
       label: 'READ MORE',
       color: color,
       onPressed: () async {
-        await context.repository<LauncherService>().launchWebsite(context, news.url);
+        await context.read<LauncherService>().launchWebsite(context, news.url);
       },
     );
   }
