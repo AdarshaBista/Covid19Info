@@ -127,8 +127,9 @@ class _TimelineGraphState extends State<TimelineGraph> {
     final double verticalInterval =
         ((sliderValues.end - sliderValues.start) ~/ 4).toDouble();
     final double horizontalInterval = (maxY ~/ 5).toDouble();
-    final List<double> xValues =
-        widget.timeline.map((data) => widget.timeline.indexOf(data).toDouble()).toList();
+    final List<double> xValues = widget.timeline
+        .map((data) => widget.timeline.indexOf(data).toDouble())
+        .toList();
 
     return LineChart(
       LineChartData(
@@ -173,17 +174,22 @@ class _TimelineGraphState extends State<TimelineGraph> {
         lineBarsData: [
           _buildLineData(
             xValues: xValues,
-            yValues: widget.timeline.map((data) => data.confirmed.toDouble()).toList(),
+            yValues: widget.timeline
+                .map((data) => data.confirmed.toDouble())
+                .toList(),
             color: Colors.blue,
           ),
           _buildLineData(
             xValues: xValues,
-            yValues: widget.timeline.map((data) => data.recovered.toDouble()).toList(),
+            yValues: widget.timeline
+                .map((data) => data.recovered.toDouble())
+                .toList(),
             color: Colors.green,
           ),
           _buildLineData(
             xValues: xValues,
-            yValues: widget.timeline.map((data) => data.deaths.toDouble()).toList(),
+            yValues:
+                widget.timeline.map((data) => data.deaths.toDouble()).toList(),
             color: Colors.red,
           ),
         ],

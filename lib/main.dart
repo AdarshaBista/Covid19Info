@@ -55,10 +55,16 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<LauncherService>(create: (_) => LauncherService()),
-        RepositoryProvider<PodcastPlayerService>(create: (_) => PodcastPlayerService()),
+        RepositoryProvider<LauncherService>(
+          create: (_) => LauncherService(),
+        ),
+        RepositoryProvider<PodcastPlayerService>(
+          create: (_) => PodcastPlayerService(),
+        ),
         RepositoryProvider<ApiService>(
-          create: (_) => ApiService(cacheService: CacheService()),
+          create: (_) => ApiService(
+            cacheService: CacheService(),
+          ),
         ),
       ],
       child: MaterialApp(

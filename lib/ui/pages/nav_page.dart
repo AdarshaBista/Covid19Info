@@ -33,19 +33,19 @@ class _NavPageState extends State<NavPage> {
   int _selectedIndex = 1;
 
   List<GButton> get tabs => [
-        GButton(
+        const GButton(
           icon: LineAwesomeIcons.globe,
           text: 'Global',
           iconColor: Colors.teal,
           backgroundColor: Colors.teal,
         ),
-        GButton(
+        const GButton(
           icon: LineAwesomeIcons.sun_o,
           text: 'Nepal',
           iconColor: Colors.red,
           backgroundColor: Colors.red,
         ),
-        GButton(
+        const GButton(
           icon: LineAwesomeIcons.info_circle,
           text: 'Info',
           iconColor: Colors.blue,

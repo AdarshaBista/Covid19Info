@@ -72,7 +72,8 @@ class GenderBarGraph extends StatelessWidget {
             touchTooltipData: BarTouchTooltipData(
               tooltipBgColor: AppColors.primary,
               getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                return BarTooltipItem(rod.y.toStringAsFixed(0), AppTextStyles.smallLight);
+                return BarTooltipItem(
+                    rod.y.toStringAsFixed(0), AppTextStyles.smallLight);
               },
             ),
           ),
