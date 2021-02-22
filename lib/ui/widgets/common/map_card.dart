@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import 'package:latlong/latlong.dart';
@@ -55,6 +53,7 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
     return FlutterMap(
       mapController: _mapController,
       options: MapOptions(
+        interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
         interactive: widget.interactive,
         center: widget.center,
         zoom: widget.zoom,
@@ -73,9 +72,6 @@ class _MapCardState extends State<MapCard> with TickerProviderStateMixin {
   TileLayerWidget _buildTiles() {
     return TileLayerWidget(
       options: TileLayerOptions(
-        tileProvider: Platform.isWindows
-            ? NetworkTileProvider()
-            : const CachedNetworkTileProvider(),
         keepBuffer: 8,
         tileSize: 512,
         zoomOffset: -1,

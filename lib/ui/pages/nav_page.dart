@@ -57,6 +57,7 @@ class _NavPageState extends State<NavPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
+      
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(4.0),
         margin: const EdgeInsets.all(10.0),
@@ -68,12 +69,12 @@ class _NavPageState extends State<NavPage> {
           ],
         ),
         child: GNav(
-          gap: 8,
+          gap: 8.0,
           tabs: tabs,
           iconSize: 20,
           activeColor: Colors.white,
           duration: const Duration(milliseconds: 300),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           selectedIndex: _selectedIndex,
           onTabChange: (int index) {
             setState(() {
