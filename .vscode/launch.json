@@ -8,6 +8,12 @@
             "deviceId": "windows"
         },
         {
+            "name": "Web",
+            "type": "dart",
+            "request": "launch",
+            "deviceId": "chrome"
+        },
+        {
             "name": "Pixel 3",
             "type": "dart",
             "request": "launch",
@@ -20,4 +26,13 @@
             "deviceId": "c3bf6cab"
         },
     ],
+    "compounds": [
+        {
+            "name": "Web + Windows",
+            "configurations": [
+                "Web",
+                "Windows"
+            ]
+        }
+    ]
 }

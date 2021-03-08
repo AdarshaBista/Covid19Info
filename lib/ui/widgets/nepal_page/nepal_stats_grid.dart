@@ -7,7 +7,9 @@ import 'package:covid19_info/ui/widgets/common/stat_card.dart';
 class NepalStatsGrid extends StatelessWidget {
   final NepalStats nepalStats;
 
-  const NepalStatsGrid({@required this.nepalStats}) : assert(nepalStats != null);
+  const NepalStatsGrid({
+    @required this.nepalStats,
+  }) : assert(nepalStats != null);
 
   @override
   Widget build(BuildContext context) {
