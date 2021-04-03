@@ -8,13 +8,7 @@
             "deviceId": "windows"
         },
         {
-            "name": "Web",
-            "type": "dart",
-            "request": "launch",
-            "deviceId": "chrome"
-        },
-        {
-            "name": "Pixel 3",
+            "name": "Pixel 4",
             "type": "dart",
             "request": "launch",
             "deviceId": "emulator-5554"
@@ -25,14 +19,5 @@
             "request": "launch",
             "deviceId": "c3bf6cab"
         },
-    ],
-    "compounds": [
-        {
-            "name": "Web + Windows",
-            "configurations": [
-                "Web",
-                "Windows"
-            ]
-        }
     ]
 }
