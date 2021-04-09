@@ -4,7 +4,7 @@ import 'package:covid19_info/ui/styles/styles.dart';
 
 class UiHelper {
   static void showMessage(BuildContext context, String msg) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    Scaffold.of(context).showSnackBar(
       SnackBar(
         content: Text(
           msg,

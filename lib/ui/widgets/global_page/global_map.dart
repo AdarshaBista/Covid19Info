@@ -86,7 +86,7 @@ class GlobalMap extends StatelessWidget {
               default:
             }
 
-            final double diameter = (math.sqrt(metric.toDouble()) / 16.0)
+            final double diameter = (math.sqrt(metric.toDouble()) / 30.0)
                 .clamp(12.0, double.maxFinite)
                 .toDouble();
             return Marker(

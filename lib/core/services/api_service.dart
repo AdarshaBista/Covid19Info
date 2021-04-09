@@ -37,8 +37,8 @@ class ApiService {
 
   static const String COVID_API_BASE = 'https://covidapi.info/api/v1/';
   static const String CORONA_TRACKER_BASE = 'https://api.coronatracker.com/';
-  static const String NEPAL_CORONA_BASE = 'https://nepalcorona.info/api/v1/';
-  static const String NEPAL_CORONA_DATA_BASE = 'https://data.nepalcorona.info/api/v1/';
+  static const String NEPAL_CORONA_BASE = 'https://corona.askbhunte.com/api/v1/';
+  static const String NEPAL_CORONA_DATA_BASE = 'https://data.askbhunte.com/api/v1/';
 
   Future<NepalStats> fetchNepalStats() async {
     const String url = '${NEPAL_CORONA_BASE}data/nepal';
